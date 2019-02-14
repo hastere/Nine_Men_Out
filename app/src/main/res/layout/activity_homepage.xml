@@ -5,74 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/highestQtyBetsBtn"
-        style="@android:style/Widget.DeviceDefault.Button.Colored"
-        android:layout_width="371dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="100dp"
-        android:text="Current High Frequency Bets"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColorLink="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/topButtonsLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toTopOf="@+id/bottomButtonsLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2">
 
-    <Button
-        android:id="@+id/Leaderboards"
-        style="@android:style/Widget.DeviceDefault.Button.Colored"
-        android:layout_width="165dp"
-        android:layout_height="129dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:text="Leaderboards"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColorLink="@color/colorAccent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/createBetsBtn"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/createBetsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:drawableRight="@color/cardview_light_background"
+            android:text="Create Bets"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/createBetsBtn"
-        style="@android:style/Widget.DeviceDefault.Button.Colored"
-        android:layout_width="166dp"
-        android:layout_height="129dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:text="Create Bets"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColorLink="@color/colorAccent"
-        app:layout_constraintEnd_toStartOf="@+id/Leaderboards"
-        app:layout_constraintTop_toBottomOf="@+id/suggestBetBtn" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:drawableLeft="@color/cardview_light_background"
+            android:text="Search Bets"
+            android:textSize="24sp" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/searchBetsBtn"
-        style="@android:style/Widget.DeviceDefault.Button.Colored"
-        android:layout_width="165dp"
-        android:layout_height="129dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:text="Search Bets"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColorLink="@color/colorAccent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/suggestBetBtn"
-        app:layout_constraintStart_toEndOf="@+id/suggestBetBtn" />
-
-    <Button
-        android:id="@+id/suggestBetBtn"
-        style="@android:style/Widget.DeviceDefault.Button.Colored"
-        android:layout_width="165dp"
-        android:layout_height="129dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="40dp"
-        android:text="Suggested Bets"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColorLink="@color/colorAccent"
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="6dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="402dp"
+        android:layout_marginBottom="9dp"
+        android:background="#FF0000"
+        app:layout_constraintBottom_toTopOf="@+id/topButtonsLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/bottomButtonsLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topButtonsLinearLayout">
+
+        <Button
+            android:id="@+id/leaderboardsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="Leaderboards  "
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/suggestedBetsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="Suggested Bets"
+            android:textSize="24sp" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
