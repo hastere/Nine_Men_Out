@@ -78,13 +78,4 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-*.xml
-*.xml
-*.xml
-.idea/vcs.xml
 .idea/dictionaries/Owen.xml
-.idea/vcs.xml
-.idea/dictionaries/Owen.xml
-.idea/misc.xml
-.idea/misc.xml
-.idea/misc.xml
