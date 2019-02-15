@@ -29,6 +29,27 @@ public class HomePageActivity extends AppCompatActivity {
                 openCreateBetsActivity();
             }
         });
+        button =(Button) findViewById(R.id.suggestedBetsBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSuggestedBetsActivity();
+            }
+        });
+        button =(Button) findViewById(R.id.searchBetsBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSearchBetsActivity();
+            }
+        });
+        button =(Button) findViewById(R.id.leaderboardsBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLeaderboardActivity();
+            }
+        });
     }
 
     public void openUserProfileActivity() {
