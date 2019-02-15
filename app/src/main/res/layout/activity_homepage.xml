@@ -9,7 +9,6 @@
         android:id="@+id/topButtonsLinearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         android:weightSum="2"
         app:layout_constraintBottom_toTopOf="@+id/bottomButtonsLinearLayout"
@@ -19,21 +18,21 @@
 
         <Button
             android:id="@+id/createBetsBtn"
+            style="@android:style/Widget.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorAccent"
-            android:drawableRight="@color/cardview_light_background"
             android:text="Create Bets"
             android:textSize="24sp" />
 
         <Button
             android:id="@+id/button3"
+            style="@android:style/Widget.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
-            android:drawableLeft="@color/cardview_light_background"
             android:text="Search Bets"
             android:textSize="24sp" />
     </LinearLayout>
@@ -56,7 +55,6 @@
         android:id="@+id/bottomButtonsLinearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="3dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,6 +63,7 @@
 
         <Button
             android:id="@+id/leaderboardsBtn"
+            style="@android:style/Widget.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -74,12 +73,14 @@
 
         <Button
             android:id="@+id/suggestedBetsBtn"
+            style="@android:style/Widget.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:text="Suggested Bets"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:visibility="visible" />
     </LinearLayout>
 
     <TableLayout
@@ -164,6 +165,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="395dp"
+        android:layout_height="115dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="161dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="63dp"
+            android:layout_height="75dp"
+            android:background="@android:drawable/ic_menu_myplaces" />
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>
