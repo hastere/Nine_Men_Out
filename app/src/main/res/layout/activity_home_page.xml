@@ -27,7 +27,7 @@
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/searchBetsBtn"
             style="@android:style/Widget.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -176,7 +176,7 @@
         >
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/profileButton"
             android:layout_width="63dp"
             android:layout_height="75dp"
             android:background="@android:drawable/ic_menu_myplaces" />
