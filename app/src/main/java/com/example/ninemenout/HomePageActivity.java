@@ -22,6 +22,13 @@ public class HomePageActivity extends AppCompatActivity {
                 openUserProfileActivity();
             }
         });
+        button =(Button) findViewById(R.id.createBetsBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateBetsActivity();
+            }
+        });
     }
 
     public void openUserProfileActivity() {
@@ -29,5 +36,24 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openCreateBetsActivity() {
+        Intent intent = new Intent(this, CreateBetsActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSearchBetsActivity() {
+        Intent intent = new Intent(this, SearchBetsActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSuggestedBetsActivity() {
+        Intent intent = new Intent(this, SuggestedBetsActivity.class);
+        startActivity(intent);
+    }
+
+    public void openLeaderboardActivity() {
+        Intent intent = new Intent(this,LeaderboardActivity.class);
+        startActivity(intent);
+    }
 
 }
