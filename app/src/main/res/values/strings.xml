@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NineMenOut</string>
+    <string name="title_activity_user_profile">UserProfile</string>
 </resources>
