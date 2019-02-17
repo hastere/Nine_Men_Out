@@ -19,10 +19,10 @@ import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private Button button;
+   // private Button button;
 
-    private int user_information_entered = 0;
-    private int register_complete = 0;
+    //private int user_information_entered = 0;
+   // private int register_complete = 0;
     public static final String BALANCE_KEY = "balance";
     public static final String EMAIL_KEY = "email";
     public static final String USERNAME_KEY = "name";
@@ -75,7 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
         int initial = 100;
 
         if(usertext.isEmpty() || passtext.isEmpty() || U_email.isEmpty()) {return; }
-        register_complete = 1;
+        //register_complete = 1;
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(BALANCE_KEY, initial);
         dataToSave.put(EMAIL_KEY, U_email);
