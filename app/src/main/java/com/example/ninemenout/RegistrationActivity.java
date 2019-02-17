@@ -59,7 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     public void openUserLoginActivity() {
-        Intent intent = new Intent(this, UserProfileActivity.class);
+        Intent intent = new Intent(this, UserLoginActivity.class);
         startActivity(intent);
     }
 
