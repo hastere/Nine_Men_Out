@@ -63,6 +63,13 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openHomePageActivivty() {
+            Intent intent = new Intent(this, HomePageActivity.class);
+            startActivity(intent);
+
+    }
+
+
 
     public void saveUser(View view) {
         EditText UserName = (EditText) findViewById(R.id.username);
@@ -82,10 +89,12 @@ public class RegistrationActivity extends AppCompatActivity {
         dataToSave.put(USERNAME_KEY, usertext);
         dataToSave.put(PASSWORD_KEY, passtext);
 
-        ApiFuture<DocumentReference> addedDocRef = db.collection("users").add(dataToSave).addOnSuccessListener( new OnSuccessListener<Void> () {
+        db.collection("users")
+            .add(dataToSave)
+            .addOnSuccessListener( new OnSuccessListener<Void> () {
             @Override
             public void onSuccess(Void aVoid) {
-                openUserLoginActivity();
+                openHomePageActivivty();
             }
         }).addOnFailureListener( new OnFailureListener() {
             @Override
