@@ -9,30 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentChange.Type;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.MetadataChanges;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.Query.Direction;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ServerTimestamp;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.Source;
-import com.google.firebase.firestore.Transaction;
-import com.google.firebase.firestore.WriteBatch;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +25,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public static final String USERNAME_KEY = "name";
     public static final String PASSWORD_KEY = "password";
 
-    private final FirebaseFirestore db;
-    this.db = db;
-
+    private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +86,8 @@ public class RegistrationActivity extends AppCompatActivity {
         dataToSave.put(USERNAME_KEY, usertext);
         dataToSave.put(PASSWORD_KEY, passtext);
 
-        db.collection("users")
-            .add(dataToSave)
+        db.child("users")
+            .child(USERNAME_KEY).setValue(dataToSave)
             .addOnSuccessListener( new OnSuccessListener<Void> () {
             @Override
             public void onSuccess(Void aVoid) {
