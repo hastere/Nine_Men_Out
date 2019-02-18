@@ -39,19 +39,13 @@ import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-   // private Button button;
-
-    //private int user_information_entered = 0;
-   // private int register_complete = 0;
     public static final String BALANCE_KEY = "balance";
     public static final String EMAIL_KEY = "email";
     public static final String USERNAME_KEY = "name";
     public static final String PASSWORD_KEY = "password";
 
     private final FirebaseFirestore db;
-
-
-        this.db = db;
+    this.db = db;
 
 
     @Override
@@ -82,10 +76,10 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-  /*  public void openUserLoginActivity() {
+    /*public void openUserLoginActivity() {
         Intent intent = new Intent(this, UserLoginActivity.class);
         startActivity(intent);
-    } */
+    }*/
 
     public void openHomePageActivivty() {
             Intent intent = new Intent(this, HomePageActivity.class);
