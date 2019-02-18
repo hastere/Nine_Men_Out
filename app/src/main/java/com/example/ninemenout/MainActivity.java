@@ -1,6 +1,7 @@
 package com.example.ninemenout;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onComplete(Task<AuthResult> task) {
+                            public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    Intent nextScreen = new Intent(view.getContext(), .class);
-                                    startActivityForResult(nextScreen, 0);
+                             //       Log.d(TAG, "createUserWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    updateUI(user);
+                                    openHomepageActivity();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(view.getContext(), "Authentication failed. Incorrect Email or Password", Toast.LENGTH_SHORT).show();
@@ -63,5 +67,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(nextScreen, 0);
             }
         });
+    }
+
+    public void openHomepageActivity() {
+        Intent nextScreen = new Intent(this, HomePageActivity.class);
+        startActivityForResult(nextScreen, 0);
     }
 }
