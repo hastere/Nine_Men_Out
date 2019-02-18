@@ -5,12 +5,18 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,35 +32,31 @@ public class RegistrationActivity extends AppCompatActivity {
     public static final String PASSWORD_KEY = "password";
 
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+    private FirebaseAuth myAuth;
+    private static final String TAG = "RegistrationActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
+        myAuth = FirebaseAuth.getInstance();
 
-        //button = (Button) findViewById(R.id.register);
-//        button.setOnClickListener((v) -> {  )
-         /*   if (user_information_entered == 1) {
-                if (register_complete == 1) {
-                    openUserLoginActivity();
-                } else {
-                    Context context = getApplicationContext();
-                    CharSequence reusername = "User name taken";
-                    int duration_one = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, reusername, duration_one);
-                    toast.show();
-                }
-            } else {
-                Context context = getApplicationContext();
-                CharSequence no_info = "Please fill in both fields";
-                int duration_two = Toast.LENGTH_SHORT;
-                Toast toast_two = Toast.makeText(context, no_info, duration_two);
-                toast_two.show();
-            }
-        }); */
     }
 
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = myAuth.getCurrentUser();
+        if(currentUser != null)
+        {
+            Context context = getApplicationContext();
+            CharSequence reusername = "You already have an account";
+            int duration_one = Toast.LENGTH_SHORT;
+            Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+            toast_2.show();
+        }
+    }
     /*public void openUserLoginActivity() {
         Intent intent = new Intent(this, UserLoginActivity.class);
         startActivity(intent);
@@ -78,8 +80,31 @@ public class RegistrationActivity extends AppCompatActivity {
         String U_email = User_email.getText().toString();
         int initial = 100;
 
+
+
+
         if(usertext.isEmpty() || passtext.isEmpty() || U_email.isEmpty()) {return; }
         //register_complete = 1;
+
+        myAuth.createUserWithEmailAndPassword(U_email, passtext)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = myAuth.getCurrentUser();
+                            openHomePageActivivty();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(BALANCE_KEY, initial);
         dataToSave.put(EMAIL_KEY, U_email);

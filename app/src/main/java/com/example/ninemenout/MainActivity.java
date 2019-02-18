@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    Intent nextScreen = new Intent(view.getContext(), .class);
+                                    Intent nextScreen = new Intent(view.getContext(),.class);
                                     startActivityForResult(nextScreen, 0);
                                 } else {
                                     // If sign in fails, display a message to the user.
