@@ -12,9 +12,11 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.core.Context;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth.initializeApp(this);
+        FirebaseApp.initializeApp(this);
         // ...
         // Initialize Firebase Auth
-         mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         emailLogin = findViewById(R.id.emailLogin);
         passwordLogin = findViewById(R.id.passwordLogin);
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnLogin).setOnClickListener(this);
         findViewById(R.id.btnCreate).setOnClickListener(this);
     }
-/*
+
     @Override
     public void onStart () {
             super.onStart();
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.startActivityForResult(nextScreen, 0);
         }
     }
-*/
+
         @Override
         public void onClick (View v){
         int i = v.getId();
