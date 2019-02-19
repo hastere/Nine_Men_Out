@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick (View v){
         int i = v.getId();
         if (i == R.id.btnCreate) {
-            Intent nextScreen = new Intent(this, HomePageActivity.class);
+            Intent nextScreen = new Intent(this, RegistrationActivity.class);
             this.startActivityForResult(nextScreen, 0);
         }
         else if (i == R.id.btnLogin) {
