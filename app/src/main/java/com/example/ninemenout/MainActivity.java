@@ -26,27 +26,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onCreate (Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            FirebaseApp.initializeApp(this);
 
-        FirebaseApp.initializeApp(this);
-        mAuth = FirebaseAuth.getInstance();
+            // ...
+            // Initialize Firebase Auth
 
-        emailLogin = findViewById(R.id.emailLogin);
-        passwordLogin = findViewById(R.id.passwordLogin);
+            emailLogin = findViewById(R.id.emailLogin);
+            passwordLogin = findViewById(R.id.passwordLogin);
 
-        findViewById(R.id.btnLogin).setOnClickListener(this);
-        findViewById(R.id.btnCreate).setOnClickListener(this);
-    }
-/*
-    @Override
-    public void onStart () {
+            findViewById(R.id.btnLogin).setOnClickListener(this);
+            findViewById(R.id.btnCreate).setOnClickListener(this);
+
+            mAuth = FirebaseAuth.getInstance();
+
+        }
+
+        @Override
+        public void onStart () {
             super.onStart();
             FirebaseUser currentUser = mAuth.getCurrentUser();
             updateUI(currentUser);
-    }
+        }
 
-    private void login (String email, String password){
+
+        private void login (String email, String password){
             if (!checkForm()) {
                 return;
             }
@@ -71,49 +76,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
         }
 
-    private boolean checkForm () {
-        boolean check = true;
 
-        String email = emailLogin.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            emailLogin.setError("Email Required.");
-            check = false;
-        } else {
-            emailLogin.setError(null);
+        private boolean checkForm () {
+            boolean check = true;
+            Log.d("myTag", emailLogin.getText().toString());
+
+            String email = emailLogin.getText().toString();
+            if (TextUtils.isEmpty(email)) {
+                emailLogin.setError("Email Required.");
+                check = false;
+            }
+            else {
+                emailLogin.setError(null);
+            }
+
+            String password = passwordLogin.getText().toString();
+            if (TextUtils.isEmpty(password)) {
+                passwordLogin.setError("Password Required.");
+                check = false;
+            }
+            else {
+                passwordLogin.setError(null);
+            }
+
+            return check;
         }
 
-        String password = passwordLogin.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            passwordLogin.setError("Password Required.");
-            check = false;
-        } else {
-            passwordLogin.setError(null);
-        }
-
-        return check;
-    }
-
-    private void updateUI (FirebaseUser user){
-        if (user != null) {
-            Intent nextScreen = new Intent(this, HomePageActivity.class);
-            this.startActivityForResult(nextScreen, 0);
-        } else {
-            Intent nextScreen = new Intent(this, MainActivity.class);
-            this.startActivityForResult(nextScreen, 0);
-        }
-    }
-*/
-        @Override
-        public void onClick (View v){
-        int i = v.getId();
-        if (i == R.id.btnCreate) {
-            Intent nextScreen = new Intent(this, HomePageActivity.class);
-            this.startActivityForResult(nextScreen, 0);
-        } else if (i == R.id.btnLogin) {
-            //login(emailLogin.getText().toString(), passwordLogin.getText().toString());
+        private void updateUI (FirebaseUser user){
+            if (user != null) {
                 Intent nextScreen = new Intent(this, HomePageActivity.class);
                 this.startActivityForResult(nextScreen, 0);
+            }
+
         }
-    }
+
+        @Override
+        public void onClick (View v){
+            int i = v.getId();
+            if (i == R.id.btnCreate) {
+                Intent nextScreen = new Intent(this, HomePageActivity.class);
+                this.startActivityForResult(nextScreen, 0);
+            }
+            else if (i == R.id.btnLogin) {
+                login(emailLogin.getText().toString(), passwordLogin.getText().toString());
+            }
+        }
 
 }
