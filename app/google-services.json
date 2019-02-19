@@ -23,14 +23,6 @@
           }
         },
         {
-          "client_id": "873770023849-87dtlsovg6sgokflc8sakuer1pr6pea2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.ninemenout",
-            "certificate_hash": "8efa5917bb8647d59994a3943c787bfad504f282"
-          }
-        },
-        {
           "client_id": "873770023849-1hh16vnacsn9vn5pjaskqntotii0sp13.apps.googleusercontent.com",
           "client_type": 3
         }
