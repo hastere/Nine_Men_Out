@@ -15,6 +15,7 @@
         <activity android:name=".CreateBetsActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".HomePageActivity" />
+        <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
