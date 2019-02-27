@@ -6,11 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".SearchBetsActivity">
 
-    <TextView
-        android:id="@+id/textView3"
+    <EditText
+        android:id="@+id/search_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search Bets"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="204dp" />
+        android:ems="10"
+        android:hint="TEAM NAME"
+        android:inputType="text"
+        tools:ems="15"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="34dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerSearch"
+        android:layout_width="403dp"
+        android:layout_height="604dp"
+        android:paddingTop="40dp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="124dp"></android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>
