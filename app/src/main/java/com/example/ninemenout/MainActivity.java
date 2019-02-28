@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.LENGTH_SHORT).show();
                     updateUI(null);
                 }
-
             }
         });
     }
