@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public static final String USERNAME_KEY = "name";
     public static final String PASSWORD_KEY = "password";
 
-    private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth myAuth;
     private static final String TAG = "RegistrationActivity";
 
@@ -113,8 +114,7 @@ public class RegistrationActivity extends AppCompatActivity {
         dataToSave.put(PASSWORD_KEY, passtext);
         FirebaseUser user = myAuth.getCurrentUser();
 
-        db.child("users")
-            .child(user.getUid()).setValue(dataToSave)
+        db.collection("users").document(myAuth.getUid()).set(dataToSave)
             .addOnSuccessListener( new OnSuccessListener<Void> () {
             @Override
             public void onSuccess(Void aVoid) {
