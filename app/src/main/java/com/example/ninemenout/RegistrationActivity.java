@@ -111,9 +111,10 @@ public class RegistrationActivity extends AppCompatActivity {
         dataToSave.put(EMAIL_KEY, U_email);
         dataToSave.put(USERNAME_KEY, usertext);
         dataToSave.put(PASSWORD_KEY, passtext);
+        FirebaseUser user = myAuth.getCurrentUser();
 
         db.child("users")
-            .child(USERNAME_KEY).setValue(dataToSave)
+            .child(user.getUid()).setValue(dataToSave)
             .addOnSuccessListener( new OnSuccessListener<Void> () {
             @Override
             public void onSuccess(Void aVoid) {
