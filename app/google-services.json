@@ -23,22 +23,6 @@
           }
         },
         {
-          "client_id": "873770023849-87dtlsovg6sgokflc8sakuer1pr6pea2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.ninemenout",
-            "certificate_hash": "8efa5917bb8647d59994a3943c787bfad504f282"
-          }
-        },
-        {
-          "client_id": "873770023849-lfn9iui2gd1nf08koa8cjepuul16bs2c.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.ninemenout",
-            "certificate_hash": "eb1bd1524571475cdd3637722248ec538a86670b"
-          }
-        },
-        {
           "client_id": "873770023849-1hh16vnacsn9vn5pjaskqntotii0sp13.apps.googleusercontent.com",
           "client_type": 3
         }

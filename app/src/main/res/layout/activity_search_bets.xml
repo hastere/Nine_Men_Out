@@ -14,8 +14,8 @@
         android:hint="TEAM NAME"
         android:inputType="text"
         tools:ems="15"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="34dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="30dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSearch"
@@ -24,4 +24,12 @@
         android:paddingTop="40dp"
         tools:layout_editor_absoluteX="5dp"
         tools:layout_editor_absoluteY="124dp"></android.support.v7.widget.RecyclerView>
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        tools:layout_editor_absoluteX="336dp"
+        tools:layout_editor_absoluteY="24dp" />
 </android.support.constraint.ConstraintLayout>
