@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,24 +12,18 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="TEAM NAME"
-        android:inputType="text"
-        tools:ems="15"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="30dp" />
+        android:inputType="text" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSearch"
         android:layout_width="403dp"
         android:layout_height="604dp"
-        android:paddingTop="40dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="124dp"></android.support.v7.widget.RecyclerView>
+        android:paddingTop="40dp">
+
+    </android.support.v7.widget.RecyclerView>
 
     <ImageButton
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_search"
-        tools:layout_editor_absoluteX="336dp"
-        tools:layout_editor_absoluteY="24dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content" />
+</android.support.design.widget.CoordinatorLayout>

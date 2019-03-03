@@ -17,10 +17,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class SearchBetsActivity extends AppCompatActivity {
 
-    private EditText search_bar;
-    private RecyclerView recyclerView;
-    private ImageButton searchButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
