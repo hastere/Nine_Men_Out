@@ -2,18 +2,31 @@ package com.example.ninemenout;
 
 public class Bets {
 
-    private String odds, user1, user2, favorite, underdog, date_expires;
+    private String away, home, favorite, odds, type, user1, user2, date_expires;
+    private int active, amount;
 
-    public Bets(){
-        // needed for cardview and bet searches
+    public String getAway() {
+        return away;
     }
 
-    public Bets(String odds, String user1, String favorite, String underdog, String date_expires) {
-        this.odds = odds;
-        this.user1 = user1;
+    public void setAway(String away) {
+        this.away = away;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public String getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(String favorite) {
         this.favorite = favorite;
-        this.underdog = underdog;
-        this.date_expires = date_expires;
     }
 
     public String getOdds() {
@@ -22,6 +35,14 @@ public class Bets {
 
     public void setOdds(String odds) {
         this.odds = odds;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUser1() {
@@ -40,22 +61,6 @@ public class Bets {
         this.user2 = user2;
     }
 
-    public String getFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(String favorite) {
-        this.favorite = favorite;
-    }
-
-    public String getUnderdog() {
-        return underdog;
-    }
-
-    public void setUnderdog(String underdog) {
-        this.underdog = underdog;
-    }
-
     public String getDate_expires() {
         return date_expires;
     }
@@ -63,4 +68,38 @@ public class Bets {
     public void setDate_expires(String date_expires) {
         this.date_expires = date_expires;
     }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Bets(String away, String home, String favorite, String odds, String type, String user1, String date_expires, int amount) {
+        this.away = away;
+        this.home = home;
+        this.favorite = favorite;
+        this.odds = odds;
+        this.type = type;
+        this.user1 = user1;
+        this.date_expires = date_expires;
+        this.active = 0;
+        this.amount = amount;
+    }
+
+    public Bets(){
+        // needed for cardview and bet searches
+    }
+
+
 }
