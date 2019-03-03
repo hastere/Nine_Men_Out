@@ -6,4 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".PersonalBetActivity">
 
+    <TextView
+        android:id="@+id/personalBetsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Personal Bets"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="28dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/personalBetsList"
+        android:layout_width="395dp"
+        android:layout_height="646dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="77dp" />
 </android.support.constraint.ConstraintLayout>
