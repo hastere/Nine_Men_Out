@@ -2,18 +2,17 @@ package com.example.ninemenout;
 
 public class Bets {
 
-    private String odds, user1, user2, team1, team2, date_expires;
+    private String odds, user1, user2, favorite, underdog, date_expires;
 
     public Bets(){
         // needed for cardview and bet searches
     }
 
-    public Bets(String odds, String user1, String team1, String team2, String date_expires) {
+    public Bets(String odds, String user1, String favorite, String underdog, String date_expires) {
         this.odds = odds;
         this.user1 = user1;
-        this.user2 = user2;
-        this.team1 = team1;
-        this.team2 = team2;
+        this.favorite = favorite;
+        this.underdog = underdog;
         this.date_expires = date_expires;
     }
 
@@ -41,20 +40,20 @@ public class Bets {
         this.user2 = user2;
     }
 
-    public String getTeam1() {
-        return team1;
+    public String getFavorite() {
+        return favorite;
     }
 
-    public void setTeam1(String team1) {
-        this.team1 = team1;
+    public void setFavorite(String favorite) {
+        this.favorite = favorite;
     }
 
-    public String getTeam2() {
-        return team2;
+    public String getUnderdog() {
+        return underdog;
     }
 
-    public void setTeam2(String team2) {
-        this.team2 = team2;
+    public void setUnderdog(String underdog) {
+        this.underdog = underdog;
     }
 
     public String getDate_expires() {

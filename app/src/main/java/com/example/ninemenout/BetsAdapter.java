@@ -18,9 +18,9 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
 
     @Override
     protected void onBindViewHolder(@NonNull BetHolder holder, int position, @NonNull Bets model) {
-        holder.textViewTitle.setText(model.getTeam1());
-        holder.textViewDescription.setText(model.getDate_expires());
-        holder.textViewPriority.setText(model.getOdds());
+        holder.textViewTitle.setText(model.getFavorite() + " vs. " + model.getUnderdog());
+        holder.textViewDescription.setText("Expires " + model.getDate_expires() + " | Favorite: " + model.getFavorite());
+        holder.textViewPriority.setText("Odds: " + model.getOdds());
     }
 
     @NonNull
