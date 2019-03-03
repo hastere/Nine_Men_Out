@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnCreate).setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-        openSearchBets();
+
     }
 
     @Override
@@ -122,8 +122,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void openSearchBets() {
-        Intent intent = new Intent(this, SearchBetsActivity.class);
-        startActivity(intent);
-    }
 }
