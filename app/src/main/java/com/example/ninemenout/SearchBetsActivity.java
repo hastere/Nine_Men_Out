@@ -22,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class SearchBetsActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference betRef = db.collection("openBets");
+    private CollectionReference betRef = db.collection("bets");
 
     private BetsAdapter adapter;
 
