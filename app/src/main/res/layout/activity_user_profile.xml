@@ -209,8 +209,24 @@
         android:layout_marginEnd="281dp"
         android:layout_marginRight="281dp"
         android:background="@color/colorPrimary"
-        android:text="Friends"
         android:onClick="openAddFriendsActivity"
+        android:text="Friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="230dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginLeft="66dp"
+        android:layout_marginTop="570dp"
+        android:layout_marginEnd="115dp"
+        android:layout_marginRight="115dp"
+        android:background="@color/colorPrimary"
+        android:onClick="logout"
+        android:text="Sign out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

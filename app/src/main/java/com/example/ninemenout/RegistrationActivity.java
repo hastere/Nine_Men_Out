@@ -107,14 +107,16 @@ public class RegistrationActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+        
+        FirebaseUser user = myAuth.getCurrentUser();
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(BALANCE_KEY, initial);
         dataToSave.put(EMAIL_KEY, U_email);
         dataToSave.put(USERNAME_KEY, usertext);
         dataToSave.put(PASSWORD_KEY, passtext);
-        FirebaseUser user = myAuth.getCurrentUser();
+        String UID = user.getUid();
 
-        db.collection("users").document(myAuth.getUid()).set(dataToSave)
+        db.collection("users").document(UID).set(dataToSave)
             .addOnSuccessListener( new OnSuccessListener<Void> () {
             @Override
             public void onSuccess(Void aVoid) {
