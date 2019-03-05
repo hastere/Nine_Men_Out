@@ -1,0 +1,110 @@
+{
+    "1": {
+        "away_spread": -6,
+        "away_team": "Portland Trail Blazers",
+        "event_date": "2019-03-06T01:05:00Z",
+        "event_id": "097e13dabbdc2f15e51c35112d331f41",
+        "home_spread": 6,
+        "home_team": "Memphis Grizzlies",
+        "over_under": 215.5
+    },
+    "10": {
+        "away_spread": 7,
+        "away_team": "Boston Celtics",
+        "event_date": "2019-03-06T03:35:00Z",
+        "event_id": "b717db9781b3631b9186b05d313e7954",
+        "home_spread": -7,
+        "home_team": "Golden State Warriors",
+        "over_under": 228
+    },
+    "11": {
+        "away_spread": 1,
+        "away_team": "Boston Celtics",
+        "event_date": "2019-03-07T03:05:00Z",
+        "event_id": "c0b7b341dd40f5542e42349da9ad5cb8",
+        "home_spread": -1,
+        "home_team": "Sacramento Kings",
+        "over_under": 228.5
+    },
+    "12": {
+        "away_spread": 10.5,
+        "away_team": "Cleveland Cavaliers",
+        "event_date": "2019-03-07T00:35:00Z",
+        "event_id": "c98e0630646fe985ba6849887835ff8f",
+        "home_spread": -10.5,
+        "home_team": "Brooklyn Nets",
+        "over_under": 226.5
+    },
+    "2": {
+        "away_spread": -5,
+        "away_team": "Utah Jazz",
+        "event_date": "2019-03-07T01:05:00Z",
+        "event_id": "0c1f088a9a8ede100cb2700c28f931eb",
+        "home_spread": 5,
+        "home_team": "New Orleans Pelicans",
+        "over_under": 230
+    },
+    "3": {
+        "away_spread": 3,
+        "away_team": "Houston Rockets",
+        "event_date": "2019-03-06T01:05:00Z",
+        "event_id": "1851152c71f59cc2da703f43a85e7db6",
+        "home_spread": -3,
+        "home_team": "Toronto Raptors",
+        "over_under": 228.5
+    },
+    "4": {
+        "away_spread": 6.5,
+        "away_team": "Chicago Bulls",
+        "event_date": "2019-03-06T00:05:00Z",
+        "event_id": "26b17864cd854b3dae0f0ebf296d5680",
+        "home_spread": -6.5,
+        "home_team": "Indiana Pacers",
+        "over_under": 218.5
+    },
+    "5": {
+        "away_spread": 4.5,
+        "away_team": "Minnesota Timberwolves",
+        "event_date": "2019-03-07T00:05:00Z",
+        "event_id": "3c7b5a0c4b3da9871aa57e6d5a757041",
+        "home_spread": -4.5,
+        "home_team": "Detroit Pistons",
+        "over_under": 225.5
+    },
+    "6": {
+        "away_spread": 3.5,
+        "away_team": "Orlando Magic",
+        "event_date": "2019-03-06T00:05:00Z",
+        "event_id": "468e1bdda63baf0ef99f0f3b3ae3031e",
+        "home_spread": -3.5,
+        "home_team": "Philadelphia 76ers",
+        "over_under": 223.5
+    },
+    "7": {
+        "away_spread": 1,
+        "away_team": "Oklahoma City Thunder",
+        "event_date": "2019-03-06T01:05:00Z",
+        "event_id": "6fd716f08574fa5aa986ba84bb8954a7",
+        "home_spread": -1,
+        "home_team": "Minnesota Timberwolves",
+        "over_under": 237
+    },
+    "8": {
+        "away_spread": 4.5,
+        "away_team": "New York Knicks",
+        "event_date": "2019-03-07T02:05:00Z",
+        "event_id": "a4f9729b66a8b6e9cc7158d65ef04f21",
+        "home_spread": -4.5,
+        "home_team": "Phoenix Suns",
+        "over_under": 224.5
+    },
+    "9": {
+        "away_spread": 6,
+        "away_team": "Dallas Mavericks",
+        "event_date": "2019-03-07T00:05:00Z",
+        "event_id": "b595cf33d66c36a07d5525c4465e4b00",
+        "home_spread": -6,
+        "home_team": "Washington Wizards",
+        "over_under": 231.5
+    }
+}
