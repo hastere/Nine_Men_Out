@@ -96,6 +96,8 @@ public class RegistrationActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = myAuth.getCurrentUser();
+                            Toast.makeText(RegistrationActivity.this, "Authentication Success.",
+                                    Toast.LENGTH_SHORT).show();
                             //openHomePageActivivty();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -107,7 +109,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         // ...
                     }
                 });
-        
+        Log.d(TAG, "We got past the auth user");
         FirebaseUser user = myAuth.getCurrentUser();
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(BALANCE_KEY, initial);
