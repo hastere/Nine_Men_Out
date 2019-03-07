@@ -25,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -74,7 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void saveUser(View view) {
         EditText UserName = (EditText) findViewById(R.id.username);
-        EditText Passcode  = (EditText) findViewById(R.id.Password);
+        EditText Passcode = (EditText) findViewById(R.id.Password);
         EditText User_email = (EditText) findViewById(R.id.email);
 
         String usertext = UserName.getText().toString();
@@ -83,60 +85,83 @@ public class RegistrationActivity extends AppCompatActivity {
         int initial = 100;
 
 
-
-
-        if(usertext.isEmpty() || passtext.isEmpty() || U_email.isEmpty()) {return; }
+        if (usertext.isEmpty() || passtext.isEmpty() || U_email.isEmpty()) {
+            return;
+        }
         //register_complete = 1;
 
-        myAuth.createUserWithEmailAndPassword(U_email, passtext).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        myAuth.createUserWithEmailAndPassword(U_email, passtext)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.w(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = myAuth.getCurrentUser();
+                            //FirebaseUser user = myAuth.getCurrentUser();
                             Toast.makeText(RegistrationActivity.this, "Authentication Success.",
                                     Toast.LENGTH_SHORT).show();
-                            //openHomePageActivivty();
+                            ScrewFirebase();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegistrationActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
+                /*.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure (@Nonnull Exception e)
+                        Context context = getApplicationContext();
+                        CharSequence authname = "Auth registration fail";
+                        int duration_two = Toast.LENGTH_LONG;
+                        Toast toast_1 = Toast.makeText(context, authname, duration_two);
+                        toast_1.show();
+                    })*/
+
+
                 });
-        Log.w(TAG, "We got past the auth user");
-        FirebaseUser user = myAuth.getCurrentUser();
-        Map<String, Object> dataToSave = new HashMap<String, Object>();
-        dataToSave.put(BALANCE_KEY, initial);
-        dataToSave.put(EMAIL_KEY, U_email);
-        dataToSave.put(USERNAME_KEY, usertext);
-        dataToSave.put(PASSWORD_KEY, passtext);
-        String UID = user.getUid();
-
-        db.collection("users").document(UID).set(dataToSave)
-            .addOnSuccessListener( new OnSuccessListener<Void> () {
-            @Override
-            public void onSuccess(Void aVoid) {
-                openHomePageActivivty();
-            }
-        }).addOnFailureListener( new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Context context = getApplicationContext();
-                CharSequence reusername = "Registration Failed";
-                int duration_one = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, reusername, duration_one);
-                toast.show();
-            }
-        } );
-
-
 
     }
 
 
-}
+        public void ScrewFirebase() {
+            EditText UserName = (EditText) findViewById(R.id.username);
+            EditText Passcode = (EditText) findViewById(R.id.Password);
+            EditText User_email = (EditText) findViewById(R.id.email);
+
+            String usertext = UserName.getText().toString();
+            String passtext = Passcode.getText().toString();
+            String U_email = User_email.getText().toString();
+            int initial = 100;
+            Log.w(TAG, "We got past the auth user");
+            FirebaseUser user = myAuth.getCurrentUser();
+            Map<String, Object> dataToSave = new HashMap<String, Object>();
+            dataToSave.put(BALANCE_KEY, initial);
+            dataToSave.put(EMAIL_KEY, U_email);
+            dataToSave.put(USERNAME_KEY, usertext);
+            dataToSave.put(PASSWORD_KEY, passtext);
+            String UID = user.getUid();
+
+            db.collection("users").document(UID).set(dataToSave)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            openHomePageActivivty();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Context context = getApplicationContext();
+                    CharSequence reusername = "Registration Failed";
+                    int duration_one = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, reusername, duration_one);
+                    toast.show();
+                }
+            });
+
+        }
+
+    }
+
+
+
