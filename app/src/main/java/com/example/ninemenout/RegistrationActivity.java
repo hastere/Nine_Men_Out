@@ -88,13 +88,12 @@ public class RegistrationActivity extends AppCompatActivity {
         if(usertext.isEmpty() || passtext.isEmpty() || U_email.isEmpty()) {return; }
         //register_complete = 1;
 
-        myAuth.createUserWithEmailAndPassword(U_email, passtext)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        myAuth.createUserWithEmailAndPassword(U_email, passtext).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
+                            Log.w(TAG, "createUserWithEmail:success");
                             FirebaseUser user = myAuth.getCurrentUser();
                             Toast.makeText(RegistrationActivity.this, "Authentication Success.",
                                     Toast.LENGTH_SHORT).show();
@@ -109,7 +108,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         // ...
                     }
                 });
-        Log.d(TAG, "We got past the auth user");
+        Log.w(TAG, "We got past the auth user");
         FirebaseUser user = myAuth.getCurrentUser();
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(BALANCE_KEY, initial);
