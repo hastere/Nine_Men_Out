@@ -5,6 +5,7 @@ public class Bets {
     private String away, home, favorite, odds, type, user1, user2, date_expires;
     private int active, amount;
 
+
     public String getAway() {
         return away;
     }
