@@ -1,14 +1,17 @@
 package com.example.ninemenout;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.text.TextWatcher;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,20 +26,20 @@ public class SearchBetsActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betRef = db.collection("bets");
-
     private BetsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_bets);
-
-        setUpRecyclerView();
+        setUpRecyclerV();
 
 
     }
 
-    private void setUpRecyclerView() {
+    private void setUpRecyclerV() {
+
+
         Query query = betRef.whereEqualTo("active", 0).orderBy("amount", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
@@ -51,6 +54,7 @@ public class SearchBetsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -62,4 +66,5 @@ public class SearchBetsActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
 }

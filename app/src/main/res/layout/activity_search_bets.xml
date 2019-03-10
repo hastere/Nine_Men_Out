@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchBetsActivity">
+    tools:context="SearchBetsActivity">
 
     <EditText
         android:id="@+id/search_bar"
@@ -20,7 +20,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSearch"
         android:layout_width="match_parent"
-        android:layout_height="394dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="100dp"
         android:paddingTop="40dp">
 
