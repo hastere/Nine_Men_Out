@@ -6,32 +6,12 @@
     android:layout_height="match_parent"
     tools:context="SearchBetsActivity">
 
-    <EditText
-        android:id="@+id/search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:hint="TEAM NAME"
-        android:inputType="text" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:paddingTop="40dp">
+        android:paddingTop="15dp">
 
     </android.support.v7.widget.RecyclerView>
 
-    <ImageButton
-        android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="325dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="50dp"
-        tools:srcCompat="@android:drawable/ic_menu_search" />
 </android.support.design.widget.CoordinatorLayout>
