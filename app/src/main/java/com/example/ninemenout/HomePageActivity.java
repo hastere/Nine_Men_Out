@@ -63,7 +63,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void openSearchBetsActivity() {
-        Intent intent = new Intent(this, SearchBetsActivity.class);
+        Intent intent = new Intent(this, SearchBetsBufferActivity.class);
         startActivity(intent);
     }
 

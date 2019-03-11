@@ -28,19 +28,28 @@ public class SearchBetsActivity extends AppCompatActivity {
     private CollectionReference betRef = db.collection("bets");
     private BetsAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_bets);
-        setUpRecyclerV();
+
+        Bundle b = this.getIntent().getExtras();
+        String[] arr = b.getStringArray("terms");
+
+        setUpRecyclerV(arr);
 
 
     }
 
-    private void setUpRecyclerV() {
+    private void setUpRecyclerV(String[] searchTerms) {
+        String teamName = searchTerms[0];
+        String betType = searchTerms[1];
 
-
-        Query query = betRef.whereEqualTo("active", 0).orderBy("amount", Query.Direction.DESCENDING);
+        Query query = betRef.whereEqualTo("active", 0)
+                .whereEqualTo("type", betType)
+                .whereEqualTo("home", teamName)
+                .orderBy("amount", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
                 .setQuery(query, Bets.class)
