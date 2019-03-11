@@ -45,11 +45,13 @@ public class SearchBetsActivity extends AppCompatActivity {
     private void setUpRecyclerV(String[] searchTerms) {
         String teamName = searchTerms[0];
         String betType = searchTerms[1];
+        String sortType = searchTerms[2];
 
         Query query = betRef.whereEqualTo("active", 0)
                 .whereEqualTo("type", betType)
                 .whereEqualTo("home", teamName)
-                .orderBy("amount", Query.Direction.DESCENDING);
+                .orderBy(sortType, Query.Direction.DESCENDING);
+
 
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
                 .setQuery(query, Bets.class)
