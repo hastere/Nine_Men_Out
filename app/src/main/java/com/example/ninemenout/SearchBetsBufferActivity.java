@@ -45,6 +45,21 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
         }
     }
 
+    public void chooseSortType(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.oddsButton:
+                if(checked)
+                    toSend[2] = "odds";
+                break;
+            case R.id.betAmountButton:
+                if(checked)
+                    toSend[2] = "amount";
+                break;
+        }
+    }
+
     public void displaySearch(View view){
         String teamName = homeTeam.getText().toString();
 
