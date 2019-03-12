@@ -62,8 +62,8 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
 
     public void displaySearch(View view){
         String teamName = homeTeam.getText().toString();
-
-        toSend[0] = teamName;
+        if(!teamName.equals(""))
+            toSend[0] = teamName;
 
         Bundle b = new Bundle();
         b.putStringArray("terms", toSend);
