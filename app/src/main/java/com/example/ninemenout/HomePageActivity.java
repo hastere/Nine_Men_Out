@@ -23,7 +23,7 @@ public class HomePageActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference userRef = db.collection("users");
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private int pointDisplay = 0;
+    private int pointDisplay = 0, activePointDisplay = 0, inactivePointDisplay = 0;
     private Button button;
 
     @Override
@@ -31,6 +31,8 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         TextView textViewToChange = findViewById(R.id.pointTotal);
+        TextView activePointText = findViewById(R.id.activePointDisplay);
+        TextView inactivePointText = findViewById(R.id.inactivePointDisplay);
         // getting user information
         String name = user.getEmail();
         if(name != null){
@@ -43,8 +45,11 @@ public class HomePageActivity extends AppCompatActivity {
                         if(document.exists()){
                             Log.d("googy", "DocumentSnapshot data: " + document.getData());
                             pointDisplay = ((Long) document.get("points")).intValue();
+                            activePointDisplay = ((Long) document.get("activePoints")).intValue();
+                            inactivePointDisplay = pointDisplay - activePointDisplay;
                             textViewToChange.setText(((Integer) pointDisplay).toString());
-
+                            activePointText.setText(((Integer) activePointDisplay).toString());
+                            inactivePointText.setText(((Integer) inactivePointDisplay).toString());
                         } else {
                             Log.d("googy", "No such document");
                         }
