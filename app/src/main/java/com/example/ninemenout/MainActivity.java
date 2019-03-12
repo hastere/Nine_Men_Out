@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnCreate).setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-        openSearchBets();
+//        openSearchBets();
     }
 
     @Override

@@ -27,7 +27,8 @@ public class SearchBetsActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betRef = db.collection("bets");
     private BetsAdapter adapter;
-
+    String[] arr = new String[3];
+    String[] readHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,16 @@ public class SearchBetsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_bets);
 
         Bundle b = this.getIntent().getExtras();
-        String[] arr = b.getStringArray("terms");
-
-        setUpRecyclerV(arr);
-
+        if(b != null)
+            readHolder = b.getStringArray("terms");
+        if(readHolder != null)
+            setUpRecyclerV(readHolder);
+        else {
+            arr[0] = "Alabama";
+            arr[1] = "spread";
+            arr[2] = "odds";
+            setUpRecyclerV(arr);
+        }
 
     }
 

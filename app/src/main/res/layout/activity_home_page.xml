@@ -101,14 +101,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:text="Points Active"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right"
-                android:text="250"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="18sp"
                 android:textSize="24sp" />
         </TableRow>
 
@@ -117,14 +118,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:text="Points Inactive"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right"
-                android:text="50"
+                android:gravity="center_horizontal"
                 android:textSize="24sp" />
         </TableRow>
 
@@ -133,13 +134,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:text="Global Rank"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right"
+                android:gravity="center_horizontal"
                 android:text="18,845"
                 android:textSize="24sp" />
         </TableRow>
@@ -150,7 +152,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="300"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
