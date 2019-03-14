@@ -22,6 +22,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import static java.lang.Character.toUpperCase;
+
 public class SearchBetsActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -50,7 +52,7 @@ public class SearchBetsActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerV(String[] searchTerms) {
-        String teamName = searchTerms[0];
+        String teamName = toCamelcase(searchTerms[0]);
         String betType = searchTerms[1];
         String sortType = searchTerms[2];
 
@@ -72,6 +74,18 @@ public class SearchBetsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    // for string compares to the database
+    public String toCamelcase(String team){
+        String temp = team;
+        if(team == null)
+            {
+                return team;
+            }
+
+        temp = temp.toLowerCase();
+        String ret = temp.substring(0, 1).toUpperCase() + temp.substring(1);
+        return ret;
+    }
 
     @Override
     protected void onStart() {
