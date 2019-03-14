@@ -32,7 +32,7 @@ public class SearchBetsActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betRef = db.collection("bets");
     private BetsAdapter adapter;
-    String[] arr = new String[3];
+    String[] arr = new String[4];
     String[] readHolder;
 
     @Override
@@ -80,7 +80,11 @@ public class SearchBetsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 String id = documentSnapshot.getId();
-                Toast.makeText(SearchBetsActivity.this, "Position: " + position + " ID: " + id, Toast.LENGTH_SHORT).show();
+                Bundle viewBet = new Bundle();
+                viewBet.putString("documentID", id);
+                Intent intent = new Intent(getApplicationContext(), BetsViewerActivity.class);
+                intent.putExtras(viewBet);
+                startActivity(intent);
             }
         });
 
