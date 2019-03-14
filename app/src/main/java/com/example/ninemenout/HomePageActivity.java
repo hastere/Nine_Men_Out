@@ -43,7 +43,6 @@ public class HomePageActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
-                            Log.d("googy", "DocumentSnapshot data: " + document.getData());
                             pointDisplay = ((Long) document.get("points")).intValue();
                             activePointDisplay = ((Long) document.get("activePoints")).intValue();
                             inactivePointDisplay = pointDisplay - activePointDisplay;
@@ -51,10 +50,10 @@ public class HomePageActivity extends AppCompatActivity {
                             activePointText.setText(((Integer) activePointDisplay).toString());
                             inactivePointText.setText(((Integer) inactivePointDisplay).toString());
                         } else {
-                            Log.d("googy", "No such document");
+                            Log.d("document error", "No such document");
                         }
                     } else {
-                        Log.d("googy", "get failed with ", task.getException());
+                        Log.d("task error", "get failed with ", task.getException());
                     }
                 }
             });
