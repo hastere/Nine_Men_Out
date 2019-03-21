@@ -13,7 +13,11 @@ import android.widget.ImageButton;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -21,10 +25,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class PersonalBetActivity extends AppCompatActivity {
 
+    private static final String TAG = "PersonalBetActivity";
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private CollectionReference betRef;
 
     private BetsAdapter adapter;
+
+    private String email = user.getEmail();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +46,7 @@ public class PersonalBetActivity extends AppCompatActivity {
     }
 
     private void setUpSubCollection() {
-        betRef = db.collection("users").document("TWVpc5J0UUspHnmYUhfq").collection("bets");
+        betRef = db.collection("users").document(email).collection("bets");
     }
 
     private void setUpRecyclerView() {
