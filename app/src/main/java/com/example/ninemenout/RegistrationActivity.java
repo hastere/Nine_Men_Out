@@ -104,8 +104,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                             //       Toast.LENGTH_SHORT).show();
                         }
                     }
                 /*.addOnFailureListener(new OnFailureListener() {
@@ -142,7 +142,7 @@ public class RegistrationActivity extends AppCompatActivity {
             dataToSave.put(PASSWORD_KEY, passtext);
             String UID = user.getUid();
 
-            db.collection("users").document(UID).set(dataToSave)
+            db.collection("users").document(U_email).set(dataToSave)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
