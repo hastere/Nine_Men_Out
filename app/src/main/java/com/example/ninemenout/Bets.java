@@ -2,7 +2,7 @@ package com.example.ninemenout;
 
 public class Bets {
 
-    private String away, home, favorite, odds, type, user1, user2, date_expires;
+    private String away, home, favorite, odds, type, betOnFavorite, betOnUnderdog, date_expires;
     private int active, amount;
 
     public String getAway() {
@@ -45,20 +45,20 @@ public class Bets {
         this.type = type;
     }
 
-    public String getUser1() {
-        return user1;
+    public String getBetOnFavorite() {
+        return betOnFavorite;
     }
 
-    public void setUser1(String user1) {
-        this.user1 = user1;
+    public void setBetOnFavorite(String user1) {
+        this.betOnFavorite = betOnFavorite;
     }
 
-    public String getUser2() {
-        return user2;
+    public String getBetOnUnderdog() {
+        return betOnUnderdog;
     }
 
-    public void setUser2(String user2) {
-        this.user2 = user2;
+    public void setBetOnUnderdog(String user2) {
+        this.betOnUnderdog = betOnUnderdog;
     }
 
     public String getDate_expires() {
@@ -85,13 +85,13 @@ public class Bets {
         this.amount = amount;
     }
 
-    public Bets(String away, String home, String favorite, String odds, String type, String user1, String date_expires, int amount) {
+    public Bets(String away, String home, String favorite, String odds, String type, String betOnFavorite, String date_expires, int amount) {
         this.away = away;
         this.home = home;
         this.favorite = favorite;
         this.odds = odds;
         this.type = type;
-        this.user1 = user1;
+        this.betOnFavorite = betOnFavorite;
         this.date_expires = date_expires;
         this.active = 0;
         this.amount = amount;
