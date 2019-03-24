@@ -1,5 +1,6 @@
 package com.example.ninemenout;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,15 +24,12 @@ public class AddFriendsActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "AddFriendsActivity";
-    private FriendsAdapter adapter;
+    private UserAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friends);
-
-
-
     }
 
     //@Override
@@ -53,6 +51,11 @@ public class AddFriendsActivity extends AppCompatActivity {
                         Log.w(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {
                         Log.w(TAG, "No such document");
+                        Context context = getApplicationContext();
+                        CharSequence reusername = "No user with that username was foung";
+                        int duration_one = Toast.LENGTH_LONG;
+                        Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+                        toast_2.show();
                     }
                 } else {
                     Log.w(TAG, "get failed with ", task.getException());
