@@ -8,7 +8,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
+        android:layout_width="360dp"
         android:layout_height="0dp"
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
@@ -25,109 +25,166 @@
         <Button
             android:id="@+id/button3"
             android:layout_width="0dp"
-            android:layout_height="113dp"
+            android:layout_height="155dp"
             android:layout_marginBottom="2dp"
             android:background="@color/colorAccent"
             android:text="Accept Bet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/awayText"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/pointText"
+            android:id="@+id/pointsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Points"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            tools:layout_editor_absoluteX="117dp"
-            tools:layout_editor_absoluteY="168dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/awayText" />
 
         <TextView
             android:id="@+id/homeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Home"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:layout_editor_absoluteX="135dp"
-            tools:layout_editor_absoluteY="6dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/vsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:text="vs"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="52dp" />
+            app:layout_constraintBottom_toTopOf="@+id/awayText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeText"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/awayText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Away"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:layout_editor_absoluteX="139dp"
-            tools:layout_editor_absoluteY="98dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeText" />
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
             android:text="Odds"
             android:textSize="30sp"
-            tools:layout_editor_absoluteX="91dp"
-            tools:layout_editor_absoluteY="259dp" />
+            app:layout_constraintEnd_toEndOf="@+id/textView14"
+            app:layout_constraintHorizontal_bias="0.894"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pointsText" />
 
         <TextView
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginBottom="36dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
             android:text="Favorite"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/textView15"
-            app:layout_constraintEnd_toStartOf="@+id/textView18" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView13"
+            app:layout_constraintVertical_bias="0.603" />
 
         <TextView
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="54dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="76dp"
             android:text="You would bet on:"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:layout_editor_absoluteX="46dp"
-            tools:layout_editor_absoluteY="407dp" />
+            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pointsText"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/unclaimedTeamText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Alabama"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textSize="36sp"
-            tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="471dp" />
+            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/oddsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="TextView"
             android:textSize="30sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toEndOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/pointsText" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/favoriteText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="TextView"
             android:textSize="30sp"
-            tools:layout_editor_absoluteX="197dp"
-            tools:layout_editor_absoluteY="326dp" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
+            app:layout_constraintEnd_toEndOf="@+id/textView15" />
 
     </android.support.constraint.ConstraintLayout>
 

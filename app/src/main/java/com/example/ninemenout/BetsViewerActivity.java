@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class BetsViewerActivity extends AppCompatActivity {
 
-    TextView homeTeam, awayTeam, odds;
+    TextView homeTeam, awayTeam, odds, points;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betsRef = db.collection("bets");
 
@@ -29,9 +29,11 @@ public class BetsViewerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bets_viewer);
 
 
-        homeTeam = findViewById(R.id.homeTeamText);
-        awayTeam = findViewById(R.id.awayTeamText);
+        homeTeam = findViewById(R.id.homeText);
+        awayTeam = findViewById(R.id.awayText);
         odds = findViewById(R.id.oddsText);
+        points = findViewById(R.id.pointsText);
+
 
         Bundle b = this.getIntent().getExtras();
         if(b != null){
@@ -47,6 +49,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                             homeTeam.setText((String) document.get("home"));
                             awayTeam.setText((String) document.get("away"));
                             odds.setText((String) document.get("odds"));
+                            points.setText((String) document.get("amount"));
                         } else {
                             Log.d("googy", "No such document");
                         }
