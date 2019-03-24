@@ -11,9 +11,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetHolder> {
-
     public BetsAdapter(@NonNull FirestoreRecyclerOptions<Bets> options) {
         super(options);
+
     }
 
     @Override
