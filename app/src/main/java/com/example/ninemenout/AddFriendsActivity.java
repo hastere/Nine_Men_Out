@@ -3,9 +3,14 @@ package com.example.ninemenout;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.EditText;
 import android.support.annotation.NonNull;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,20 +25,63 @@ import com.google.firebase.auth.FirebaseUser;
 import android.content.Intent;
 import android.view.View;
 
+import static java.sql.Types.NULL;
+
 public class AddFriendsActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth myauth;
     private static final String TAG = "AddFriendsActivity";
-    private UserAdapter adapter;
+ //   private UserAdapter adapter;
+   // FirebaseUser lonely = myauth.getCurrentUser();
+   // String uEmail = lonely.getEmail();
+  //  private CollectionReference budRef = db.collection("user").document(uEmail).collection("friends");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friends);
+
+        /*Query check = budRef.orderBy("name");
+        check.toEqual(NULL);*/
+        //setUpFriendsView();
     }
+        /*private void setUpFriendsView() {
+            Query query = budRef.orderBy("name", Query.Direction.DESCENDING);
+
+
+                FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
+                        .setQuery(query, Users.class)
+                        .build();
+
+                adapter = new UserAdapter(options);
+
+                RecyclerView recyclerView = findViewById(R.id.recyclerSearch);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                recyclerView.setAdapter(adapter);
+            }
+
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+            adapter.startListening();
+        }
+
+        @Override
+        protected void onStop() {
+            super.onStop();
+            adapter.stopListening();
+        }
+*/
+
+
+
 
     //@Override
-    public void searchFriends() {
+    public void searchFriends(View view) {
         EditText UserName = (EditText) findViewById(R.id.Friends_Username);
         String username = UserName.getText().toString();
 
@@ -41,6 +89,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         CollectionReference usersRef = db.collection("users");
         Query friend = usersRef.whereEqualTo("name", username);
         String friendname = friend.toString();
+        Log.w(TAG, friendname);
         DocumentReference docRef = db.collection("users").document(friendname);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -49,6 +98,11 @@ public class AddFriendsActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.w(TAG, "DocumentSnapshot data: " + document.getData());
+                        Context contex = getApplicationContext();
+                        CharSequence hip = "Hooray you fond a friend";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(contex, hip, duration);
+                        toast.show();
                     } else {
                         Log.w(TAG, "No such document");
                         Context context = getApplicationContext();
