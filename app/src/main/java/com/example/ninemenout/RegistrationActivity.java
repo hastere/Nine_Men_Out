@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    public static final String BALANCE_KEY = "balance";
+    public static final String BALANCE_KEY = "points";
     public static final String EMAIL_KEY = "email";
     public static final String USERNAME_KEY = "name";
     public static final String PASSWORD_KEY = "password";
@@ -41,6 +41,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+       //creates the view for the registration activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
         myAuth = FirebaseAuth.getInstance();
@@ -51,6 +53,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
+        //checks to see the if a user is logged in
         FirebaseUser currentUser = myAuth.getCurrentUser();
         if(currentUser != null)
         {
@@ -67,6 +70,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }*/
 
     public void openHomePageActivivty() {
+        //opens home page activity
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
 
@@ -75,10 +79,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     public void saveUser(View view) {
+        //grabs the data from the registration screen
         EditText UserName = (EditText) findViewById(R.id.username);
         EditText Passcode = (EditText) findViewById(R.id.Password);
         EditText User_email = (EditText) findViewById(R.id.email);
-
+        //converts it to strings
         String usertext = UserName.getText().toString();
         String passtext = Passcode.getText().toString();
         String U_email = User_email.getText().toString();
@@ -125,6 +130,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         public void ScrewFirebase() {
+            //adds data to the user database
             EditText UserName = (EditText) findViewById(R.id.username);
             EditText Passcode = (EditText) findViewById(R.id.Password);
             EditText User_email = (EditText) findViewById(R.id.email);
@@ -136,10 +142,10 @@ public class RegistrationActivity extends AppCompatActivity {
             Log.w(TAG, "We got past the auth user");
             FirebaseUser user = myAuth.getCurrentUser();
             Map<String, Object> dataToSave = new HashMap<String, Object>();
-            dataToSave.put(BALANCE_KEY, initial);
             dataToSave.put(EMAIL_KEY, U_email);
             dataToSave.put(USERNAME_KEY, usertext);
-            dataToSave.put(PASSWORD_KEY, passtext);
+            dataToSave.put(BALANCE_KEY, initial);
+            //dataToSave.put(PASSWORD_KEY, passtext);
             String UID = user.getUid();
 
             db.collection("users").document(U_email).set(dataToSave)
