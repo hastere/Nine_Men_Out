@@ -3,11 +3,14 @@ package com.example.ninemenout;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.support.annotation.NonNull;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,45 +38,51 @@ public class AddFriendsActivity extends AppCompatActivity {
     private static final String TAG = "AddFriendsActivity";
     public static final String FNAME = "Name";
     public static final String WAIT = "Status";
- //   private UserAdapter adapter;
-   // FirebaseUser lonely = myauth.getCurrentUser();
-   // String uEmail = lonely.getEmail();
-  //  private CollectionReference budRef = db.collection("user").document(uEmail).collection("friends");
-     private Button button;
+    private UserAdapter adapter;
+    private CollectionReference budRef;
+    private Button button;
      private Button no;
      public String buddy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friends);
         button = (Button) findViewById(R.id.sendRequest);
         no = (Button) findViewById(R.id.reject);
         button.setVisibility(View.INVISIBLE);
         no.setVisibility(View.INVISIBLE);
+
         myauth = FirebaseAuth.getInstance();
+        FirebaseUser lonely = myauth.getCurrentUser();
+        String uEmail = lonely.getEmail();
+        Log.d(TAG, "The user email is " +uEmail);
+        budRef = db.collection("user").document(uEmail).collection("friends");
         /*Query check = budRef.orderBy("name");
         check.toEqual(NULL);*/
-        //setUpFriendsView();
+        setUpFriendsView();
+        Log.d(TAG, "The recycle viewer should be set up");
     }
-        /*private void setUpFriendsView() {
+        private void setUpFriendsView() {
             Query query = budRef.orderBy("name", Query.Direction.DESCENDING);
-
-
                 FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
                         .setQuery(query, Users.class)
                         .build();
 
                 adapter = new UserAdapter(options);
-
-                RecyclerView recyclerView = findViewById(R.id.recyclerSearch);
+                Log.d(TAG, "in SetUp Friends");
+                RecyclerView recyclerView = findViewById(R.id.Friends_View);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 recyclerView.setAdapter(adapter);
+
             }
 
 
-        @Override
+
+
+ @Override
         protected void onStart() {
             super.onStart();
             adapter.startListening();
@@ -84,7 +93,7 @@ public class AddFriendsActivity extends AppCompatActivity {
             super.onStop();
             adapter.stopListening();
         }
-*/
+
 
 
 
@@ -132,12 +141,12 @@ public class AddFriendsActivity extends AppCompatActivity {
         DocumentReference u = db.collection("user").document(email);
         String name =  "jjgospodarek";//u.get().getResult().getString("name");
         String status = "Pending";
-        Log.d(TAG, "the user is " +user);
+        Log.d(TAG, "the user is " +email);
         Log.d(TAG, "the friend is " +buddy);
         Map<String, Object> dataToSave = new HashMap<String, Object>();
-        dataToSave.put(FNAME, name);
+        dataToSave.put(FNAME, email);
         dataToSave.put(WAIT, false);
-        db.collection("users").document(buddy).collection("Requests").document(name).set(dataToSave)
+        db.collection("users").document(buddy).collection("Requests").document(email).set(dataToSave)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

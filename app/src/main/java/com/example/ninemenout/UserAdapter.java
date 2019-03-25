@@ -3,6 +3,7 @@ package com.example.ninemenout;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+
+
 public class UserAdapter extends FirestoreRecyclerAdapter<Users, UserAdapter.UserHolder> {
 private OnItemClickListener listener;
+public String TAG = "UserAdapter";
 public UserAdapter(@NonNull FirestoreRecyclerOptions<Users> options) {
         super(options);
         }
@@ -28,7 +32,7 @@ protected void onBindViewHolder(@NonNull UserHolder holder, int position, @NonNu
 @NonNull
 @Override
 public UserHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.bet_item, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_item, viewGroup, false);
         return new UserHolder(v);
         }
 
@@ -40,7 +44,8 @@ class UserHolder extends RecyclerView.ViewHolder {
         super(itemView);
         textViewTitle = itemView.findViewById(R.id.text_view_title);
         textViewDescription = itemView.findViewById(R.id.text_view_description);
-
+        String user = textViewTitle.toString();
+        Log.d(TAG, user);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
