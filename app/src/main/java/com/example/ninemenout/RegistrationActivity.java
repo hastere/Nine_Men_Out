@@ -128,7 +128,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-
+        //this function adds the data to the user database
+        //this function also uses the recently created auth user
         public void ScrewFirebase() {
             //adds data to the user database
             EditText UserName = (EditText) findViewById(R.id.username);

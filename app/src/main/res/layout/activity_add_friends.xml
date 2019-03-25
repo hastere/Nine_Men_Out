@@ -50,4 +50,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/sendRequest"
+        android:layout_width="162dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="243dp"
+        android:layout_marginRight="243dp"
+        android:background="@color/colorPrimary"
+        android:text="Friend Invite"
+        android:onClick="sendRequest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/reject"
+        android:layout_width="167dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="210dp"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginRight="34dp"
+        android:background="@color/colorAccent"
+        android:text="Never mind"
+        android:onClick="nah"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
