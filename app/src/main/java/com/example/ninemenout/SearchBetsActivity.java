@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import static java.lang.Character.toUpperCase;
 
+// USES INFORMATION FROM THE SEARCH BETS BUFFER ACTIVITY PASSED BY INTENT
 public class SearchBetsActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -40,12 +41,14 @@ public class SearchBetsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_bets);
 
+        // SearchBetsActivity gets info from the buffer, passed by intent
         Bundle b = this.getIntent().getExtras();
         if(b != null)
             readHolder = b.getStringArray("terms");
         if(readHolder != null)
             setUpRecyclerV(readHolder);
         else {
+            // default search values, mainly used for testing
             arr[0] = "Alabama";
             arr[1] = "spread";
             arr[2] = "odds";
@@ -54,28 +57,34 @@ public class SearchBetsActivity extends AppCompatActivity {
 
     }
 
+    // display recyclerview based on the search terms
     private void setUpRecyclerV(String[] searchTerms) {
+        // separate to reduce errors
         String teamName = toCamelcase(searchTerms[0]);
         String betType = searchTerms[1];
         String sortType = searchTerms[2];
 
+        // query based on data supplied through intent
         Query query = betRef.whereEqualTo("active", 0)
                 .whereEqualTo("type", betType)
                 .whereEqualTo("home", teamName)
                 .orderBy(sortType, Query.Direction.DESCENDING);
 
-
+        // set view based on the query object
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
                 .setQuery(query, Bets.class)
                 .build();
 
         adapter = new BetsAdapter(options);
 
+        // RECYCLER VIEW PROPERTY CONTROLS
         RecyclerView recyclerView = findViewById(R.id.recyclerSearch);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        // set each item in the recycler view to have an on click
+        // opens a new activity that lets users view + accept bets
         adapter.setOnItemClickListener(new BetsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
@@ -90,7 +99,7 @@ public class SearchBetsActivity extends AppCompatActivity {
 
     }
 
-    // for string compares to the database
+    // sanitize input since firestore requires exact matches for queries
     public String toCamelcase(String team){
         String temp = team;
         if(team == null)
@@ -106,13 +115,13 @@ public class SearchBetsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        adapter.startListening();
+        adapter.startListening(); // so the adapter will update live
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        adapter.stopListening();
+        adapter.stopListening(); // so the adapter knows it needs to stop updating live
     }
 
 }

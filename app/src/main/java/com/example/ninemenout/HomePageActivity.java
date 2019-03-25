@@ -33,7 +33,7 @@ public class HomePageActivity extends AppCompatActivity {
         TextView textViewToChange = findViewById(R.id.pointTotal);
         TextView activePointText = findViewById(R.id.activePointDisplay);
         TextView inactivePointText = findViewById(R.id.inactivePointDisplay);
-        // getting user information
+        // getting user information - user has to be stored in their own document by ID
         String name = user.getEmail();
         if(name != null){
             DocumentReference docRef = userRef.document(name);
@@ -43,6 +43,7 @@ public class HomePageActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
+                            // update home page display to represent user data
                             pointDisplay = ((Long) document.get("points")).intValue();
                             activePointDisplay = ((Long) document.get("activePoints")).intValue();
                             inactivePointDisplay = pointDisplay - activePointDisplay;
@@ -58,6 +59,8 @@ public class HomePageActivity extends AppCompatActivity {
                 }
             });
         }
+
+        //// CONNECT BUTTONS TO FUNCTIONS THAT LINK TO OTHER PAGES ////
 
         button =(Button) findViewById(R.id.profileButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +103,8 @@ public class HomePageActivity extends AppCompatActivity {
     public void getPointsHere(){
         Log.d("googy", ((Integer) pointDisplay).toString());
     }
+
+    //// FUNCTIONS TO CONTROL CHANGING TO A NEW ACTIVITY BY BUTTON PRESS ////
 
     public void openUserProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
