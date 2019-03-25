@@ -3,29 +3,22 @@ package com.example.ninemenout;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.EditText;
 import android.support.annotation.NonNull;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
-import android.content.Intent;
-import android.view.View;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import static java.sql.Types.NULL;
+import android.view.View;
 
 public class AddFriendsActivity extends AppCompatActivity {
 
@@ -87,34 +80,46 @@ public class AddFriendsActivity extends AppCompatActivity {
 
 
         CollectionReference usersRef = db.collection("users");
-        Query friend = usersRef.whereEqualTo("name", username);
-        String friendname = friend.toString();
-        Log.w(TAG, friendname);
-        DocumentReference docRef = db.collection("users").document(friendname);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.w(TAG, "DocumentSnapshot data: " + document.getData());
-                        Context contex = getApplicationContext();
-                        CharSequence hip = "Hooray you fond a friend";
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(contex, hip, duration);
-                        toast.show();
+       // QuerySnapshot query = usersRef.whereEqualTo("name", username).get().getResult();
+        /*if(query.isEmpty())
+        {
+        Context context = getApplicationContext();
+        CharSequence reusername = "No user with that username was foung";
+        int duration_one = Toast.LENGTH_SHORT;
+        Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+        toast_2.show();
+
+        }
+    else
+        {
+
+*/            usersRef.whereEqualTo("name", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                            if(task.getResult().isEmpty())
+                            {
+                                Context context = getApplicationContext();
+                                CharSequence reusername = "No user with that username was foung";
+                                int duration_one = Toast.LENGTH_SHORT;
+                                Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+                                toast_2.show();
+                            }
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            Context contex = getApplicationContext();
+                            CharSequence hip = "Hooray you found a friend";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(contex, hip, duration);
+                            toast.show();
+                        }
                     } else {
-                        Log.w(TAG, "No such document");
-                        Context context = getApplicationContext();
-                        CharSequence reusername = "No user with that username was foung";
-                        int duration_one = Toast.LENGTH_LONG;
-                        Toast toast_2 = Toast.makeText(context, reusername, duration_one);
-                        toast_2.show();
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
-                } else {
-                    Log.w(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+
+            });
+        }
     }
-}
+
+//}
