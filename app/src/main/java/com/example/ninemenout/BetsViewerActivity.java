@@ -28,7 +28,7 @@ public class BetsViewerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bets_viewer);
 
-
+        // establish variable connections to various text and buttons
         homeTeam = findViewById(R.id.homeText);
         awayTeam = findViewById(R.id.awayText);
         odds = findViewById(R.id.oddsText);
@@ -36,7 +36,9 @@ public class BetsViewerActivity extends AppCompatActivity {
         unclaimedTeam = findViewById(R.id.unclaimedTeamText);
         favorite = findViewById(R.id.favoriteText);
 
+        // betsViewer should be passed the document ID as a string (reduces querying overall)
         Bundle b = this.getIntent().getExtras();
+        // only query if the document ID exists
         if(b != null){
             String docID = b.getString("documentID");
 
@@ -47,11 +49,14 @@ public class BetsViewerActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
-                            String hello = String.valueOf(document.getLong("amount"));
+                            // set the text in the display to what was dynamically gained from the DB
+                            // based on the passed (via the intent) document ID
+                            // cast the LONG / NUMBER values first to avoid casting problems in line
+                            String pointsConverter = String.valueOf(document.getLong("amount"));
                             homeTeam.setText((String) document.get("home"));
                             awayTeam.setText((String) document.get("away"));
                             odds.setText((String) document.get("odds"));
-                           points.setText(hello);
+                            points.setText(pointsConverter);
                             unclaimedTeam.setText((String) document.get("away"));
                             favorite.setText((String) document.get("favorite"));
                         } else {
@@ -62,8 +67,6 @@ public class BetsViewerActivity extends AppCompatActivity {
                     }
                 }
             });
-
-
 
         } else {
             // do nothing - this is an error

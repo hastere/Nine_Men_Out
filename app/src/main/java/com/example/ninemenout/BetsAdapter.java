@@ -21,6 +21,7 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
         super(options);
     }
 
+    // overrides the view holder to display each position in the specific way
     @Override
     protected void onBindViewHolder(@NonNull BetHolder holder, int position, @NonNull Bets model) {
         holder.textViewTitle.setText(model.getHome() + " vs. " + model.getAway());
@@ -28,6 +29,7 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
         holder.textViewPriority.setText("Odds: " + model.getOdds());
     }
 
+    // overrides the view holder creation to use the bet item layout
     @NonNull
     @Override
     public BetHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -45,6 +47,7 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
 
+            // so users can select bets to view them / accept them
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
