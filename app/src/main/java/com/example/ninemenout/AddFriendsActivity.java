@@ -64,6 +64,8 @@ public class AddFriendsActivity extends AppCompatActivity {
         setUpFriendsView();
         Log.d(TAG, "The recycle viewer should be set up");
     }
+
+        //sets up recyclerView
         private void setUpFriendsView() {
             Query query = budRef.orderBy("name", Query.Direction.DESCENDING);
                 FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
@@ -98,17 +100,20 @@ public class AddFriendsActivity extends AppCompatActivity {
 
 
 
-    //@Override
+    //This function allows the user to search for friends by username
     public void searchFriends(View view) {
+        //gets user input
         EditText UserName = (EditText) findViewById(R.id.Friends_Username);
         String username = UserName.getText().toString();
         CollectionReference usersRef = db.collection("users");
+        //creates a query looking for that userinput
         usersRef.whereEqualTo("name", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                             if(task.getResult().isEmpty())
                             {
+                                //notifies the user that the search failed
                                 Context context = getApplicationContext();
                                 CharSequence reusername = "No user with that username was foung";
                                 int duration_one = Toast.LENGTH_SHORT;
@@ -117,9 +122,12 @@ public class AddFriendsActivity extends AppCompatActivity {
                             }
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
+                            //gets search result email for future querying
+                            //makes the send request and not send request buttons visible
                             buddy = (String) document.get("email");
                             button.setVisibility(View.VISIBLE);
                             no.setVisibility(View.VISIBLE);
+                            //notifies user of succesful search
                             Context contex = getApplicationContext();
                             CharSequence hip = "Hooray you found a friend";
                             int duration = Toast.LENGTH_SHORT;
@@ -136,22 +144,26 @@ public class AddFriendsActivity extends AppCompatActivity {
         }
 
     public void sendRequest(View view){
+        //gets user information to add to the request for the potential friend
         FirebaseUser user = myauth.getCurrentUser();
         String email = user.getEmail();
         DocumentReference u = db.collection("user").document(email);
         String name =  "jjgospodarek";//u.get().getResult().getString("name");
-        String status = "Pending";
         Log.d(TAG, "the user is " +email);
         Log.d(TAG, "the friend is " +buddy);
+        //creates data for request document
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(FNAME, email);
         dataToSave.put(WAIT, false);
+        //adds request document to potential new friend
         db.collection("users").document(buddy).collection("Requests").document(email).set(dataToSave)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        //makes send request and not send invisible again
                         button.setVisibility(View.INVISIBLE);
                         no.setVisibility(View.INVISIBLE);
+                        //sends toast notifying user request was sent
                         Context contex = getApplicationContext();
                         CharSequence hip = "Friend request sent";
                         int duration = Toast.LENGTH_SHORT;
@@ -172,6 +184,7 @@ public class AddFriendsActivity extends AppCompatActivity {
 
     }
 
+    //does not send request, and makes send and not send invisible again
     public void nah(View view){
         button.setVisibility(View.INVISIBLE);
         no.setVisibility(View.INVISIBLE);
