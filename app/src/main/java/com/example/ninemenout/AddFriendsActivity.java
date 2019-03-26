@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class AddFriendsActivity extends AppCompatActivity {
     private Button button;
      private Button no;
      public String buddy;
+     private int userSearch = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         String uEmail = lonely.getEmail();
         Log.d(TAG, "The user email is " +uEmail);
         budRef = db.collection("user").document(uEmail).collection("friends");
+
         /*Query check = budRef.orderBy("name");
         check.toEqual(NULL);*/
         setUpFriendsView();
@@ -101,53 +104,90 @@ public class AddFriendsActivity extends AppCompatActivity {
 
 
     //This function allows the user to search for friends by username
-    public void searchFriends(View view) {
+    public void searchFriends(View view) throws InterruptedException {
         //gets user input
         EditText UserName = (EditText) findViewById(R.id.Friends_Username);
         String username = UserName.getText().toString();
-        CollectionReference usersRef = db.collection("users");
-        //creates a query looking for that userinput
-        usersRef.whereEqualTo("name", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                            if(task.getResult().isEmpty())
-                            {
-                                //notifies the user that the search failed
-                                Context context = getApplicationContext();
-                                CharSequence reusername = "No user with that username was foung";
-                                int duration_one = Toast.LENGTH_SHORT;
-                                Toast toast_2 = Toast.makeText(context, reusername, duration_one);
-                                toast_2.show();
-                            }
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d(TAG, document.getId() + " => " + document.getData());
-                            //gets search result email for future querying
-                            //makes the send request and not send request buttons visible
-                            buddy = (String) document.get("email");
-                            button.setVisibility(View.VISIBLE);
-                            no.setVisibility(View.VISIBLE);
-                            //notifies user of succesful search
-                            Context contex = getApplicationContext();
-                            CharSequence hip = "Hooray you found a friend";
-                            int duration = Toast.LENGTH_SHORT;
-                            Toast toast = Toast.makeText(contex, hip, duration);
-                            toast.show();
-
-                        }
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
+        myauth = FirebaseAuth.getInstance();
+        FirebaseUser lonely = myauth.getCurrentUser();
+        String uEmail = lonely.getEmail();
+        Log.d(TAG, "user email is " +uEmail);
+        DocumentReference u = db.collection("users").document(uEmail);
+        u.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    String check  = (String) doc.get("name");
+                    Log.d(TAG, "the name of the user is " +check);
+                    Log.d(TAG, "the name entered in search is " +username);
+                    if (check.equals(username)) {
+                        Log.d(TAG, "In reject");
+                        Context context = getApplicationContext();
+                        CharSequence reusername = "Can't Search for yourself!!!!";
+                        int duration_one = Toast.LENGTH_SHORT;
+                        Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+                        toast_2.show();
+                        userSearch = 1;
                     }
-                }
+                    else {
+                        CollectionReference usersRef = db.collection("users");
+                        //creates a query looking for that userinput
+                        usersRef.whereEqualTo("name", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    if(task.getResult().isEmpty())
+                                    {
+                                        //notifies the user that the search failed
+                                        Context context = getApplicationContext();
+                                        CharSequence reusername = "No user with that username was found";
+                                        int duration_one = Toast.LENGTH_SHORT;
+                                        Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+                                        toast_2.show();
+                                    }
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        //gets search result email for future querying
+                                        //makes the send request and not send request buttons visible
+                                        buddy = (String) document.get("email");
+                                        button.setVisibility(View.VISIBLE);
+                                        no.setVisibility(View.VISIBLE);
+                                        //notifies user of succesful search
+                                        Context contex = getApplicationContext();
+                                        CharSequence hip = "Hooray you found a friend";
+                                        int duration = Toast.LENGTH_SHORT;
+                                        Toast toast = Toast.makeText(contex, hip, duration);
+                                        toast.show();
 
-            });
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+
+                        });
+                        userSearch = 0;
+                        }
+                } else {
+                    Log.d(TAG, "Error getting username");
+                }
+            }
+        });
+
+        Log.d(TAG, "UserSearch is " +userSearch);
+        if(userSearch > 0)
+        {
+            return;
+        }
+
         }
 
     public void sendRequest(View view){
         //gets user information to add to the request for the potential friend
         FirebaseUser user = myauth.getCurrentUser();
         String email = user.getEmail();
-        DocumentReference u = db.collection("user").document(email);
+        DocumentReference u = db.collection("users").document(email);
         String name =  "jjgospodarek";//u.get().getResult().getString("name");
         Log.d(TAG, "the user is " +email);
         Log.d(TAG, "the friend is " +buddy);
