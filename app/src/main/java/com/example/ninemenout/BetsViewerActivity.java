@@ -52,12 +52,23 @@ public class BetsViewerActivity extends AppCompatActivity {
                             // set the text in the display to what was dynamically gained from the DB
                             // based on the passed (via the intent) document ID
                             // cast the LONG / NUMBER values first to avoid casting problems in line
+                            String teamComparison = getOpenTeam(((String) document.get("betOnFavorite")), ((String) document.get("betOnUnderdog")));
+                            String home = ((String) document.get("home"));
+                            String away = ((String) document.get("away"));
+                            String fav = ((String) document.get("favorite"));
+                            if(teamComparison.equals("underdog")){
+                                if(home.equals(fav)){
+                                    teamComparison = "away";
+                                }
+                                else
+                                    teamComparison = "home";
+                            }
                             String pointsConverter = String.valueOf(document.getLong("amount"));
                             homeTeam.setText((String) document.get("home"));
                             awayTeam.setText((String) document.get("away"));
                             odds.setText((String) document.get("odds"));
                             points.setText(pointsConverter);
-                            unclaimedTeam.setText((String) document.get("away"));
+                            unclaimedTeam.setText((String) document.get(teamComparison));
                             favorite.setText((String) document.get("favorite"));
                         } else {
                             Log.d("googy", "No such document");
@@ -74,6 +85,13 @@ public class BetsViewerActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public String getOpenTeam(String favorite, String underdog){
+        if(favorite.equals(""))
+            return "favorite";
+        else
+            return "underdog";
     }
 
 }
