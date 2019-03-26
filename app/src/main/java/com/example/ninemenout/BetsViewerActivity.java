@@ -1,5 +1,6 @@
 package com.example.ninemenout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,16 +13,23 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BetsViewerActivity extends AppCompatActivity {
 
     TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betsRef = db.collection("bets");
+    private String documentID, unclaimed;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,7 @@ public class BetsViewerActivity extends AppCompatActivity {
         // only query if the document ID exists
         if(b != null){
             String docID = b.getString("documentID");
-
+            documentID = docID;
             DocumentReference docRef = betsRef.document(docID);
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -63,6 +71,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                                 else
                                     teamComparison = "home";
                             }
+                            unclaimed = teamComparison;
                             String pointsConverter = String.valueOf(document.getLong("amount"));
                             homeTeam.setText((String) document.get("home"));
                             awayTeam.setText((String) document.get("away"));
@@ -87,11 +96,42 @@ public class BetsViewerActivity extends AppCompatActivity {
 
     }
 
+    // returns which team has NOT been bet on based on user selection in the DB
     public String getOpenTeam(String favorite, String underdog){
         if(favorite.equals(""))
             return "favorite";
         else
             return "underdog";
+    }
+
+    // accepts the bet and returns to the home page
+    public void betAccepted(View view){
+        DocumentReference docRef = betsRef.document(documentID);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task){
+                if(task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        docRef.update("active", 1);
+                        if(unclaimed.equals("favorite"))
+                            docRef.update("betOnFavorite", user.getEmail());
+                        else
+                            docRef.update("betOnUnderdog", user.getEmail());
+                    } else {
+                        Log.d("googy", "No such document");
+                    }
+                } else {
+                    Log.d("googy", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        // set the unoccupied user field to the current user
+        // set the bets 'active' status to '1' to indicate it is active
+        // add the bet into the users personal bets field
+
+
     }
 
 }
