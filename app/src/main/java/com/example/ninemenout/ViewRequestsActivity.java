@@ -41,7 +41,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
         FirebaseUser lonely = myauth.getCurrentUser();
         String uEmail = lonely.getEmail();
         Log.d(TAG, "The user email is " +uEmail);
-        reqRef = db.collection("user").document(uEmail).collection("requests");
+        reqRef = db.collection("user").document(uEmail).collection("Requests");
 
         //setUpRecyclerView();
 
