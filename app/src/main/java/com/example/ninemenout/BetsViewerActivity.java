@@ -1,5 +1,6 @@
 package com.example.ninemenout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +30,7 @@ public class BetsViewerActivity extends AppCompatActivity {
     TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betsRef = db.collection("bets");
+    private CollectionReference userRef = db.collection("users");
     private String documentID, unclaimed;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -107,17 +110,44 @@ public class BetsViewerActivity extends AppCompatActivity {
     // accepts the bet and returns to the home page
     public void betAccepted(View view){
         DocumentReference docRef = betsRef.document(documentID);
+        DocumentReference emailRef = userRef.document(user.getEmail());
+        CollectionReference userBetsRef = emailRef.collection("bets");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task){
                 if(task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
+                        Map<String, Object> userBet = new HashMap<String, Object>();
                         docRef.update("active", 1);
-                        if(unclaimed.equals("favorite"))
+                        if(unclaimed.equals("favorite")) {
                             docRef.update("betOnFavorite", user.getEmail());
-                        else
+                            userBet.put("betOnFavorite", user.getEmail());
+                            userBet.put("betOnUnderdog", ((String) document.get("betOnUnderdog")));
+                        } else {
                             docRef.update("betOnUnderdog", user.getEmail());
+                            userBet.put("betOnUnderdog", user.getEmail());
+                            userBet.put("betOnFavorite", ((String) document.get("betOnFavorite")));
+                        }
+
+                        // active
+                        userBet.put("active", 1);
+                        // amount
+                        userBet.put("amount", document.getLong("amount"));
+                        // away
+                        userBet.put("away", ((String) document.get("away")));
+                        // date expirex
+                        userBet.put("date_expires", ((String) document.get("date_expires")));
+                        // favorite
+                        userBet.put("favorite", ((String) document.get("favorite")));
+                        // home
+                        userBet.put("home", ((String) document.get("home")));
+                        // odds
+                        userBet.put("odds", ((String) document.get("odds")));
+                        // type
+                        userBet.put("type", ((String) document.get("type")));
+
+                        userBetsRef.add(userBet);
                     } else {
                         Log.d("googy", "No such document");
                     }
@@ -126,12 +156,14 @@ public class BetsViewerActivity extends AppCompatActivity {
                 }
             }
         });
+        Context context = getApplicationContext();
+        CharSequence toastMessage = "Bet Accepted!";
+        int toastDuration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, toastMessage, toastDuration);
+        toast.show();
 
-        // set the unoccupied user field to the current user
-        // set the bets 'active' status to '1' to indicate it is active
-        // add the bet into the users personal bets field
-
-
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
     }
 
 }
