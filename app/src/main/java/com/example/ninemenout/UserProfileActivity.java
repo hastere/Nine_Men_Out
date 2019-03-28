@@ -28,6 +28,13 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
+    public void openViewRequestsActivity(View view) {
+        Intent intent = new Intent(this, ViewRequestsActivity.class);
+        startActivity(intent);
+    }
+
+
+
     public void logout(View view)
         {
         FirebaseAuth.getInstance().signOut();

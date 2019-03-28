@@ -38,7 +38,7 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<Requests, RequestAd
         public RequestHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
+           // textViewDescription = itemView.findViewById(R.id.text_view_description);
             String user = textViewTitle.toString();
             Log.d(TAG, user);
             itemView.setOnClickListener(new View.OnClickListener() {

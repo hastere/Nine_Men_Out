@@ -46,16 +46,16 @@ class UserHolder extends RecyclerView.ViewHolder {
         textViewDescription = itemView.findViewById(R.id.text_view_description);
         String user = textViewTitle.toString();
         Log.d(TAG, user);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
+        //itemView.setOnClickListener(new View.OnClickListener() {
+            /*@Override
             public void onClick(View v) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && listener != null) {
                     listener.onItemClick(getSnapshots().getSnapshot(position), position);
                 }
             }
-        });
-    }
+        }); */
+    };
 }
 
 public interface OnItemClickListener {

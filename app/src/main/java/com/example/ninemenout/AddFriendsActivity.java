@@ -60,7 +60,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         FirebaseUser lonely = myauth.getCurrentUser();
         String uEmail = lonely.getEmail();
         Log.d(TAG, "The user email is " +uEmail);
-        budRef = db.collection("user").document(uEmail).collection("friends");
+        budRef = db.collection("users").document(uEmail).collection("friends");
 
         /*Query check = budRef.orderBy("name");
         check.toEqual(NULL);*/
