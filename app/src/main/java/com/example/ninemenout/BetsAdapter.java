@@ -42,4 +42,7 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
         }
     }
 
+
+
+
 }
