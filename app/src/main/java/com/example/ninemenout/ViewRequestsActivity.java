@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,16 +56,16 @@ public class ViewRequestsActivity extends AppCompatActivity {
 
         adapter = new RequestAdapter(options);
         Log.d(TAG, "in SetUp Friends");
-        RecyclerView recyclerView = findViewById(R.id.Friends_View);
+        RecyclerView recyclerView = findViewById(R.id.viewReq);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RequestAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-             documentSnapshot.get(position);
+        //adapter.setOnItemClickListener(new RequestAdapter.OnItemClickListener() {
+          //  @Override
+           // public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+            // documentSnapshot.get(position);
 
-            }
+            //}
 
 
 

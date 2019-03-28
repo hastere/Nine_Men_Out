@@ -9,13 +9,28 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/viewReq"
         android:layout_width="395dp"
-        android:layout_height="715dp"
-        android:scrollbars="vertical"
+        android:layout_height="520dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/debugger"
+        android:layout_width="132dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="612dp"
+        android:layout_marginEnd="263dp"
+        android:layout_marginRight="263dp"
+        android:text="It is the Recycle"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
