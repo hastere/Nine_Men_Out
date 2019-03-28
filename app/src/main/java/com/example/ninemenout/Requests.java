@@ -13,7 +13,7 @@ public class Requests {
         this.pending = pending;
     }
 
-    public String getName() {
+    public String getRName() {
         return Name;
     }
 

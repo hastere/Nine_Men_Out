@@ -21,8 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_toStartOf="@id/text_view_priority"
-            android:layout_toLeftOf="@id/text_view_priority"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Title"
@@ -30,22 +28,8 @@
 
         </TextView>
 
-        <Button
-            android:id="@+id/Decline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Decline" />
-
-        <Button
-            android:id="@+id/Accept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_toStartOf="@+id/Decline"
-            android:layout_toLeftOf="@+id/Decline"
-            android:text="Accept" />
 
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
+

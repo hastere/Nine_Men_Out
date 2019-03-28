@@ -50,7 +50,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
 
     private void setUpRequestView() {
         Query query = reqRef.orderBy("Name", Query.Direction.DESCENDING);
-        reqRef.orderBy("Name", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        /*reqRef.orderBy("Name", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -59,7 +59,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
                     }
                 }
             }
-                });
+                });*/
 
         FirestoreRecyclerOptions<Requests> options = new FirestoreRecyclerOptions.Builder<Requests>()
                 .setQuery(query, Requests.class)

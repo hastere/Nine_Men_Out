@@ -22,7 +22,7 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<Requests, RequestAd
 
     @Override
     protected void onBindViewHolder(@NonNull RequestHolder holder, int position, @NonNull Requests model) {
-        holder.textViewTitle.setText(model.getName());
+        holder.textViewTitle.setText(model.getRName());
     }
 
     @NonNull
@@ -35,13 +35,11 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<Requests, RequestAd
     class RequestHolder extends RecyclerView.ViewHolder {
 
         TextView textViewTitle, textViewDescription, textViewPriority;
-        Button  yes, no;
+
 
         public RequestHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-            yes = itemView.findViewById(R.id.Accept);
-            no = itemView.findViewById(R.id.Decline);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
