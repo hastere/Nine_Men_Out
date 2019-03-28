@@ -40,7 +40,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
         FirebaseUser lonely = myauth.getCurrentUser();
         String uEmail = lonely.getEmail();
         Log.d(TAG, "The user email is " + uEmail);
-        reqRef = db.collection("user").document(uEmail).collection("Requests");
+        reqRef = db.collection("users").document(uEmail).collection("Requests");
 
         setUpRequestView();
 
@@ -49,13 +49,24 @@ public class ViewRequestsActivity extends AppCompatActivity {
 
 
     private void setUpRequestView() {
-        Query query = reqRef.orderBy("name", Query.Direction.DESCENDING);
+        Query query = reqRef.orderBy("Name", Query.Direction.DESCENDING);
+        reqRef.orderBy("Name", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    }
+                }
+            }
+                });
+
         FirestoreRecyclerOptions<Requests> options = new FirestoreRecyclerOptions.Builder<Requests>()
                 .setQuery(query, Requests.class)
                 .build();
 
         adapter = new RequestAdapter(options);
-        Log.d(TAG, "in SetUp Friends");
+        Log.d(TAG, "in SetUp Requests");
         RecyclerView recyclerView = findViewById(R.id.viewReq);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,9 +77,6 @@ public class ViewRequestsActivity extends AppCompatActivity {
             // documentSnapshot.get(position);
 
             //}
-
-
-
 
     }
 }

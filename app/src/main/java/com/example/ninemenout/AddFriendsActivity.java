@@ -45,6 +45,7 @@ public class AddFriendsActivity extends AppCompatActivity {
      private Button no;
      public String buddy;
      private int userSearch = 0;
+     private String checku;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,17 @@ public class AddFriendsActivity extends AppCompatActivity {
         String uEmail = lonely.getEmail();
         Log.d(TAG, "The user email is " +uEmail);
         budRef = db.collection("users").document(uEmail).collection("friends");
-
+        DocumentReference u = db.collection("users").document(uEmail);
+        u.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    checku = (String) doc.get("name");
+                    Log.d(TAG,checku);
+                }
+            }
+        });
         /*Query check = budRef.orderBy("name");
         check.toEqual(NULL);*/
         setUpFriendsView();
@@ -187,13 +198,13 @@ public class AddFriendsActivity extends AppCompatActivity {
         //gets user information to add to the request for the potential friend
         FirebaseUser user = myauth.getCurrentUser();
         String email = user.getEmail();
-        DocumentReference u = db.collection("users").document(email);
+        Log.d(TAG,checku);
         String name =  "jjgospodarek";//u.get().getResult().getString("name");
         Log.d(TAG, "the user is " +email);
         Log.d(TAG, "the friend is " +buddy);
         //creates data for request document
         Map<String, Object> dataToSave = new HashMap<String, Object>();
-        dataToSave.put(FNAME, email);
+        dataToSave.put(FNAME, checku);
         dataToSave.put(WAIT, false);
         //adds request document to potential new friend
         db.collection("users").document(buddy).collection("Requests").document(email).set(dataToSave)

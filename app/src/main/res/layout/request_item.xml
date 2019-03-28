@@ -1,63 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="@color/colorPrimary"
+    tools:cardBackgroundColor="@color/colorPrimary" >
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cardView2"
-        android:layout_width="395dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
 
         <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="142dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="237dp"
-            android:layout_marginRight="237dp"
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/text_view_priority"
+            android:layout_toLeftOf="@id/text_view_priority"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Title"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large">
+
+        </TextView>
+
+        <Button
+            android:id="@+id/Decline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Decline" />
 
         <Button
             android:id="@+id/Accept"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_marginStart="175dp"
-            android:layout_marginLeft="175dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="132dp"
-            android:layout_marginRight="132dp"
-            android:text="Accept"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
 
-        <Button
-            android:id="@+id/Decline"
-            android:layout_width="89dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="290dp"
-            android:layout_marginLeft="290dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Decline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-</android.support.constraint.ConstraintLayout>
+            android:layout_toStartOf="@+id/Decline"
+            android:layout_toLeftOf="@+id/Decline"
+            android:text="Accept" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
