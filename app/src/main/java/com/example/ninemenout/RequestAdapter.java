@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -34,13 +35,13 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<Requests, RequestAd
     class RequestHolder extends RecyclerView.ViewHolder {
 
         TextView textViewTitle, textViewDescription, textViewPriority;
+        Button  yes, no;
 
         public RequestHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-           // textViewDescription = itemView.findViewById(R.id.text_view_description);
-            String user = textViewTitle.toString();
-            Log.d(TAG, user);
+            yes = itemView.findViewById(R.id.Accept);
+            no = itemView.findViewById(R.id.Decline);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

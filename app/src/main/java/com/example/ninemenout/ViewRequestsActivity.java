@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -29,8 +30,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
     public static String TAG = "ViewRequestsActivity";
     private CollectionReference reqRef;
 
-    //private BetsAdapter adapter;
-
+    private RequestAdapter adapter;
 
 
     @Override
@@ -40,10 +40,35 @@ public class ViewRequestsActivity extends AppCompatActivity {
         myauth = FirebaseAuth.getInstance();
         FirebaseUser lonely = myauth.getCurrentUser();
         String uEmail = lonely.getEmail();
-        Log.d(TAG, "The user email is " +uEmail);
+        Log.d(TAG, "The user email is " + uEmail);
         reqRef = db.collection("user").document(uEmail).collection("Requests");
 
-        //setUpRecyclerView();
+        setUpRequestView();
+
+
+    }
+
+
+    private void setUpRequestView() {
+        Query query = reqRef.orderBy("name", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Requests> options = new FirestoreRecyclerOptions.Builder<Requests>()
+                .setQuery(query, Requests.class)
+                .build();
+
+        adapter = new RequestAdapter(options);
+        Log.d(TAG, "in SetUp Friends");
+        RecyclerView recyclerView = findViewById(R.id.Friends_View);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RequestAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+             documentSnapshot.get(position);
+
+            }
+
+
 
 
     }
