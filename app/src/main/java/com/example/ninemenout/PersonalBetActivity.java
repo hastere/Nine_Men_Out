@@ -35,6 +35,29 @@ public class PersonalBetActivity extends AppCompatActivity {
 
     private String email = user.getEmail();
 
+    private DocumentReference docRef = db.collection("users").document(email);
+
+    private DocumentSnapshot getDocSnapshot() {
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Document found in the offline cache
+                    DocumentSnapshot document = task.getResult();
+                    Log.d(TAG, "Cached document data: " + document.getData());
+                } else {
+                    Log.d(TAG, "Cached get failed: ", task.getException());
+                }
+            }
+        });
+    }
+
+    public String getUsername() {
+        DocumentSnapshot docSnap = getDocSnapshot();
+        String username = docSnap.getString("username");
+        return username;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +79,7 @@ public class PersonalBetActivity extends AppCompatActivity {
                 .setQuery(query, Bets.class)
                 .build();
 
-        adapter = new BetsAdapter(options);
+        adapter = new PersonalBetsAdapter(options);
 
         RecyclerView recyclerView = findViewById(R.id.personalBetsList);
         recyclerView.setHasFixedSize(true);
