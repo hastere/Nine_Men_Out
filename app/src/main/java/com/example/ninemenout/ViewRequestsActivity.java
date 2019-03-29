@@ -44,7 +44,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
     private RequestAdapter adapter;
     private CollectionReference reqRef;
     String uEmail, uName;
-    int uPoints;
+    long uPoints;
 
 
 
@@ -59,8 +59,19 @@ public class ViewRequestsActivity extends AppCompatActivity {
         Log.d(TAG, "The user email is " +uEmail);
         reqRef = db.collection("users").document(uEmail).collection("Requests");
         DocumentReference u = db.collection("users").document(uEmail);
-          uName = "jjgospodarek";
-          uPoints = 999999;
+         Task<DocumentSnapshot> doccy = u.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+             @Override
+             public void onComplete(@NonNull Task<DocumentSnapshot> task)
+             {
+             if(task.isSuccessful())
+             {
+                 DocumentSnapshot doccy = task.getResult();
+                 uName = (String) doccy.get("name");
+                 uPoints = (long) doccy.get("points");
+             }
+             }
+                                                                      }
+         );
 
         /*Query check = budRef.orderBy("name");
         check.toEqual(NULL);*/
