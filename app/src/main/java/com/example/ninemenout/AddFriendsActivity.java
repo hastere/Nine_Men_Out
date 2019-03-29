@@ -205,7 +205,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         //creates data for request document
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(FNAME, checku);
-        dataToSave.put(WAIT, false);
+        //dataToSave.put(WAIT, false);
         //adds request document to potential new friend
         db.collection("users").document(buddy).collection("Requests").document(email).set(dataToSave)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

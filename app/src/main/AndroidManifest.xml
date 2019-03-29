@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".AddFriendsActivity"></activity>
+        <activity android:name=".ViewRequestsActivity"></activity>
+        <activity android:name=".AddFriendsActivity" />
         <activity android:name=".SuggestedBetsActivity" />
         <activity android:name=".LeaderboardActivity" />
         <activity android:name=".SearchBetsActivity" />
@@ -17,7 +18,6 @@
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".ViewRequestsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

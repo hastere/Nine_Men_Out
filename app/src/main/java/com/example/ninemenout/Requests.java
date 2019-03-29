@@ -3,17 +3,8 @@ package com.example.ninemenout;
 public class Requests {
 
     private String Name;
-    private boolean pending;
 
-    public boolean isPending() {
-        return pending;
-    }
-
-    public void setPending(boolean pending) {
-        this.pending = pending;
-    }
-
-    public String getRName() {
+    public String getName() {
         return Name;
     }
 
@@ -21,9 +12,8 @@ public class Requests {
         this.Name = name;
     }
 
-    public Requests(String name, boolean pending) {
+    public Requests(String name) {
         this.Name = name;
-        this.pending = pending;
     }
 
     public Requests() {
