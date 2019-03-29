@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ public class AddFriendsActivity extends AppCompatActivity {
      public String buddy;
      private int userSearch = 0;
      private String checku;
+     private ArrayList friendsArray = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,6 @@ public class AddFriendsActivity extends AppCompatActivity {
         no = (Button) findViewById(R.id.reject);
         button.setVisibility(View.INVISIBLE);
         no.setVisibility(View.INVISIBLE);
-
         myauth = FirebaseAuth.getInstance();
         FirebaseUser lonely = myauth.getCurrentUser();
         String uEmail = lonely.getEmail();
@@ -73,8 +74,20 @@ public class AddFriendsActivity extends AppCompatActivity {
                 }
             }
         });
-        /*Query check = budRef.orderBy("name");
-        check.toEqual(NULL);*/
+
+        budRef.orderBy("name",Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                        String f = (String) document.get("name");
+                        friendsArray.add(f);
+                    }
+                }
+            }
+        });
         setUpFriendsView();
         Log.d(TAG, "The recycle viewer should be set up");
     }
@@ -132,7 +145,19 @@ public class AddFriendsActivity extends AppCompatActivity {
                     String check  = (String) doc.get("name");
                     Log.d(TAG, "the name of the user is " +check);
                     Log.d(TAG, "the name entered in search is " +username);
-                    if (check.equals(username)) {
+                    for(int i = 0; i < friendsArray.size(); i++) {
+                        String fCheck = (String) friendsArray.get(i);
+                        if (fCheck.equals(username)) {
+                            Log.d(TAG, "In reject");
+                            Context context = getApplicationContext();
+                            CharSequence reusername = "They're already your friend!";
+                            int duration_one = Toast.LENGTH_SHORT;
+                            Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+                            toast_2.show();
+                            return;
+                        }
+                    }
+                        if (check.equals(username)) {
                         Log.d(TAG, "In reject");
                         Context context = getApplicationContext();
                         CharSequence reusername = "Can't Search for yourself!!!!";
@@ -141,6 +166,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                         toast_2.show();
                         userSearch = 1;
                     }
+
                     else {
                         CollectionReference usersRef = db.collection("users");
                         //creates a query looking for that userinput
