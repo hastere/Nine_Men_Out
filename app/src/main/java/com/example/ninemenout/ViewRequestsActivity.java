@@ -158,6 +158,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
                                 dataToSave2.put("name", uName);
                                 dataToSave2.put("points", uPoints);
                                 db.collection("users").document(email).collection("friends").document(uEmail).set(dataToSave2);
+                                db.collection("users").document(uEmail).collection("Requests").document(email).delete();
 
 
                             }
