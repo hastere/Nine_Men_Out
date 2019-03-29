@@ -110,8 +110,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            if(task.getResult().isEmpty())
-                            {
+                            if (task.getResult().isEmpty()) {
                                 //notifies the user that the search failed
                                 Context context = getApplicationContext();
                                 CharSequence reusername = "Sorry that user no longer exists!";
@@ -126,10 +125,10 @@ public class ViewRequestsActivity extends AppCompatActivity {
                                 //notifies user of successful search
                                 String email = (String) document.get("email");
                                 String Fname = (String) document.get("name");
-                                Long points  = (Long) document.get("points");
+                                Long points = (Long) document.get("points");
                                 Map<String, Object> dataToSave = new HashMap<String, Object>();
                                 dataToSave.put("email", email);
-                                dataToSave.put("name",Fname);
+                                dataToSave.put("name", Fname);
                                 dataToSave.put("points", points);
                                 db.collection("users").document(uEmail).collection("friends").document(email).set(dataToSave)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -152,7 +151,8 @@ public class ViewRequestsActivity extends AppCompatActivity {
                                         Toast toast = Toast.makeText(context, reusername, duration_one);
                                         toast.show();
                                     }
-                                }); ;
+                                });
+                                ;
                                 Map<String, Object> dataToSave2 = new HashMap<String, Object>();
                                 dataToSave2.put("email", uEmail);
                                 dataToSave2.put("name", uName);
@@ -172,12 +172,47 @@ public class ViewRequestsActivity extends AppCompatActivity {
 
             @Override
             public void onDeclineClick(DocumentSnapshot documentSnapshot, int position) {
+                String newFriend = (String) documentSnapshot.get("Name");
+                CollectionReference usersRef = db.collection("users");
+                //creates a query looking for that userinput
+                usersRef.whereEqualTo("name", newFriend).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().isEmpty()) {
+                                //notifies the user that the search failed
+                                Context context = getApplicationContext();
+                                CharSequence reusername = "Sorry that user no longer exists!";
+                                int duration_one = Toast.LENGTH_SHORT;
+                                Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+                                toast_2.show();
+                            }
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                //gets search result email for future querying
+                                //makes the send request and not send request buttons visible
+                                //notifies user of successful search
+                                String email = (String) document.get("email");
+                                Context contex = getApplicationContext();
+                                CharSequence hip = "Friendship Rejected!!!";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(contex, hip, duration);
+                                toast.show();
+                                db.collection("users").document(uEmail).collection("Requests").document(email).delete();
+
+
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
             }
+
+            ;
         });
-
     }
-
     @Override
     protected void onStart() {
         super.onStart();
