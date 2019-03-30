@@ -11,6 +11,14 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".ViewRequestsActivity"></activity>
         <activity android:name=".AddFriendsActivity" />
+        <activity
+            android:name=".BetsViewerActivity"
+            android:label="@string/title_activity_bets_viewer"
+            android:theme="@style/NoActionBar"></activity>
+        <activity
+            android:name=".SearchBetsBufferActivity"
+            android:label="@string/title_activity_search_bets_buffer"
+            android:theme="@style/NoActionBar" />
         <activity android:name=".SuggestedBetsActivity" />
         <activity android:name=".LeaderboardActivity" />
         <activity android:name=".SearchBetsActivity" />
