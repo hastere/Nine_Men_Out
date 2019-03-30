@@ -14,6 +14,15 @@
             android:label="@string/title_activity_place_bet"
             android:theme="@style/NoActionBar"></activity>
         <activity android:name=".SuggestedBetsActivity" />
+        <activity
+            android:name=".BetsViewerActivity"
+            android:label="@string/title_activity_bets_viewer"
+            android:theme="@style/NoActionBar"></activity>
+        <activity
+            android:name=".SearchBetsBufferActivity"
+            android:label="@string/title_activity_search_bets_buffer"
+            android:theme="@style/NoActionBar" />
+        <activity android:name=".SuggestedBetsActivity" />
         <activity android:name=".LeaderboardActivity" />
         <activity android:name=".SearchBetsActivity" />
         <activity android:name=".CreateBetsActivity" />

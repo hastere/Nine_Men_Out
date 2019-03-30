@@ -102,5 +102,5 @@ public class Bets {
         // needed for cardview and bet searches
     }
 
-
+}
 }

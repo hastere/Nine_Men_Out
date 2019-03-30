@@ -16,13 +16,13 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/text_view_title"
+            android:id="@+id/betTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_toStartOf="@id/text_view_priority"
-            android:layout_toLeftOf="@id/text_view_priority"
+            android:layout_toStartOf="@id/oddsText"
+            android:layout_toLeftOf="@id/oddsText"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Title"
@@ -31,7 +31,7 @@
         </TextView>
 
         <TextView
-            android:id="@+id/text_view_priority"
+            android:id="@+id/oddsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -46,10 +46,11 @@
             android:id="@+id/text_view_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_title"
+            android:layout_below="@id/betTitle"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:text="This is where the odds are placed">
+            android:text="This is where the odds are placed"
+            android:textSize="18sp">
 
         </TextView>
 
