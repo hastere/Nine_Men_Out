@@ -116,8 +116,6 @@ public class placeBetActivity extends AppCompatActivity {
 
         DocumentReference docRef = gamesRef.document(documentID);
         DocumentReference userRef = userCollectionRef.document(user.getEmail());
-        DocumentReference newBetRef = db.collection("bets").document();
-
 
         CollectionReference userBetsRef = userRef.collection("bets");
         CollectionReference betsCollectionRef = db.collection("bets");
@@ -128,13 +126,13 @@ public class placeBetActivity extends AppCompatActivity {
 
         Map<String, Object> userBet = new HashMap<String, Object>();
         // active
-        //userBet.put("active", (int) 0);
+        userBet.put("active", (int) 0);
         // amount
-        //userBet.put("amount", (int) betValue);
+        userBet.put("amount", (int) betValue);
         // away
         userBet.put("away", away);
         // date expires
-        userBet.put("date_expires", gameTime);
+        userBet.put("date_expires", gameStart);
         // favorite
         userBet.put("favorite", favorite);
         // home
@@ -155,10 +153,10 @@ public class placeBetActivity extends AppCompatActivity {
                     if(document.exists()){
                         Log.d("UserCheck", "Got User");
                         long points = (long) document.get("points");
-                        if(points >= betValue && (betValue > 0)) {
-                              Log.d("BalanceCheck", "Got User");
-//                            document.update("points", (points - betValue));
-//                            document.update("activepoints")
+                        long activePoints = (long) document.get("activePoints");
+                        if((points - activePoints) >= betValue && (betValue > 0)) {
+                            Log.d("BalanceCheck", "Got User");
+                            userRef.update("activePoints", (activePoints + betValue));
 
                         }
                         else {
@@ -179,18 +177,29 @@ public class placeBetActivity extends AppCompatActivity {
 
 
 
-//        userBetsRef.add(userBet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//            @Override
-//            public void onSuccess(DocumentReference documentReference) { Log.d("heyo", "DocumentSnapshot written with ID: " + documentReference.getId()); }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.w("userBetsCol", "Error adding document", e);
-//            }
-//        });
+        userBetsRef.add(userBet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) { Log.d("heyo", "DocumentSnapshot written with ID: " + documentReference.getId()); }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("userBetsCol", "Error adding document", e);
+            }
+        });
 
 
-        newBetRef.set(userBet);
+        betsCollectionRef.add(userBet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d("heyo", "DocumentSnapshot written with ID: " + documentReference.getId());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("BetsColl", "Error adding document", e);
+            }
+        });
+
         Context context = getApplicationContext();
         CharSequence toastMessage = "Bet Accepted!";
         int toastDuration = Toast.LENGTH_SHORT;
