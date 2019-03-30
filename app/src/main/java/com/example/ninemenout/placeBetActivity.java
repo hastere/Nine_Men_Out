@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ import java.util.Map;
 public class placeBetActivity extends AppCompatActivity {
 
     TextView gameTitle, gameTime, odds;
+    RadioButton homeTeamOverButton, awayTeamUnderButton;
+
     String home, away, gameStart, favorite, favoriteSpread;
     double overUnder, homeSpread, awaySpread;
 
@@ -48,6 +51,8 @@ public class placeBetActivity extends AppCompatActivity {
         gameTitle = findViewById(R.id.gameTitle);
         gameTime = findViewById(R.id.gameTime);
         odds = findViewById(R.id.odds);
+        homeTeamOverButton = findViewById(R.id.radioHomeOver);
+        awayTeamUnderButton = findViewById(R.id.radioAwayUnder);
 
 
         button =(Button) findViewById(R.id.placeBet);
@@ -57,9 +62,8 @@ public class placeBetActivity extends AppCompatActivity {
                 createBet(v);
             }
         });
-        // betsViewer should be passed the document ID as a string (reduces querying overall)
+        // game is passed in as string
         Bundle b = this.getIntent().getExtras();
-        // only query if the document ID exists
         if(b != null){
             String docID = b.getString("documentID");
             documentID = docID;
@@ -92,6 +96,10 @@ public class placeBetActivity extends AppCompatActivity {
                             gameTitle.setText((home + " vs. " + away));
                             gameTime.setText(gameStart);
                             odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
+
+                            homeTeamOverButton.setText(home);
+                            awayTeamUnderButton.setText(away);
+
                         } else {
                             Log.d("oops", "No such document");
                         }
@@ -116,35 +124,50 @@ public class placeBetActivity extends AppCompatActivity {
 
         DocumentReference docRef = gamesRef.document(documentID);
         DocumentReference userRef = userCollectionRef.document(user.getEmail());
-
         CollectionReference userBetsRef = userRef.collection("bets");
         CollectionReference betsCollectionRef = db.collection("bets");
 
         EditText betSize = (EditText) findViewById(R.id.betSize);
-        //EditText betType = (EditText) findViewById(R.id.betType);
         long betValue = Long.parseLong(betSize.getText().toString());
+        //EditText betType = (EditText) findViewById(R.id.betType);
 
+        //create new bet document
         Map<String, Object> userBet = new HashMap<String, Object>();
-        // active
         userBet.put("active", (int) 0);
-        // amount
         userBet.put("amount", (int) betValue);
-        // away
         userBet.put("away", away);
-        // date expires
         userBet.put("date_expires", gameStart);
-        // favorite
         userBet.put("favorite", favorite);
-        // home
         userBet.put("home", home);
-        // odds
         userBet.put("odds", favoriteSpread);
-        // type
         userBet.put("type", "spread");
-        //gameRefId
-        //userBet.put("gameRef", documentID);
+        userBet.put("gameRef", documentID);
 
-        userBet.put("betOnFavorite", user.getEmail().toString());
+        boolean checked = ((RadioButton) view).isChecked();
+
+        //Place bet on underdog or favorite based off of home or away team
+        switch(view.getId()) {
+            case R.id.radioHomeOver:
+                if(checked) {
+                    if (home == favorite)
+                        userBet.put("betOnFavorite", user.getEmail());
+                    else
+                        userBet.put("betOnUnderdog", user.getEmail());
+                }
+                break;
+            case R.id.radioAwayUnder:
+                if(checked) {
+                    if (away == favorite)
+                        userBet.put("betOnFavorite", user.getEmail());
+                    else
+                        userBet.put("betOnUnderdog", user.getEmail());
+
+                }
+                break;
+            default:
+        }
+
+        //check that user has enough points to bet
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task){
@@ -154,9 +177,13 @@ public class placeBetActivity extends AppCompatActivity {
                         Log.d("UserCheck", "Got User");
                         long points = (long) document.get("points");
                         long activePoints = (long) document.get("activePoints");
+                        //move points to active status
                         if((points - activePoints) >= betValue && (betValue > 0)) {
                             Log.d("BalanceCheck", "Got User");
                             userRef.update("activePoints", (activePoints + betValue));
+                            DocumentReference newBetRef = userBetsRef.document();
+                            newBetRef.set(userBet);
+                            betsCollectionRef.document(newBetRef.getId()).set(userBet);
 
                         }
                         else {
@@ -175,39 +202,33 @@ public class placeBetActivity extends AppCompatActivity {
             }
         });
 
-
-
-        userBetsRef.add(userBet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) { Log.d("heyo", "DocumentSnapshot written with ID: " + documentReference.getId()); }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("userBetsCol", "Error adding document", e);
-            }
-        });
-
-
-        betsCollectionRef.add(userBet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d("heyo", "DocumentSnapshot written with ID: " + documentReference.getId());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("BetsColl", "Error adding document", e);
-            }
-        });
-
         Context context = getApplicationContext();
         CharSequence toastMessage = "Bet Accepted!";
         int toastDuration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, toastMessage, toastDuration);
         toast.show();
 
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, browseGames.class);
         startActivity(intent);
+    }
+
+
+    public void chooseBetType(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // update the array that will be sent to search bets based on button clicks
+        switch(view.getId()) {
+            case R.id.radioSpread:
+                if(checked)
+                    homeTeamOverButton.setText(home);
+                    awayTeamUnderButton.setText(away);
+                break;
+            case R.id.radioOverUnder:
+                if(checked)
+                    homeTeamOverButton.setText("Over");
+                    awayTeamUnderButton.setText("Under");
+                    break;
+        }
     }
 
 }

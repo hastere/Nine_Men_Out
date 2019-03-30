@@ -25,7 +25,7 @@
         <activity android:name=".SuggestedBetsActivity" />
         <activity android:name=".LeaderboardActivity" />
         <activity android:name=".SearchBetsActivity" />
-        <activity android:name=".CreateBetsActivity" />
+        <activity android:name=".browseGames" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".RegistrationActivity" />
