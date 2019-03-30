@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +30,8 @@ public class placeBetActivity extends AppCompatActivity {
 
     TextView gameTitle, gameTime, odds;
     String home, away, gameStart, favorite, favoriteSpread;
-    Long overUnder, homeSpread, awaySpread;
+    double overUnder, homeSpread, awaySpread;
+
     private Button button;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference gamesRef = db.collection("games");
@@ -73,9 +76,9 @@ public class placeBetActivity extends AppCompatActivity {
                             gameStart = ((String) document.get("event_date"));
                             favorite = "";
                             favoriteSpread = "";
-                            overUnder = ((long) document.get("over_under"));
-                            homeSpread = ((long) document.get("home_spread"));
-                            awaySpread = ((long) document.get("away_spread"));
+                            overUnder = document.getDouble("over_under");
+                            homeSpread =  document.getDouble("home_spread");
+                            awaySpread =  document.getDouble("away_spread");
 
                             if (homeSpread < 0) {
                                 favorite = home;
@@ -88,7 +91,7 @@ public class placeBetActivity extends AppCompatActivity {
 
                             gameTitle.setText((home + " vs. " + away));
                             gameTime.setText(gameStart);
-                            odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Long.toString(overUnder));
+                            odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
                         } else {
                             Log.d("oops", "No such document");
                         }
@@ -109,64 +112,85 @@ public class placeBetActivity extends AppCompatActivity {
     // accepts the bet and returns to the home page
     public void createBet(View view){
 
+        String userCollectionBetID;
+
         DocumentReference docRef = gamesRef.document(documentID);
         DocumentReference userRef = userCollectionRef.document(user.getEmail());
+        DocumentReference newBetRef = db.collection("bets").document();
+
 
         CollectionReference userBetsRef = userRef.collection("bets");
         CollectionReference betsCollectionRef = db.collection("bets");
 
         EditText betSize = (EditText) findViewById(R.id.betSize);
         //EditText betType = (EditText) findViewById(R.id.betType);
-        Long betValue = Long.parseLong(betSize.getText().toString());
+        long betValue = Long.parseLong(betSize.getText().toString());
 
+        Map<String, Object> userBet = new HashMap<String, Object>();
+        // active
+        //userBet.put("active", (int) 0);
+        // amount
+        //userBet.put("amount", (int) betValue);
+        // away
+        userBet.put("away", away);
+        // date expires
+        userBet.put("date_expires", gameTime);
+        // favorite
+        userBet.put("favorite", favorite);
+        // home
+        userBet.put("home", home);
+        // odds
+        userBet.put("odds", favoriteSpread);
+        // type
+        userBet.put("type", "spread");
+        //gameRefId
+        //userBet.put("gameRef", documentID);
 
+        userBet.put("betOnFavorite", user.getEmail().toString());
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task){
                 if(task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
+                        Log.d("UserCheck", "Got User");
                         long points = (long) document.get("points");
-                        if(points >= betValue && (betValue != null || betValue > 0)) {
-                            Map<String, Object> userBet = new HashMap<String, Object>();
-                            // active
-                            userBet.put("active", 0);
-                            // amount
-                            userBet.put("amount", betValue);
-                            // away
-                            userBet.put("away", away);
-                            // date expires
-                            userBet.put("date_expires", gameTime);
-                            // favorite
-                            userBet.put("favorite", favorite);
-                            // home
-                            userBet.put("home", home);
-                            // odds
-                            userBet.put("odds", favoriteSpread);
-                            // type
-                            userBet.put("type", "spread");
-                            //gameRefId
-                            userBet.put("gameRef", documentID);
+                        if(points >= betValue && (betValue > 0)) {
+                              Log.d("BalanceCheck", "Got User");
+//                            document.update("points", (points - betValue));
+//                            document.update("activepoints")
 
-                            userBetsRef.add(userBet);
-                            betsCollectionRef.add(userBet);
                         }
                         else {
-                            Log.d("googy", "no sufficient points");
+                            Log.d("BalanceCheck", "no sufficient points");
                             Context context = getApplicationContext();
                             CharSequence toastMessage = "Not enough points! Try Again.";
                             int toastDuration = Toast.LENGTH_SHORT;
                             Toast toast = Toast.makeText(context, toastMessage, toastDuration);
                             toast.show();
                         }
-                    } else {
-                        Log.d("googy", "No such document");
                     }
-                } else {
-                    Log.d("googy", "get failed with ", task.getException());
+                    else {
+                        Log.d("UserCheck", "No such document");
+                    }
                 }
             }
         });
+
+
+
+//        userBetsRef.add(userBet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//            @Override
+//            public void onSuccess(DocumentReference documentReference) { Log.d("heyo", "DocumentSnapshot written with ID: " + documentReference.getId()); }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.w("userBetsCol", "Error adding document", e);
+//            }
+//        });
+
+
+        newBetRef.set(userBet);
         Context context = getApplicationContext();
         CharSequence toastMessage = "Bet Accepted!";
         int toastDuration = Toast.LENGTH_SHORT;
