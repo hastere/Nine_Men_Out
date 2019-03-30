@@ -2,12 +2,10 @@ package com.example.ninemenout;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -24,8 +22,19 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
     // overrides the view holder to display each position in the specific way
     @Override
     protected void onBindViewHolder(@NonNull BetHolder holder, int position, @NonNull Bets model) {
+        String untaken = "Alabama";
+
+        if(model.getBetOnFavorite().equals(""))
+            untaken = model.getFavorite();
+        else {
+            if(model.getHome().equals(model.getFavorite())){
+                untaken = model.getAway();
+            } else {
+                untaken = model.getHome();
+            }
+        }
         holder.textViewTitle.setText(model.getHome() + " vs. " + model.getAway());
-        holder.textViewDescription.setText("Expires " + model.getDate_expires() + " | Favorite: " + model.getFavorite());
+        holder.textViewDescription.setText("Favorite: " + model.getFavorite() + " | Unclaimed: " + untaken);
         holder.textViewPriority.setText("Odds: " + model.getOdds());
     }
 
@@ -43,9 +52,9 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
 
         public BetHolder(@NonNull View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.text_view_title);
+            textViewTitle = itemView.findViewById(R.id.betTitle);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewPriority = itemView.findViewById(R.id.text_view_priority);
+            textViewPriority = itemView.findViewById(R.id.oddsText);
 
             // so users can select bets to view them / accept them
             itemView.setOnClickListener(new View.OnClickListener() {

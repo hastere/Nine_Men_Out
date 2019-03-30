@@ -49,7 +49,7 @@ public class Bets {
         return betOnFavorite;
     }
 
-    public void setBetOnFavorite(String user1) {
+    public void setBetOnFavorite(String betOnFavorite) {
         this.betOnFavorite = betOnFavorite;
     }
 
@@ -57,7 +57,7 @@ public class Bets {
         return betOnUnderdog;
     }
 
-    public void setBetOnUnderdog(String user2) {
+    public void setBetOnUnderdog(String betOnUnderdog) {
         this.betOnUnderdog = betOnUnderdog;
     }
 
@@ -85,12 +85,13 @@ public class Bets {
         this.amount = amount;
     }
 
-    public Bets(String away, String home, String favorite, String odds, String type, String betOnFavorite, String date_expires, int amount) {
+    public Bets(String away, String home, String favorite, String odds, String type, String betOnFavorite, String betOnUnderdog, String date_expires, int amount) {
         this.away = away;
         this.home = home;
         this.favorite = favorite;
         this.odds = odds;
         this.type = type;
+        this.betOnUnderdog = betOnUnderdog;
         this.betOnFavorite = betOnFavorite;
         this.date_expires = date_expires;
         this.active = 0;
