@@ -26,7 +26,7 @@ public UserAdapter(@NonNull FirestoreRecyclerOptions<Users> options) {
 @Override
 protected void onBindViewHolder(@NonNull UserHolder holder, int position, @NonNull Users model) {
         holder.textViewTitle.setText(model.getName());
-        holder.textViewDescription.setText("Points " + model.getPoints());
+        holder.textViewDescription.setText("Points: " + model.getPoints());
         }
 
 @NonNull
