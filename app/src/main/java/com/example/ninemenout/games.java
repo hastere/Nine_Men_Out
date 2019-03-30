@@ -1,8 +1,8 @@
 package com.example.ninemenout;
 
 public class games {
-    private String away_team, home_team, event_date;
-    private double over_under, home_spread;
+    private String away_team, home_team, event_date, event_id;
+    private double over_under, home_spread, away_spread;
 
 
     public String getHome_team() {
@@ -12,6 +12,8 @@ public class games {
         return away_team;
     }
     public double getHome_spread() { return home_spread; }
+    public double getAway_spread() { return away_spread; }
+    public String getEvent_id() { return event_id; }
     public double getOver_under() { return over_under; }
     public String getEvent_date() { return event_date; }
 
@@ -22,18 +24,22 @@ public class games {
     public void setHome_spread(double home_spread) {
         this.home_spread = home_spread;
     }
+    public void setAway_spread(double away_spread) {this.away_spread = away_spread; }
     public void setOver_under(double over_under) { this.over_under = over_under; }
     public void setEvent_date(String event_date) {
         this.event_date = event_date;
     }
+    public void setGame_id(String event_id) {this.event_id = event_id; }
 
 
-    public games(String away_team, String home_team, double home_spread, double over_under, String event_date) {
+    public games(String away_team, String home_team, double home_spread, double away_spread, double over_under, String event_date, String event_id) {
         this.away_team = away_team;
         this.home_team = home_team;
         this.home_spread = home_spread;
+        this.away_spread = away_spread;
         this.over_under = over_under;
         this.event_date = event_date;
+        this.event_id = event_id;
     }
     public games() {}
 

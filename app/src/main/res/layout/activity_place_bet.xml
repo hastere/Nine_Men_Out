@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="@+id/gameTime" />
 
         <Button
-            android:id="@+id/place_bet"
+            android:id="@+id/placeBet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="54dp"
@@ -66,19 +66,19 @@
             android:layout_marginStart="27dp"
             android:layout_marginLeft="27dp"
             android:layout_marginBottom="26dp"
-            app:layout_constraintBottom_toTopOf="@+id/editText"
-            app:layout_constraintStart_toStartOf="@+id/editText" />
+            app:layout_constraintBottom_toTopOf="@+id/betSize"
+            app:layout_constraintStart_toStartOf="@+id/betSize" />
 
         <TextView
             android:id="@+id/betAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bet Amount"
-            app:layout_constraintBaseline_toBaselineOf="@+id/editText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/betSize"
             app:layout_constraintStart_toStartOf="@+id/betType" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/betSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
