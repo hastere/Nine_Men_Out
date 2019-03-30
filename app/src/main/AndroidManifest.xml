@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".place_bet"
+            android:name=".placeBetActivity"
             android:label="@string/title_activity_place_bet"
             android:theme="@style/NoActionBar"></activity>
         <activity android:name=".SuggestedBetsActivity" />
