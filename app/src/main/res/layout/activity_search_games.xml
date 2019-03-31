@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".SearchBetsActivity">
 
-    <EditText
-        android:id="@+id/search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="TEAM NAME"
-        android:inputType="text" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSearch"
         android:layout_width="403dp"
@@ -22,8 +14,4 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <ImageButton
-        android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </android.support.design.widget.CoordinatorLayout>
