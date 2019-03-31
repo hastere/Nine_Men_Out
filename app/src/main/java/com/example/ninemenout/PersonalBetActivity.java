@@ -48,7 +48,7 @@ public class PersonalBetActivity extends AppCompatActivity {
         setUpRecyclerView();
     }
 
-    private void setUpSubCollection() {
+    private void setUpSubCollection() { //sets up subcollection to display the documents in it
         betRef = db.collection("users").document(email).collection("bets");
     }
 
