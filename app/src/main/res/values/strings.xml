@@ -3,4 +3,5 @@
     <string name="title_activity_user_profile">UserProfile</string>
     <string name="title_activity_search_bets_buffer">SearchBetsBufferActivity</string>
     <string name="title_activity_bets_viewer">BetsViewerActivity</string>
+    <string name="title_activity_place_bet">place_bet</string>
 </resources>

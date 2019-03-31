@@ -76,4 +76,7 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
     }
+
+
+
 }

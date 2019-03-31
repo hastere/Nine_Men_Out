@@ -107,7 +107,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void openCreateBetsActivity() {
-        Intent intent = new Intent(this, CreateBetsActivity.class);
+        Intent intent = new Intent(this, browseGames.class);
         startActivity(intent);
     }
 
