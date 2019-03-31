@@ -144,16 +144,24 @@ public class placeBetActivity extends AppCompatActivity {
         if (options[0] == "spread") {
             userBet.put("type", "spread");
             if (options[1] == "homeOver") {
-                if (home == favorite)
+                if (home == favorite) {
                     userBet.put("betOnFavorite", user.getEmail());
-                else
                     userBet.put("betOnUnderdog", user.getEmail());
+                }
+                else {
+                    userBet.put("betOnFavorite", "");
+                }
             }
             else {
-                if (away == favorite)
+                if (away == favorite) {
                     userBet.put("betOnFavorite", user.getEmail());
-                else
+                    userBet.put("betOnUnder", "");
+                }
+                else{
                     userBet.put("betOnUnderdog", user.getEmail());
+                    userBet.put("betOnFavorite", "");
+                }
+
             }
         }
         else {
