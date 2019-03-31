@@ -28,8 +28,9 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
         if(email == model.getBetOnFavorite()) {
             holder.textViewPriority.setText("Pick: " + model.getBetOnFavorite());
         }
-        if(email == model.getBetOnUnderdog)
-        holder.textViewPriority.setText("Pick: " + model.getBetOnFavorite());
+        if(email == model.getBetOnUnderdog()) {
+            holder.textViewPriority.setText("Pick: " + model.getBetOnUnderdog());
+        }
     }
 
     @NonNull

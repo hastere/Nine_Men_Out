@@ -28,12 +28,12 @@ public class PersonalBetActivity extends AppCompatActivity {
     private static final String TAG = "PersonalBetActivity";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    static private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private CollectionReference betRef;
 
     private PersonalBetsAdapter adapter;
 
-    private String email = user.getEmail();
+   static  String email = user.getEmail();
 
     private DocumentReference docRef = db.collection("users").document(email);
 /*
@@ -59,7 +59,7 @@ public class PersonalBetActivity extends AppCompatActivity {
     }
 */
 
-    public String getEmail() {
+    static public String getEmail() {
         return email;
     }
     @Override
