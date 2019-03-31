@@ -26,7 +26,7 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
         homeTeam = findViewById(R.id.homeTeam);
 
         // default values mainly used for testing
-        toSend[0] = "Alabama";
+        toSend[0] = "any";
         toSend[1] = "spread";
         toSend[2] = "odds";
 
