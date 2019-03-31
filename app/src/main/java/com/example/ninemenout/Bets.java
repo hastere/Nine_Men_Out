@@ -98,6 +98,13 @@ public class Bets {
         this.amount = amount;
     }
 
+    public Bets(String away, String home, String favorite, String odds) {
+        this.away = away;
+        this.home = home;
+        this.favorite = favorite;
+        this.odds = odds;
+    }
+
     public Bets(){
         // needed for cardview and bet searches
     }
