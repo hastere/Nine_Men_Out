@@ -33,6 +33,7 @@ public class placeBetActivity extends AppCompatActivity {
     RadioButton homeTeamOverButton, awayTeamUnderButton;
 
     String home, away, gameStart, favorite, favoriteSpread;
+    String[] options = new String[2];
     double overUnder, homeSpread, awaySpread;
 
     private Button button;
@@ -54,7 +55,6 @@ public class placeBetActivity extends AppCompatActivity {
         homeTeamOverButton = findViewById(R.id.radioHomeOver);
         awayTeamUnderButton = findViewById(R.id.radioAwayUnder);
 
-
         button =(Button) findViewById(R.id.placeBet);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,6 @@ public class placeBetActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
-
                             home = ((String) document.get("home_team"));
                             away = ((String) document.get("away_team"));
                             gameStart = ((String) document.get("event_date"));
@@ -96,7 +95,6 @@ public class placeBetActivity extends AppCompatActivity {
                             gameTitle.setText((home + " vs. " + away));
                             gameTime.setText(gameStart);
                             odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
-
                             homeTeamOverButton.setText(home);
                             awayTeamUnderButton.setText(away);
 
@@ -117,7 +115,7 @@ public class placeBetActivity extends AppCompatActivity {
 
     }
 
-    // accepts the bet and returns to the home page
+    // creates the bet and returns to the list of gamees
     public void createBet(View view){
 
         String userCollectionBetID;
@@ -143,29 +141,31 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("type", "spread");
         userBet.put("gameRef", documentID);
 
-        boolean checked = ((RadioButton) view).isChecked();
-
-        //Place bet on underdog or favorite based off of home or away team
-        switch(view.getId()) {
-            case R.id.radioHomeOver:
-                if(checked) {
-                    if (home == favorite)
-                        userBet.put("betOnFavorite", user.getEmail());
-                    else
-                        userBet.put("betOnUnderdog", user.getEmail());
-                }
-                break;
-            case R.id.radioAwayUnder:
-                if(checked) {
-                    if (away == favorite)
-                        userBet.put("betOnFavorite", user.getEmail());
-                    else
-                        userBet.put("betOnUnderdog", user.getEmail());
-
-                }
-                break;
-            default:
+        if (options[0] == "spread") {
+            userBet.put("type", "spread");
+            if (options[1] == "homeOver") {
+                if (home == favorite)
+                    userBet.put("betOnFavorite", user.getEmail());
+                else
+                    userBet.put("betOnUnderdog", user.getEmail());
+            }
+            else {
+                if (away == favorite)
+                    userBet.put("betOnFavorite", user.getEmail());
+                else
+                    userBet.put("betOnUnderdog", user.getEmail());
+            }
         }
+        else {
+            userBet.put("type", "over under");
+            if (options[1] == "homeOver")
+                userBet.put("betOnOver", user.getEmail());
+            else
+                userBet.put("betOnUnder", user.getEmail());
+        }
+
+
+
 
         //check that user has enough points to bet
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -215,19 +215,36 @@ public class placeBetActivity extends AppCompatActivity {
 
     public void chooseBetType(View view){
         boolean checked = ((RadioButton) view).isChecked();
-
-        // update the array that will be sent to search bets based on button clicks
         switch(view.getId()) {
             case R.id.radioSpread:
-                if(checked)
+                if(checked) {
                     homeTeamOverButton.setText(home);
                     awayTeamUnderButton.setText(away);
+                    options[0] = "spread";
+                }
                 break;
             case R.id.radioOverUnder:
-                if(checked)
+                if(checked) {
                     homeTeamOverButton.setText("Over");
                     awayTeamUnderButton.setText("Under");
-                    break;
+                    options[0] = "over under";
+                }
+                break;
+        }
+    }
+    public void chooseBetOn(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+        switch(view.getId()) {
+            case R.id.radioHomeOver:
+                if(checked) {
+                    options[1] = "homeOver";
+                }
+                break;
+            case R.id.radioAwayUnder:
+                if(checked) {
+                    options[1] = "awayUnder";
+                }
+                break;
         }
     }
 
