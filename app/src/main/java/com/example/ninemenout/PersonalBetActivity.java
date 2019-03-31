@@ -58,6 +58,10 @@ public class PersonalBetActivity extends AppCompatActivity {
         return username;
     }
 */
+
+    public String getEmail() {
+        return email;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

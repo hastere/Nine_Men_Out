@@ -19,12 +19,16 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
 
     public PersonalBetsAdapter(@NonNull FirestoreRecyclerOptions<Bets> options) {super(options);}
 
-    //public String username = PersonalBetActivity.getUsername();
+    private String email = PersonalBetActivity.getEmail();
 
     @Override
     protected void onBindViewHolder(@NonNull PersonalBetsAdapter.BetHolder holder, int position, @NonNull Bets model) {
         holder.textViewTitle.setText(model.getHome() + " vs. " + model.getAway());
         holder.textViewDescription.setText("Expires " + model.getDate_expires() + "| Favorite: " + model.getFavorite() + "| Odds: " + model.getOdds());
+        if(email == model.getBetOnFavorite()) {
+            holder.textViewPriority.setText("Pick: " + model.getBetOnFavorite());
+        }
+        if(email == model.getBetOnUnderdog)
         holder.textViewPriority.setText("Pick: " + model.getBetOnFavorite());
     }
 
