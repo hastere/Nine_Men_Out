@@ -97,11 +97,6 @@ public class HomePageActivity extends AppCompatActivity {
                 openLeaderboardActivity();
             }
         });
-        getPointsHere();
-    }
-
-    public void getPointsHere(){
-        Log.d("googy", ((Integer) pointDisplay).toString());
     }
 
     //// FUNCTIONS TO CONTROL CHANGING TO A NEW ACTIVITY BY BUTTON PRESS ////

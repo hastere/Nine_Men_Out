@@ -118,16 +118,27 @@ public class BetsViewerActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
+                        // add copy to the users bets
                         Map<String, Object> userBet = new HashMap<String, Object>();
                         docRef.update("active", 1);
                         if(unclaimed.equals("favorite")) {
                             docRef.update("betOnFavorite", user.getEmail());
                             userBet.put("betOnFavorite", user.getEmail());
                             userBet.put("betOnUnderdog", ((String) document.get("betOnUnderdog")));
+                            db.collection("users").document((String) document.get("betOnUnderdog"))
+                                    .collection("bets").document(documentID).update(
+                                    "active", 1,
+                                    "betOnFavorite", user.getEmail()
+                            );
                         } else {
                             docRef.update("betOnUnderdog", user.getEmail());
                             userBet.put("betOnUnderdog", user.getEmail());
                             userBet.put("betOnFavorite", ((String) document.get("betOnFavorite")));
+                            db.collection("users").document((String) document.get("betOnFavorite"))
+                                    .collection("bets").document(documentID).update(
+                                    "active", 1,
+                                    "betOnUnderdog", user.getEmail()
+                            );
                         }
 
                         // active
@@ -147,7 +158,10 @@ public class BetsViewerActivity extends AppCompatActivity {
                         // type
                         userBet.put("type", ((String) document.get("type")));
 
-                        userBetsRef.add(userBet);
+                        userBetsRef.document(documentID).set(userBet);
+//                        userBetsRef.add(userBet);
+
+                        // update bet creators bets to have new data
                     } else {
                         Log.d("googy", "No such document");
                     }
