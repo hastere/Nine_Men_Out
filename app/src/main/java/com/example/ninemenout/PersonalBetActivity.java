@@ -31,12 +31,12 @@ public class PersonalBetActivity extends AppCompatActivity {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private CollectionReference betRef;
 
-    private BetsAdapter adapter;
+    private PersonalBetsAdapter adapter;
 
     private String email = user.getEmail();
 
     private DocumentReference docRef = db.collection("users").document(email);
-
+/*
     private DocumentSnapshot getDocSnapshot() {
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -57,7 +57,7 @@ public class PersonalBetActivity extends AppCompatActivity {
         String username = docSnap.getString("username");
         return username;
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
