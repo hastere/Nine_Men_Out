@@ -38,6 +38,7 @@ public class SearchBetsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_bets);
 
@@ -49,7 +50,7 @@ public class SearchBetsActivity extends AppCompatActivity {
             setUpRecyclerV(readHolder);
         else {
             // default search values, mainly used for testing
-            arr[0] = "Alabama";
+            arr[0] = "any";
             arr[1] = "spread";
             arr[2] = "odds";
             setUpRecyclerV(arr);
@@ -60,16 +61,23 @@ public class SearchBetsActivity extends AppCompatActivity {
     // display recyclerview based on the search terms
     private void setUpRecyclerV(String[] searchTerms) {
         // separate to reduce errors
-        String teamName = toCamelcase(searchTerms[0]);
+//        String teamName = toCamelcase(searchTerms[0]);
+        String teamName = searchTerms[0];
         String betType = searchTerms[1];
         String sortType = searchTerms[2];
 
-        // query based on data supplied through intent
-        Query query = betRef.whereEqualTo("active", 0)
-                .whereEqualTo("type", betType)
-                .whereEqualTo("home", teamName)
-                .orderBy(sortType, Query.Direction.DESCENDING);
+        Query query;
 
+        if(searchTerms[0].equals("any")){
+            Log.d("googy", "in one");
+            query = betRef.whereEqualTo("active", 0).orderBy("type", Query.Direction.DESCENDING);
+        } else {
+            // query based on data supplied through intent
+            query = betRef.whereEqualTo("active", 0)
+                    .whereEqualTo("type", betType)
+                    .whereEqualTo("home", searchTerms[0])
+                    .orderBy(sortType, Query.Direction.DESCENDING);
+        }
         // set view based on the query object
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
                 .setQuery(query, Bets.class)
@@ -114,6 +122,8 @@ public class SearchBetsActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        db = FirebaseFirestore.getInstance();
+        betRef = db.collection("bets");
         super.onStart();
         adapter.startListening(); // so the adapter will update live
     }

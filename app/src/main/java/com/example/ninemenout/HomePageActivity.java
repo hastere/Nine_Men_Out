@@ -126,4 +126,8 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 }
