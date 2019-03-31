@@ -158,6 +158,25 @@ public class BetsViewerActivity extends AppCompatActivity {
                         // type
                         userBet.put("type", ((String) document.get("type")));
 
+                        int changer = document.getLong("amount").intValue();
+                        emailRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> userTask) {
+                                if (userTask.isSuccessful()) {
+                                    DocumentSnapshot userDocument = userTask.getResult();
+                                    if (userDocument.exists()) {
+                                        int userTotal = userDocument.getLong("activePoints").intValue();
+                                        int sumTotal = userTotal + changer;
+
+                                        emailRef.update(
+                                                "activePoints", sumTotal
+                                        );
+                                    }
+                                }
+                            }
+                        });
+
+
                         userBetsRef.document(documentID).set(userBet);
 //                        userBetsRef.add(userBet);
 

@@ -35,7 +35,7 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
         }
         holder.textViewTitle.setText(model.getHome() + " vs. " + model.getAway());
         holder.textViewDescription.setText("Favorite: " + model.getFavorite() + "\n" + "Unclaimed: " + untaken);
-        holder.textViewPriority.setText("Odds: " + model.getOdds());
+        holder.textViewPriority.setText(model.getOdds() + " / " + ((Integer) model.getAmount()).toString());
     }
 
     // overrides the view holder creation to use the bet item layout

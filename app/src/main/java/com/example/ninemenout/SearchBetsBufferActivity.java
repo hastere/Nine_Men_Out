@@ -46,6 +46,9 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
                 if(checked)
                     toSend[1] = "straight";
                 break;
+            case R.id.overUnderButton:
+                if(checked)
+                    toSend[1] = "over under";
         }
     }
 
@@ -71,7 +74,6 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
         String teamName = homeTeam.getText().toString();
         if(!teamName.equals("")) // eliminate entering nothing, will default to Alabama if nothing entered
             toSend[0] = teamName;
-
         // send the array of information to the new search activity to be displayed
         Bundle b = new Bundle();
         b.putStringArray("terms", toSend);
