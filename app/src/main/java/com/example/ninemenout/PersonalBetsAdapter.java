@@ -22,10 +22,10 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
     private String email = PersonalBetActivity.getEmail();
 
     @Override
-    protected void onBindViewHolder(@NonNull PersonalBetsAdapter.BetHolder holder, int position, @NonNull Bets model) {
+    protected void onBindViewHolder(@NonNull PersonalBetsAdapter.BetHolder holder, int position, @NonNull Bets model) { //model functions come from Bets.java
         holder.textViewTitle.setText(model.getHome() + " vs. " + model.getAway());
         holder.textViewDescription.setText("Expires " + model.getDate_expires() + "| Favorite: " + model.getFavorite() + "| Odds: " + model.getOdds());
-        if(email == model.getBetOnFavorite()) {
+        if(email == model.getBetOnFavorite()) { //uses users email to determine what to display
             holder.textViewPriority.setText("Pick: " + model.getBetOnFavorite());
         }
         if(email == model.getBetOnUnderdog()) {

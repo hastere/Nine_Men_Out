@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onStart () {
+    public void onStart () { //checks to see if a user is currently logged in or not
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private boolean checkForm () {
+    private boolean checkForm () { //used to check that login information is correct and filled out
         boolean check = true;
         Log.d("myTag", emailLogin.getText().toString());
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return check;
     }
 
-    private void updateUI (FirebaseUser user){
+    private void updateUI (FirebaseUser user){ //switches the users screen to homepage when login is successful
         if (user != null) {
             Intent nextScreen = new Intent(this, HomePageActivity.class);
             this.startActivityForResult(nextScreen, 0);
@@ -113,11 +113,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick (View v){
         int i = v.getId();
-        if (i == R.id.btnCreate) {
+        if (i == R.id.btnCreate) { //takes user to registration page
             Intent nextScreen = new Intent(this, RegistrationActivity.class);
             this.startActivityForResult(nextScreen, 0);
         }
-        else if (i == R.id.btnLogin) {
+        else if (i == R.id.btnLogin) { //logs the user in
             login(emailLogin.getText().toString(), passwordLogin.getText().toString());
         }
     }

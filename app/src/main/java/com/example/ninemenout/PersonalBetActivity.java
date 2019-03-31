@@ -35,31 +35,7 @@ public class PersonalBetActivity extends AppCompatActivity {
 
    static  String email = user.getEmail();
 
-    private DocumentReference docRef = db.collection("users").document(email);
-/*
-    private DocumentSnapshot getDocSnapshot() {
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    // Document found in the offline cache
-                    DocumentSnapshot document = task.getResult();
-                    Log.d(TAG, "Cached document data: " + document.getData());
-                } else {
-                    Log.d(TAG, "Cached get failed: ", task.getException());
-                }
-            }
-        });
-    }
-
-    public String getUsername() {
-        DocumentSnapshot docSnap = getDocSnapshot();
-        String username = docSnap.getString("username");
-        return username;
-    }
-*/
-
-    static public String getEmail() {
+    static public String getEmail() { //for the personal bets adapter to determine what to show
         return email;
     }
     @Override
