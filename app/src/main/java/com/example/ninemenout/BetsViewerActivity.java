@@ -33,6 +33,7 @@ public class BetsViewerActivity extends AppCompatActivity {
     private CollectionReference userRef = db.collection("users");
     private String documentID, unclaimed;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    boolean amountTooHigh = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,7 @@ public class BetsViewerActivity extends AppCompatActivity {
 
     // accepts the bet and returns to the home page
     public void betAccepted(View view){
+        amountTooHigh = false;
         DocumentReference docRef = betsRef.document(documentID);
         DocumentReference emailRef = userRef.document(user.getEmail());
         CollectionReference userBetsRef = emailRef.collection("bets");
@@ -119,45 +121,6 @@ public class BetsViewerActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         // add copy to the users bets
-                        Map<String, Object> userBet = new HashMap<String, Object>();
-                        docRef.update("active", 1);
-                        if(unclaimed.equals("favorite")) {
-                            docRef.update("betOnFavorite", user.getEmail());
-                            userBet.put("betOnFavorite", user.getEmail());
-                            userBet.put("betOnUnderdog", ((String) document.get("betOnUnderdog")));
-                            db.collection("users").document((String) document.get("betOnUnderdog"))
-                                    .collection("bets").document(documentID).update(
-                                    "active", 1,
-                                    "betOnFavorite", user.getEmail()
-                            );
-                        } else {
-                            docRef.update("betOnUnderdog", user.getEmail());
-                            userBet.put("betOnUnderdog", user.getEmail());
-                            userBet.put("betOnFavorite", ((String) document.get("betOnFavorite")));
-                            db.collection("users").document((String) document.get("betOnFavorite"))
-                                    .collection("bets").document(documentID).update(
-                                    "active", 1,
-                                    "betOnUnderdog", user.getEmail()
-                            );
-                        }
-
-                        // active
-                        userBet.put("active", 1);
-                        // amount
-                        userBet.put("amount", document.getLong("amount"));
-                        // away
-                        userBet.put("away", ((String) document.get("away")));
-                        // date expirex
-                        userBet.put("date_expires", ((String) document.get("date_expires")));
-                        // favorite
-                        userBet.put("favorite", ((String) document.get("favorite")));
-                        // home
-                        userBet.put("home", ((String) document.get("home")));
-                        // odds
-                        userBet.put("odds", ((String) document.get("odds")));
-                        // type
-                        userBet.put("type", ((String) document.get("type")));
-
                         int changer = document.getLong("amount").intValue();
                         emailRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -165,22 +128,79 @@ public class BetsViewerActivity extends AppCompatActivity {
                                 if (userTask.isSuccessful()) {
                                     DocumentSnapshot userDocument = userTask.getResult();
                                     if (userDocument.exists()) {
-                                        int userTotal = userDocument.getLong("activePoints").intValue();
-                                        int sumTotal = userTotal + changer;
+                                        int userActive = userDocument.getLong("activePoints").intValue();
+                                        int userInactive = userDocument.getLong("points").intValue() - userActive;
+                                        int sumTotal = userActive + changer;
+                                        if(changer > userInactive){
+                                            Log.d("googy", "in here");
+                                            Context context = getApplicationContext();
+                                            CharSequence toastMessage = "Insufficient Points to Accept Bet";
+                                            int toastDuration = Toast.LENGTH_SHORT;
+                                            Toast toast = Toast.makeText(context, toastMessage, toastDuration);
+                                            toast.show();
+                                            amountTooHigh = true;
+                                            return;
+                                        }
 
                                         emailRef.update(
                                                 "activePoints", sumTotal
                                         );
+
+                                        if(!amountTooHigh) {
+                                            Log.d("googy", "in here1111");
+                                            Map<String, Object> userBet = new HashMap<String, Object>();
+
+                                            docRef.update("active", 1);
+                                            if (unclaimed.equals("favorite")) {
+                                                docRef.update("betOnFavorite", user.getEmail());
+                                                userBet.put("betOnFavorite", user.getEmail());
+                                                userBet.put("betOnUnderdog", ((String) document.get("betOnUnderdog")));
+                                                db.collection("users").document((String) document.get("betOnUnderdog"))
+                                                        .collection("bets").document(documentID).update(
+                                                        "active", 1,
+                                                        "betOnFavorite", user.getEmail()
+                                                );
+                                            } else {
+                                                docRef.update("betOnUnderdog", user.getEmail());
+                                                userBet.put("betOnUnderdog", user.getEmail());
+                                                userBet.put("betOnFavorite", ((String) document.get("betOnFavorite")));
+                                                db.collection("users").document((String) document.get("betOnFavorite"))
+                                                        .collection("bets").document(documentID).update(
+                                                        "active", 1,
+                                                        "betOnUnderdog", user.getEmail()
+                                                );
+                                            }
+
+                                            // active
+                                            userBet.put("active", 1);
+                                            // amount
+                                            userBet.put("amount", document.getLong("amount"));
+                                            // away
+                                            userBet.put("away", ((String) document.get("away")));
+                                            // date expirex
+                                            userBet.put("date_expires", ((String) document.get("date_expires")));
+                                            // favorite
+                                            userBet.put("favorite", ((String) document.get("favorite")));
+                                            // home
+                                            userBet.put("home", ((String) document.get("home")));
+                                            // odds
+                                            userBet.put("odds", ((String) document.get("odds")));
+                                            // type
+                                            userBet.put("type", ((String) document.get("type")));
+
+                                            userBetsRef.document(documentID).set(userBet);
+                                            Context context = getApplicationContext();
+                                            CharSequence toastMessage = "Bet Accepted!";
+                                            int toastDuration = Toast.LENGTH_SHORT;
+                                            Toast toast = Toast.makeText(context, toastMessage, toastDuration);
+                                            toast.show();
+                                        }
+
+                                        // update bet creators bets to have new data
                                     }
                                 }
                             }
                         });
-
-
-                        userBetsRef.document(documentID).set(userBet);
-//                        userBetsRef.add(userBet);
-
-                        // update bet creators bets to have new data
                     } else {
                         Log.d("googy", "No such document");
                     }
@@ -189,11 +209,6 @@ public class BetsViewerActivity extends AppCompatActivity {
                 }
             }
         });
-        Context context = getApplicationContext();
-        CharSequence toastMessage = "Bet Accepted!";
-        int toastDuration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, toastMessage, toastDuration);
-        toast.show();
 
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);

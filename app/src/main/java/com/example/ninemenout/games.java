@@ -29,7 +29,7 @@ public class games {
     public void setEvent_date(String event_date) {
         this.event_date = event_date;
     }
-    public void setGame_id(String event_id) {this.event_id = event_id; }
+    public void setEvent_id(String event_id) {this.event_id = event_id; }
 
 
     public games(String away_team, String home_team, double home_spread, double away_spread, double over_under, String event_date, String event_id) {
@@ -41,6 +41,12 @@ public class games {
         this.event_date = event_date;
         this.event_id = event_id;
     }
+
+    public games(String home_team, String away_team){
+        this.home_team = home_team;
+        this.away_team = away_team;
+    }
+
     public games() {}
 
 }

@@ -25,6 +25,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 
 // USES INFORMATION FROM THE SEARCH BETS BUFFER ACTIVITY PASSED BY INTENT
@@ -62,7 +63,7 @@ public class SearchBetsActivity extends AppCompatActivity {
     private void setUpRecyclerV(String[] searchTerms) {
         // separate to reduce errors
 //        String teamName = toCamelcase(searchTerms[0]);
-        String teamName = searchTerms[0];
+        String teamName = toExactMatch(searchTerms[0]);
         String betType = searchTerms[1];
         String sortType = searchTerms[2];
 
@@ -108,15 +109,23 @@ public class SearchBetsActivity extends AppCompatActivity {
     }
 
     // sanitize input since firestore requires exact matches for queries
-    public String toCamelcase(String team){
-        String temp = team;
-        if(team == null)
-            {
-                return team;
+    public static String toExactMatch(String team){
+        String ret = "";
+        boolean spaceFound = true;
+        for(int i = 0; i < team.length(); i++){
+            char x = team.charAt(i);
+            if(x == ' ') {
+                spaceFound = true;
+                ret += x;
+            } else{
+                if(spaceFound) {
+                    ret += toUpperCase(x);
+                    spaceFound = false;
+                } else
+                    ret += toLowerCase(x);
             }
+        }
 
-        temp = temp.toLowerCase();
-        String ret = temp.substring(0, 1).toUpperCase() + temp.substring(1);
         return ret;
     }
 
