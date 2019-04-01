@@ -18,6 +18,8 @@ public class gamesAdapter extends FirestoreRecyclerAdapter<games, gamesAdapter.g
         super(options);
     }
 
+
+    //set values for each item in the recycler view
     @Override
     protected void onBindViewHolder(@NonNull gameHolder holder, int position, @NonNull games model) {
         holder.textViewTitle.setText(model.getHome_team() + " vs. " + model.getAway_team());
@@ -42,7 +44,7 @@ public class gamesAdapter extends FirestoreRecyclerAdapter<games, gamesAdapter.g
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
 
-
+            //allows for redirecting to placebet
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
