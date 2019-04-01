@@ -161,7 +161,8 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("active", 0);
         userBet.put("amount", (int) betValue);
         userBet.put("away", away);
-        userBet.put("date_expires", gameStart);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        userBet.put("date_expires", outputFormat.format(gameStart));
         userBet.put("favorite", favorite);
         userBet.put("home", home);
         userBet.put("odds", favoriteSpread);
@@ -218,7 +219,7 @@ public class placeBetActivity extends AppCompatActivity {
                     if(document.exists()){
                         home = ((String) document.get("home_team"));
                         away = ((String) document.get("away_team"));
-                        gameStart = ((String) document.get("event_date"));
+                        gameStart = document.getDate("event_date");
                         favorite = "";
                         favoriteSpread = "";
                         overUnder = document.getDouble("over_under");
@@ -234,7 +235,7 @@ public class placeBetActivity extends AppCompatActivity {
                             favoriteSpread = Double.toString(awaySpread);
                         }
                         gameTitle.setText((home + " vs. " + away));
-                        gameTime.setText(gameStart);
+                        gameTime.setText(gameStart.toString());
                         odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
                         homeTeamOverButton.setText(home);
                         awayTeamUnderButton.setText(away);
