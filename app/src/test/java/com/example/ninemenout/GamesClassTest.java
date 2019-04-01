@@ -6,8 +6,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.theories.suppliers.TestedOn;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 
 public class GamesClassTest {
 
@@ -31,8 +37,9 @@ public class GamesClassTest {
 
     @Test
     public void testEvent_date(){
-        g.setEvent_date("ED");
-        Assert.assertEquals("ED", g.getEvent_date());
+        Date date = new Date();
+        g.setEvent_date(date);
+        Assert.assertEquals(date, g.getEvent_date());
     }
 
     @Test
