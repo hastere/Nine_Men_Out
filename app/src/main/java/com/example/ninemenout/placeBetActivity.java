@@ -47,7 +47,6 @@ public class placeBetActivity extends AppCompatActivity {
         options[1] = "homeOver";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_bet);
-
         // establish variable connections to various text and buttons
         gameTitle = findViewById(R.id.gameTitle);
         gameTime = findViewById(R.id.gameTime);
@@ -62,7 +61,6 @@ public class placeBetActivity extends AppCompatActivity {
                 createBet(v);
             }
         });
-
         // game is passed in as string
         Bundle b = this.getIntent().getExtras();
         if(b != null){
@@ -72,7 +70,6 @@ public class placeBetActivity extends AppCompatActivity {
             Log.d("error", "bet viewer received no data");
         }
     }
-
     // creates the bet and returns to the list of gamees
     public void createBet(View view){
         DocumentReference userRef = userCollectionRef.document(user.getEmail());
@@ -167,7 +164,6 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("odds", favoriteSpread);
         userBet.put("type", "spread");
         userBet.put("gameRef", documentID);
-
         //check options for overunder and who the bet is placed on
         if (options[0].equals("spread")) {
             userBet.put("type", "spread");
@@ -190,7 +186,6 @@ public class placeBetActivity extends AppCompatActivity {
                     userBet.put("betOnUnderdog", user.getEmail());
                     userBet.put("betOnFavorite", "");
                 }
-
             }
         }
         else {
@@ -207,7 +202,7 @@ public class placeBetActivity extends AppCompatActivity {
         }
     return userBet;
     }
-
+    //binds game information to class variables for use when creating a bet
     public void bindValues(Bundle b) {
         String docID = b.getString("documentID");
         documentID = docID;
@@ -226,7 +221,7 @@ public class placeBetActivity extends AppCompatActivity {
                         overUnder = document.getDouble("over_under");
                         homeSpread =  document.getDouble("home_spread");
                         awaySpread =  document.getDouble("away_spread");
-
+                        //determine favorite based off of spread value
                         if (homeSpread < 0) {
                             favorite = home;
                             favoriteSpread = Double.toString(homeSpread);
@@ -235,13 +230,11 @@ public class placeBetActivity extends AppCompatActivity {
                             favorite = away;
                             favoriteSpread = Double.toString(awaySpread);
                         }
-
                         gameTitle.setText((home + " vs. " + away));
                         gameTime.setText(gameStart);
                         odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
                         homeTeamOverButton.setText(home);
                         awayTeamUnderButton.setText(away);
-
                     } else {
                         Log.d("oops", "No such document");
                     }
@@ -250,6 +243,5 @@ public class placeBetActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
