@@ -27,11 +27,12 @@ import java.util.Map;
 
 public class BetsViewerActivity extends AppCompatActivity {
 
+    // GLOBAL VARIABLE DEFINITIONS
     TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite, betTypeText;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betsRef = db.collection("bets");
     private CollectionReference userRef = db.collection("users");
-    private String documentID, unclaimed;
+    private String documentID, unclaimed, unclaimedField;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     boolean amountTooHigh = false;
 
@@ -49,7 +50,7 @@ public class BetsViewerActivity extends AppCompatActivity {
         favorite = findViewById(R.id.favoriteText);
         betTypeText = findViewById(R.id.betTypeText);
 
-        // betsViewer should be passed the document ID as a string (reduces querying overall)
+        // betsViewer should be passed the document ID as a string (reduces overall querying needed)
         Bundle b = this.getIntent().getExtras();
         // only query if the document ID exists
         if(b != null){
@@ -65,18 +66,11 @@ public class BetsViewerActivity extends AppCompatActivity {
                             // set the text in the display to what was dynamically gained from the DB
                             // based on the passed (via the intent) document ID
                             // cast the LONG / NUMBER values first to avoid casting problems in line
-                            String teamComparison = getOpenTeam(((String) document.get("betOnFavorite")), ((String) document.get("betOnUnderdog")));
-                            String home = ((String) document.get("home"));
-                            String away = ((String) document.get("away"));
-                            String fav = ((String) document.get("favorite"));
-                            if(teamComparison.equals("underdog")){
-                                if(home.equals(fav)){
-                                    teamComparison = "away";
-                                }
-                                else
-                                    teamComparison = "home";
-                            }
-                            unclaimed = teamComparison;
+                            unclaimed = getOpenTeam(((String) document.get("betOnFavorite")),
+                                    ((String) document.get("betOnUnderdog")));
+                            unclaimedField = getOpenTeamField(unclaimed,
+                                    ((String) document.get("favorite")),
+                                    ((String) document.get("home")));
                             String pointsConverter = String.valueOf(document.getLong("amount"));
                             homeTeam.setText((String) document.get("home"));
                             awayTeam.setText((String) document.get("away"));
@@ -85,19 +79,19 @@ public class BetsViewerActivity extends AppCompatActivity {
                             String betType = ((String) document.get("type"));
                             if(betType.equals("over under")) {
                                 betTypeText.setText("Over Under");
-                                if (teamComparison.equals("favorite"))
+                                if (unclaimed.equals("favorite"))
                                     unclaimedTeam.setText("Over");
                                 else
                                     unclaimedTeam.setText("Under");
                             } else {
-                                unclaimedTeam.setText((String) document.get(teamComparison));
+                                unclaimedTeam.setText((String) document.get(unclaimedField));
                             }
                             favorite.setText((String) document.get("favorite"));
                         } else {
-                            Log.d("googy", "No such document");
+                            Log.d("error", "No such document");
                         }
                     } else {
-                        Log.d("googy", "get failed with ", task.getException());
+                        Log.d("error", "get failed with ", task.getException());
                     }
                 }
             });
@@ -108,14 +102,6 @@ public class BetsViewerActivity extends AppCompatActivity {
         }
 
 
-    }
-
-    // returns which team has NOT been bet on based on user selection in the DB
-    public String getOpenTeam(String favorite, String underdog){
-        if(favorite.equals(""))
-            return "favorite";
-        else
-            return "underdog";
     }
 
     // accepts the bet and returns to the home page
@@ -130,8 +116,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
-                        // add copy to the users bets
-                        int changer = document.getLong("amount").intValue();
+                        int pointChanger = document.getLong("amount").intValue();
                         emailRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> userTask) {
@@ -140,88 +125,115 @@ public class BetsViewerActivity extends AppCompatActivity {
                                     if (userDocument.exists()) {
                                         int userActive = userDocument.getLong("activePoints").intValue();
                                         int userInactive = userDocument.getLong("points").intValue() - userActive;
-                                        int sumTotal = userActive + changer;
-                                        if(changer > userInactive){
-                                            Log.d("googy", "in here");
-                                            Context context = getApplicationContext();
-                                            CharSequence toastMessage = "Insufficient Points to Accept Bet";
-                                            int toastDuration = Toast.LENGTH_SHORT;
-                                            Toast toast = Toast.makeText(context, toastMessage, toastDuration);
-                                            toast.show();
+                                        int sumTotal = userActive + pointChanger;
+                                        if(pointChanger > userInactive){
+                                            insufficientToast();
                                             amountTooHigh = true;
                                             return;
                                         }
 
-                                        emailRef.update(
-                                                "activePoints", sumTotal
-                                        );
+                                        emailRef.update("activePoints", sumTotal);
 
                                         if(!amountTooHigh) {
-                                            Log.d("googy", "in here1111");
-                                            Map<String, Object> userBet = new HashMap<String, Object>();
-
+                                            String betOnF, betOnU;
                                             docRef.update("active", 1);
                                             if (unclaimed.equals("favorite")) {
                                                 docRef.update("betOnFavorite", user.getEmail());
-                                                userBet.put("betOnFavorite", user.getEmail());
-                                                userBet.put("betOnUnderdog", ((String) document.get("betOnUnderdog")));
-                                                db.collection("users").document((String) document.get("betOnUnderdog"))
+                                                betOnF = user.getEmail();
+                                                betOnU = ((String) document.get("betOnUnderdog"));
+                                                db.collection("users").document(betOnU)
                                                         .collection("bets").document(documentID).update(
                                                         "active", 1,
                                                         "betOnFavorite", user.getEmail()
                                                 );
                                             } else {
                                                 docRef.update("betOnUnderdog", user.getEmail());
-                                                userBet.put("betOnUnderdog", user.getEmail());
-                                                userBet.put("betOnFavorite", ((String) document.get("betOnFavorite")));
-                                                db.collection("users").document((String) document.get("betOnFavorite"))
+                                                betOnU = user.getEmail();
+                                                betOnF =  ((String) document.get("betOnFavorite"));
+                                                db.collection("users").document(betOnF)
                                                         .collection("bets").document(documentID).update(
                                                         "active", 1,
                                                         "betOnUnderdog", user.getEmail()
                                                 );
                                             }
-
-                                            // active
-                                            userBet.put("active", 1);
-                                            // amount
-                                            userBet.put("amount", document.getLong("amount"));
-                                            // away
-                                            userBet.put("away", ((String) document.get("away")));
-                                            // date expirex
-                                            userBet.put("date_expires", ((String) document.get("date_expires")));
-                                            // favorite
-                                            userBet.put("favorite", ((String) document.get("favorite")));
-                                            // home
-                                            userBet.put("home", ((String) document.get("home")));
-                                            // odds
-                                            userBet.put("odds", ((String) document.get("odds")));
-                                            // type
-                                            userBet.put("type", ((String) document.get("type")));
-
-                                            userBetsRef.document(documentID).set(userBet);
-                                            Context context = getApplicationContext();
-                                            CharSequence toastMessage = "Bet Accepted!";
-                                            int toastDuration = Toast.LENGTH_SHORT;
-                                            Toast toast = Toast.makeText(context, toastMessage, toastDuration);
-                                            toast.show();
+                                            userBetsRef.document(documentID).set(newUserBet(document, betOnF, betOnU));
+                                            acceptedToast();
                                         }
-
-                                        // update bet creators bets to have new data
                                     }
                                 }
                             }
                         });
                     } else {
-                        Log.d("googy", "No such document");
+                        Log.d("error", "No such document");
                     }
                 } else {
-                    Log.d("googy", "get failed with ", task.getException());
+                    Log.d("error", "get failed with ", task.getException());
                 }
             }
         });
 
+        // user moved back to homepage
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
+    }
+
+    // returns which team has NOT been bet on based on user selection in the DB
+    public String getOpenTeam(String favorite, String underdog){
+        if(favorite.equals(""))
+            return "favorite";
+        else
+            return "underdog";
+    }
+
+    // returns which team (HOME or AWAY) is the underdog or favorite, whichever is in the 'unclaimed' String
+    public String getOpenTeamField(String unclaimed, String favorite, String home) {
+        if (unclaimed.equals("underdog")) {
+            if (home.equals(favorite)) {
+                return "away";
+            } else
+                return "home";
+        } else {
+            if (home.equals(favorite)) {
+                return "home";
+            } else
+                return "away";
+        }
+    }
+
+    // copies document over to the bet collection of whoever accepted the bet
+    public Map<String, Object> newUserBet(DocumentSnapshot document, String betOnF, String betOnU){
+        Map<String, Object> userBet = new HashMap<String, Object>();
+        userBet.put("active", 1);
+        userBet.put("amount", document.getLong("amount"));
+        userBet.put("away", ((String) document.get("away")));
+        userBet.put("date_expires", ((String) document.get("date_expires")));
+        userBet.put("favorite", ((String) document.get("favorite")));
+        userBet.put("home", ((String) document.get("home")));
+        userBet.put("odds", ((String) document.get("odds")));
+        userBet.put("type", ((String) document.get("type")));
+        userBet.put("betOnFavorite", betOnF);
+        userBet.put("betOnUnderdog", betOnU);
+        return userBet;
+    }
+
+    //// YOAST CONTROLLER FUNCTIONS ////
+
+    // toast when accept is denied
+    public void insufficientToast(){
+        Context context = getApplicationContext();
+        CharSequence toastMessage = "Insufficient Points to Accept Bet";
+        int toastDuration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, toastMessage, toastDuration);
+        toast.show();
+    }
+
+    // toast when accept is accepted
+    public void acceptedToast(){
+        Context context = getApplicationContext();
+        CharSequence toastMessage = "Bet Accepted!";
+        int toastDuration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, toastMessage, toastDuration);
+        toast.show();
     }
 
 }
