@@ -9,14 +9,15 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/Friends_View"
         android:layout_width="395dp"
-        android:layout_height="405dp"
-        android:scrollbars="vertical"
+        android:layout_height="600dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="318dp"
+        android:layout_marginTop="168dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,13 +58,14 @@
         android:layout_height="48dp"
         android:layout_marginStart="35dp"
         android:layout_marginLeft="35dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="104dp"
         android:layout_marginEnd="243dp"
         android:layout_marginRight="243dp"
         android:background="@color/colorPrimary"
-        android:text="Friend Invite"
         android:onClick="sendRequest"
+        android:text="Friend Invite"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.655"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,13 +75,14 @@
         android:layout_height="50dp"
         android:layout_marginStart="210dp"
         android:layout_marginLeft="210dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="104dp"
         android:layout_marginEnd="34dp"
         android:layout_marginRight="34dp"
         android:background="@color/colorAccent"
-        android:text="Never mind"
         android:onClick="nah"
+        android:text="Never mind"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

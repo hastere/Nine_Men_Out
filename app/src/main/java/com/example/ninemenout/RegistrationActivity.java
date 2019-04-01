@@ -105,7 +105,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             //FirebaseUser user = myAuth.getCurrentUser();
                             Toast.makeText(RegistrationActivity.this, "Authentication Success.",
                                     Toast.LENGTH_SHORT).show();
-                            ScrewFirebase();
+                            AddUserDB();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -130,7 +130,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //this function adds the data to the user database
         //this function also uses the recently created auth user
-        public void ScrewFirebase() {
+        public void AddUserDB() {
             //adds data to the user database
             EditText UserName = (EditText) findViewById(R.id.username);
             EditText Passcode = (EditText) findViewById(R.id.Password);
