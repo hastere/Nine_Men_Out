@@ -24,13 +24,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class placeBetActivity extends AppCompatActivity {
 
     TextView gameTitle, gameTime, odds;
     RadioButton homeTeamOverButton, awayTeamUnderButton;
 
-    String home, away, gameStart, favorite, favoriteSpread;
+    String home, away, favorite, favoriteSpread;
+    Date gameStart;
     String[] options = new String[2];
     double overUnder, homeSpread, awaySpread;
 
