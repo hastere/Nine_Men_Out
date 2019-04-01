@@ -22,7 +22,7 @@ public class gamesAdapter extends FirestoreRecyclerAdapter<games, gamesAdapter.g
     protected void onBindViewHolder(@NonNull gameHolder holder, int position, @NonNull games model) {
         holder.textViewTitle.setText(model.getHome_team() + " vs. " + model.getAway_team());
         holder.textViewDescription.setText("Over Under: " + Double.toString(model.getOver_under()) + " | Home Team Spread: " + Double.toString(model.getHome_spread()));
-        holder.textViewPriority.setText("TBD" );
+        holder.textViewPriority.setText("");
     }
 
     @NonNull
