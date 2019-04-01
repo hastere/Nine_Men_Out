@@ -4,7 +4,7 @@ public class games {
     private String away_team, home_team, event_date, event_id;
     private double over_under, home_spread, away_spread;
 
-
+    //getters and setters
     public String getHome_team() {
         return home_team;
     }

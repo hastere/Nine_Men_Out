@@ -64,6 +64,7 @@ public class placeBetActivity extends AppCompatActivity {
                 createBet(v);
             }
         });
+
         // game is passed in as string
         Bundle b = this.getIntent().getExtras();
         if(b != null){
@@ -110,7 +111,6 @@ public class placeBetActivity extends AppCompatActivity {
             });
 
         } else {
-            // do nothing - this is an error
             Log.d("error", "bet viewer received no data");
         }
 
@@ -143,6 +143,7 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("type", "spread");
         userBet.put("gameRef", documentID);
 
+        //check options for overunder and who the bet is placed on
         if (options[0].equals("spread")) {
             userBet.put("type", "spread");
             if (options[1].equals("homeOver")) {
@@ -180,9 +181,6 @@ public class placeBetActivity extends AppCompatActivity {
             }
         }
 
-
-
-
         //check that user has enough points to bet
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -190,12 +188,10 @@ public class placeBetActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
-                        Log.d("UserCheck", "Got User");
                         long points = (long) document.get("points");
                         long activePoints = (long) document.get("activePoints");
                         //move points to active status
                         if((points - activePoints) >= betValue && (betValue > 0)) {
-                            Log.d("BalanceCheck", "Got User");
                             userRef.update("activePoints", (activePoints + betValue));
                             DocumentReference newBetRef = userBetsRef.document();
                             newBetRef.set(userBet);
@@ -203,7 +199,7 @@ public class placeBetActivity extends AppCompatActivity {
 
                         }
                         else {
-                            Log.d("BalanceCheck", "no sufficient points");
+                            //error check for a bet that is too big
                             Context context = getApplicationContext();
                             CharSequence toastMessage = "Not enough points! Try Again.";
                             int toastDuration = Toast.LENGTH_SHORT;
@@ -224,11 +220,11 @@ public class placeBetActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, toastMessage, toastDuration);
         toast.show();
 
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, browseGames.class);
         startActivity(intent);
     }
 
-
+    //alternates what the bet type is
     public void chooseBetType(View view){
         boolean checked = ((RadioButton) view).isChecked();
         switch(view.getId()) {
@@ -248,20 +244,17 @@ public class placeBetActivity extends AppCompatActivity {
                 break;
         }
     }
+    //alternates what the bet will be placed on
     public void chooseBetOn(View view){
         boolean checked = ((RadioButton) view).isChecked();
         switch(view.getId()) {
             case R.id.radioHomeOver:
-                if(checked) {
-                    Log.d("googy", "pressed home over");
+                if(checked)
                     options[1] = "homeOver";
-                }
                 break;
             case R.id.radioAwayUnder:
-                if(checked) {
-                    Log.d("googy", "pressed away under");
+                if(checked)
                     options[1] = "awayUnder";
-                }
                 break;
         }
     }
