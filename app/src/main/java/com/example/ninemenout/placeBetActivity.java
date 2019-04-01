@@ -14,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
-
+import java.text.SimpleDateFormat;
 
 public class placeBetActivity extends AppCompatActivity {
 
@@ -139,7 +137,8 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("active", (int) 0);
         userBet.put("amount", (int) betValue);
         userBet.put("away", away);
-        userBet.put("date_expires", gameStart);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        userBet.put("date_expires", outputFormat.format(gameStart));
         userBet.put("favorite", favorite);
         userBet.put("home", home);
         userBet.put("odds", favoriteSpread);
