@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class SearchBetsUnitTest {
+public class SearchBetsTest {
 
     @Test
     public void testTeamNameSanitizer(){

@@ -66,8 +66,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                             // set the text in the display to what was dynamically gained from the DB
                             // based on the passed (via the intent) document ID
                             // cast the LONG / NUMBER values first to avoid casting problems in line
-                            unclaimed = getOpenTeam(((String) document.get("betOnFavorite")),
-                                    ((String) document.get("betOnUnderdog")));
+                            unclaimed = getOpenTeam(((String) document.get("betOnFavorite")));
                             unclaimedField = getOpenTeamField(unclaimed,
                                     ((String) document.get("favorite")),
                                     ((String) document.get("home")));
@@ -178,7 +177,7 @@ public class BetsViewerActivity extends AppCompatActivity {
     }
 
     // returns which team has NOT been bet on based on user selection in the DB
-    public String getOpenTeam(String favorite, String underdog){
+    public static String getOpenTeam(String favorite){
         if(favorite.equals(""))
             return "favorite";
         else
@@ -186,7 +185,7 @@ public class BetsViewerActivity extends AppCompatActivity {
     }
 
     // returns which team (HOME or AWAY) is the underdog or favorite, whichever is in the 'unclaimed' String
-    public String getOpenTeamField(String unclaimed, String favorite, String home) {
+    public static String getOpenTeamField(String unclaimed, String favorite, String home) {
         if (unclaimed.equals("underdog")) {
             if (home.equals(favorite)) {
                 return "away";
