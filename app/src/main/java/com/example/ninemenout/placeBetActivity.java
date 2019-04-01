@@ -26,13 +26,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+
 
 public class placeBetActivity extends AppCompatActivity {
 
     TextView gameTitle, gameTime, odds;
     RadioButton homeTeamOverButton, awayTeamUnderButton;
 
-    String home, away, gameStart, favorite, favoriteSpread;
+    String home, away, favorite, favoriteSpread;
+    Date gameStart;
     String[] options = new String[2];
     double overUnder, homeSpread, awaySpread;
 
@@ -78,7 +81,7 @@ public class placeBetActivity extends AppCompatActivity {
                         if(document.exists()){
                             home = ((String) document.get("home_team"));
                             away = ((String) document.get("away_team"));
-                            gameStart = ((String) document.get("event_date"));
+                            gameStart =  document.getDate("event_date");
                             favorite = "";
                             favoriteSpread = "";
                             overUnder = document.getDouble("over_under");
@@ -95,7 +98,7 @@ public class placeBetActivity extends AppCompatActivity {
                             }
 
                             gameTitle.setText((home + " vs. " + away));
-                            gameTime.setText(gameStart);
+                            gameTime.setText(gameStart.toString());
                             odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
                             homeTeamOverButton.setText(home);
                             awayTeamUnderButton.setText(away);
