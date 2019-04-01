@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class BetsViewerActivity extends AppCompatActivity {
 
-    TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite;
+    TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite, betTypeText;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betsRef = db.collection("bets");
     private CollectionReference userRef = db.collection("users");
@@ -47,6 +47,7 @@ public class BetsViewerActivity extends AppCompatActivity {
         points = findViewById(R.id.pointsText);
         unclaimedTeam = findViewById(R.id.unclaimedTeamText);
         favorite = findViewById(R.id.favoriteText);
+        betTypeText = findViewById(R.id.betTypeText);
 
         // betsViewer should be passed the document ID as a string (reduces querying overall)
         Bundle b = this.getIntent().getExtras();
@@ -81,7 +82,16 @@ public class BetsViewerActivity extends AppCompatActivity {
                             awayTeam.setText((String) document.get("away"));
                             odds.setText((String) document.get("odds"));
                             points.setText(pointsConverter);
-                            unclaimedTeam.setText((String) document.get(teamComparison));
+                            String betType = ((String) document.get("type"));
+                            if(betType.equals("over under")) {
+                                betTypeText.setText("Over Under");
+                                if (teamComparison.equals("favorite"))
+                                    unclaimedTeam.setText("Over");
+                                else
+                                    unclaimedTeam.setText("Under");
+                            } else {
+                                unclaimedTeam.setText((String) document.get(teamComparison));
+                            }
                             favorite.setText((String) document.get("favorite"));
                         } else {
                             Log.d("googy", "No such document");

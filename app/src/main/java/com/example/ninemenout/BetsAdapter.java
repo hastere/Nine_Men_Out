@@ -23,18 +23,27 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
     @Override
     protected void onBindViewHolder(@NonNull BetHolder holder, int position, @NonNull Bets model) {
         String untaken = "Alabama";
+        boolean ouFlag = false;
+        if(model.getType().equals("over under"))
+            ouFlag = true;
+        if(model.getBetOnFavorite().equals("")) {
+            if(ouFlag)
+                untaken = "Over";
+            else
+                untaken = model.getFavorite();
 
-        if(model.getBetOnFavorite().equals(""))
-            untaken = model.getFavorite();
-        else {
-            if(model.getHome().equals(model.getFavorite())){
-                untaken = model.getAway();
-            } else {
-                untaken = model.getHome();
-            }
+        } else {
+            if(ouFlag)
+                untaken = "Under";
+            else
+                if(model.getHome().equals(model.getFavorite())){
+                    untaken = model.getAway();
+                } else {
+                    untaken = model.getHome();
+                }
         }
-        holder.textViewTitle.setText(model.getHome() + " vs. " + model.getAway());
-        holder.textViewDescription.setText("Favorite: " + model.getFavorite() + "\n" + "Unclaimed: " + untaken);
+        holder.textViewTitle.setText(model.getHome() + " vs." + "\n" + model.getAway());
+        holder.textViewDescription.setText("Favorite: " + model.getFavorite() + "\n" + "Unclaimed: " + untaken + "\n" + "Type: " + model.getType());
         holder.textViewPriority.setText(model.getOdds() + " / " + ((Integer) model.getAmount()).toString());
     }
 

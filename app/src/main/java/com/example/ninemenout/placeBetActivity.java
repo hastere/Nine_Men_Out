@@ -45,6 +45,8 @@ public class placeBetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        options[0] = "spread";
+        options[1] = "homeOver";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_bet);
 
@@ -141,19 +143,20 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("type", "spread");
         userBet.put("gameRef", documentID);
 
-        if (options[0] == "spread") {
+        if (options[0].equals("spread")) {
             userBet.put("type", "spread");
-            if (options[1] == "homeOver") {
-                if (home == favorite) {
+            if (options[1].equals("homeOver")) {
+                if (home.equals(favorite)) {
                     userBet.put("betOnFavorite", user.getEmail());
-                    userBet.put("betOnUnderdog", user.getEmail());
+                    userBet.put("betOnUnderdog", "");
                 }
                 else {
                     userBet.put("betOnFavorite", "");
+                    userBet.put("betOnUnderdog", user.getEmail());
                 }
             }
             else {
-                if (away == favorite) {
+                if (away.equals(favorite)) {
                     userBet.put("betOnFavorite", user.getEmail());
                     userBet.put("betOnUnder", "");
                 }
@@ -166,10 +169,15 @@ public class placeBetActivity extends AppCompatActivity {
         }
         else {
             userBet.put("type", "over under");
-            if (options[1] == "homeOver")
-                userBet.put("betOnOver", user.getEmail());
-            else
-                userBet.put("betOnUnder", user.getEmail());
+            String ou = Double.toString(overUnder);
+            userBet.put("odds", ou);
+            if (options[1].equals("homeOver")) {
+                userBet.put("betOnFavorite", user.getEmail());
+                userBet.put("betOnUnderdog", "");
+            } else {
+                userBet.put("betOnUnderdog", user.getEmail());
+                userBet.put("betOnFavorite", "");
+            }
         }
 
 
@@ -211,12 +219,12 @@ public class placeBetActivity extends AppCompatActivity {
         });
 
         Context context = getApplicationContext();
-        CharSequence toastMessage = "Bet Accepted!";
+        CharSequence toastMessage = "Bet Placed";
         int toastDuration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, toastMessage, toastDuration);
         toast.show();
 
-        Intent intent = new Intent(this, browseGames.class);
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 
@@ -245,11 +253,13 @@ public class placeBetActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radioHomeOver:
                 if(checked) {
+                    Log.d("googy", "pressed home over");
                     options[1] = "homeOver";
                 }
                 break;
             case R.id.radioAwayUnder:
                 if(checked) {
+                    Log.d("googy", "pressed away under");
                     options[1] = "awayUnder";
                 }
                 break;
