@@ -24,7 +24,7 @@
             android:layout_toStartOf="@id/oddsText"
             android:layout_toLeftOf="@id/oddsText"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="2"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large">
 

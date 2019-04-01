@@ -224,7 +224,7 @@ public class placeBetActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, toastMessage, toastDuration);
         toast.show();
 
-        Intent intent = new Intent(this, browseGames.class);
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 
