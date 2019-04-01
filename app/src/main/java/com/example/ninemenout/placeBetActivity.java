@@ -14,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,13 +24,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class placeBetActivity extends AppCompatActivity {
 
     TextView gameTitle, gameTime, odds;
     RadioButton homeTeamOverButton, awayTeamUnderButton;
 
-    String home, away, gameStart, favorite, favoriteSpread;
+    String home, away, favorite, favoriteSpread;
+    Date gameStart;
     String[] options = new String[2];
     double overUnder, homeSpread, awaySpread;
 
@@ -78,7 +79,7 @@ public class placeBetActivity extends AppCompatActivity {
                         if(document.exists()){
                             home = ((String) document.get("home_team"));
                             away = ((String) document.get("away_team"));
-                            gameStart = ((String) document.get("event_date"));
+                            gameStart =  document.getDate("event_date");
                             favorite = "";
                             favoriteSpread = "";
                             overUnder = document.getDouble("over_under");
@@ -95,7 +96,7 @@ public class placeBetActivity extends AppCompatActivity {
                             }
 
                             gameTitle.setText((home + " vs. " + away));
-                            gameTime.setText(gameStart);
+                            gameTime.setText(gameStart.toString());
                             odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
                             homeTeamOverButton.setText(home);
                             awayTeamUnderButton.setText(away);
@@ -136,7 +137,8 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("active", (int) 0);
         userBet.put("amount", (int) betValue);
         userBet.put("away", away);
-        userBet.put("date_expires", gameStart);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        userBet.put("date_expires", outputFormat.format(gameStart));
         userBet.put("favorite", favorite);
         userBet.put("home", home);
         userBet.put("odds", favoriteSpread);
