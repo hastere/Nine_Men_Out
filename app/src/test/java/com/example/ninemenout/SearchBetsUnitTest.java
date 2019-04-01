@@ -14,7 +14,7 @@ public class SearchBetsUnitTest {
     public void testTeamNameSanitizer(){
         String testTeamName = "toroNTO RAptoRS";
         Assert.assertEquals("Toronto Raptors"
-                , SearchBetsActivity.toExactMatch(testTeamName));
+                , SearchBetsActivity.updateStringToExactMatch(testTeamName));
     }
 
 }

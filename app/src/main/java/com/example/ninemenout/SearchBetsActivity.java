@@ -48,35 +48,33 @@ public class SearchBetsActivity extends AppCompatActivity {
         if(b != null)
             readHolder = b.getStringArray("terms");
         if(readHolder != null)
-            setUpRecyclerV(readHolder);
+            setUpRecyclerView(readHolder);
         else {
             // default search values, mainly used for testing
             arr[0] = "any";
             arr[1] = "spread";
             arr[2] = "odds";
-            setUpRecyclerV(arr);
+            setUpRecyclerView(arr);
         }
 
     }
 
     // display recyclerview based on the search terms
-    private void setUpRecyclerV(String[] searchTerms) {
+    private void setUpRecyclerView(String[] searchTerms) {
         // separate to reduce errors
 //        String teamName = toCamelcase(searchTerms[0]);
-        String teamName = toExactMatch(searchTerms[0]);
+        String teamName = updateStringToExactMatch(searchTerms[0]);
         String betType = searchTerms[1];
         String sortType = searchTerms[2];
 
         Query query;
 
-        if(searchTerms[0].equals("any")){
-            Log.d("googy", "in one");
+        if(searchTerms[0].equals("any")){ // query when nothing specified, return all data
             query = betRef.whereEqualTo("active", 0).orderBy("type", Query.Direction.DESCENDING);
-        } else {
-            // query based on data supplied through intent
+        } else { // query based on data supplied through intent
             query = betRef.whereEqualTo("active", 0)
                     .whereEqualTo("type", betType)
-                    .whereEqualTo("home", searchTerms[0])
+                    .whereEqualTo("home", teamName)
                     .orderBy(sortType, Query.Direction.DESCENDING);
         }
         // set view based on the query object
@@ -109,7 +107,8 @@ public class SearchBetsActivity extends AppCompatActivity {
     }
 
     // sanitize input since firestore requires exact matches for queries
-    public static String toExactMatch(String team){
+    // for example, changes "toronto raptors" to "Toronto Raptors"
+    public static String updateStringToExactMatch(String team){
         String ret = "";
         boolean spaceFound = true;
         for(int i = 0; i < team.length(); i++){
@@ -125,7 +124,6 @@ public class SearchBetsActivity extends AppCompatActivity {
                     ret += toLowerCase(x);
             }
         }
-
         return ret;
     }
 
