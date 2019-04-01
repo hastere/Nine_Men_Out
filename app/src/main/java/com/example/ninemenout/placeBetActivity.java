@@ -46,7 +46,7 @@ public class placeBetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         options[0] = "spread";
-        options[1] = "awayUnder";
+        options[1] = "homeOver";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_bet);
 
@@ -168,8 +168,9 @@ public class placeBetActivity extends AppCompatActivity {
             }
         }
         else {
-
             userBet.put("type", "over under");
+            String ou = Double.toString(overUnder);
+            userBet.put("odds", ou);
             if (options[1].equals("homeOver")) {
                 userBet.put("betOnFavorite", user.getEmail());
                 userBet.put("betOnUnderdog", "");
