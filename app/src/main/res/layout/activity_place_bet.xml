@@ -145,12 +145,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="chooseBetOn"
                 android:checked="true" />
 
             <RadioButton
                 android:id="@+id/radioAwayUnder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="chooseBetOn"
                 android:layout_weight="1" />
         </RadioGroup>
 
