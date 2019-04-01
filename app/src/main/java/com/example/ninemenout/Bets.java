@@ -85,6 +85,7 @@ public class Bets {
         this.amount = amount;
     }
 
+    // default BIG constructor
     public Bets(String away, String home, String favorite, String odds, String type, String betOnFavorite, String betOnUnderdog, String date_expires, int amount) {
         this.away = away;
         this.home = home;
@@ -98,6 +99,7 @@ public class Bets {
         this.amount = amount;
     }
 
+    // smaller constructor to mitigate potential errors + used in testing
     public Bets(String away, String home, String favorite, String odds) {
         this.away = away;
         this.home = home;

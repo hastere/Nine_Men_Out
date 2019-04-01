@@ -17,7 +17,6 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
     String[] toSend = new String[3];
     private TextView homeTeam;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +32,7 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
     }
 
     // controls the first set of radio buttons
+    // dictates what type of bet to look for
     public void chooseBetType(View view){
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -53,6 +53,7 @@ public class SearchBetsBufferActivity extends AppCompatActivity {
     }
 
     // controls the second set of radio buttons
+    // dictates how to sort the bets
     public void chooseSortType(View view){
         boolean checked = ((RadioButton) view).isChecked();
 
