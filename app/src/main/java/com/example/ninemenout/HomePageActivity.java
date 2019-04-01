@@ -13,10 +13,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import static java.sql.Types.NULL;
 
 public class HomePageActivity extends AppCompatActivity {
 
@@ -45,7 +48,13 @@ public class HomePageActivity extends AppCompatActivity {
                         if(document.exists()){
                             // update home page display to represent user data
                             pointDisplay = ((Long) document.get("points")).intValue();
-                            activePointDisplay = ((Long) document.get("activePoints")).intValue();
+                            if(document.contains("activePoints"))
+                                {
+                                    activePointDisplay = ((Long) document.get("activePoints")).intValue();
+                                }
+                            else {
+                               activePointDisplay = 0;
+                            }
                             inactivePointDisplay = pointDisplay - activePointDisplay;
                             textViewToChange.setText(((Integer) pointDisplay).toString());
                             activePointText.setText(((Integer) activePointDisplay).toString());
