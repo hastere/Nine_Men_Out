@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".PersonalBetActivity" />
         <activity android:name=".ViewRequestsActivity"></activity>
         <activity android:name=".AddFriendsActivity" />
         <activity
@@ -28,7 +27,6 @@
         <activity android:name=".SuggestedBetsActivity" />
         <activity android:name=".LeaderboardActivity" />
         <activity android:name=".SearchBetsActivity" />
-        <activity android:name=".PersonalBetActivity" />
         <activity android:name=".browseGames" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".HomePageActivity" />
