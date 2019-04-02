@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+
         <activity android:name=".SuggestedBetsActivity" />
         <activity android:name=".LeaderboardActivity" />
-        <activity android:name=".PersonalBetActivity"></activity>
+        <activity android:name=".PersonalBetActivity" />
         <activity android:name=".SearchBetsActivity" />
         <activity android:name=".CreateBetsActivity" />
         <activity android:name=".UserProfileActivity" />
