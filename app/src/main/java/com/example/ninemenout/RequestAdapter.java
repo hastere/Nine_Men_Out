@@ -57,9 +57,6 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<Requests, RequestAd
             textViewTitle = itemView.findViewById(R.id.Title);
             yes = itemView.findViewById(R.id.Accept);
             no = itemView.findViewById(R.id.Decline);
-            //textViewDescription = itemView.findViewById(R.id.text_view_description);
-            //String user = textViewTitle.toString();
-            //Log.d(TAG, user);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -92,9 +89,6 @@ public class RequestAdapter extends FirestoreRecyclerAdapter<Requests, RequestAd
 
 
         }
-
-
-
     }
 }
 

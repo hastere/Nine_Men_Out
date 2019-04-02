@@ -56,30 +56,23 @@ public class ViewRequestsActivity extends AppCompatActivity {
         myauth = FirebaseAuth.getInstance();
         FirebaseUser lonely = myauth.getCurrentUser();
         uEmail = lonely.getEmail();
-        Log.d(TAG, "The user email is " +uEmail);
         reqRef = db.collection("users").document(uEmail).collection("Requests");
+        //gets the users points and username
         DocumentReference u = db.collection("users").document(uEmail);
          Task<DocumentSnapshot> doccy = u.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
              @Override
              public void onComplete(@NonNull Task<DocumentSnapshot> task)
              {
              if(task.isSuccessful())
-             {
+                {
                  DocumentSnapshot doccy = task.getResult();
                  uName = (String) doccy.get("name");
                  uPoints = (long) doccy.get("points");
+                }
              }
-             }
-                                                                      }
+         }
          );
-
-        /*Query check = budRef.orderBy("name");
-        check.toEqual(NULL);*/
         setUpRequestView();
-
-
-
-
     }
 
     private void setUpRequestView() {
@@ -89,16 +82,13 @@ public class ViewRequestsActivity extends AppCompatActivity {
                 .build();
 
         adapter = new RequestAdapter(options);
-        Log.d(TAG, "in SetUp Requests");
         RecyclerView recyclerView = findViewById(R.id.Request_View);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Log.d(TAG, "Right before set adapter");
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new RequestAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-
             }
 
             @Override
@@ -120,9 +110,8 @@ public class ViewRequestsActivity extends AppCompatActivity {
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                //gets search result email for future querying
-                                //makes the send request and not send request buttons visible
-                                //notifies user of successful search
+                                //gets the requester's information
+                                //makes user and requester friends
                                 String email = (String) document.get("email");
                                 String Fname = (String) document.get("name");
                                 Long points = (Long) document.get("points");
@@ -188,10 +177,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
                                 toast_2.show();
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                //gets search result email for future querying
-                                //makes the send request and not send request buttons visible
-                                //notifies user of successful search
+                                //deletes the request from the db, notifies the user they rejected it
                                 String email = (String) document.get("email");
                                 Context contex = getApplicationContext();
                                 CharSequence hip = "Friendship Rejected!!!";
@@ -199,8 +185,6 @@ public class ViewRequestsActivity extends AppCompatActivity {
                                 Toast toast = Toast.makeText(contex, hip, duration);
                                 toast.show();
                                 db.collection("users").document(uEmail).collection("Requests").document(email).delete();
-
-
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -224,7 +208,4 @@ public class ViewRequestsActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-
-
-
 }

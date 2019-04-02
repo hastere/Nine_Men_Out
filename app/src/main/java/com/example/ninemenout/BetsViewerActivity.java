@@ -121,8 +121,15 @@ public class BetsViewerActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<DocumentSnapshot> userTask) {
                                 if (userTask.isSuccessful()) {
                                     DocumentSnapshot userDocument = userTask.getResult();
+                                    int userActive;
                                     if (userDocument.exists()) {
-                                        int userActive = userDocument.getLong("activePoints").intValue();
+                                        if(document.contains("activePoints")) {
+                                            userActive = userDocument.getLong("activePoints").intValue();
+                                            }
+                                        else
+                                            {
+                                             userActive = 0;
+                                            }
                                         int userInactive = userDocument.getLong("points").intValue() - userActive;
                                         int sumTotal = userActive + pointChanger;
                                         if(pointChanger > userInactive){

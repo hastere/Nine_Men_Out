@@ -70,7 +70,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     checku = (String) doc.get("name");
-                    Log.d(TAG,checku);
                 }
             }
         });
@@ -89,7 +88,6 @@ public class AddFriendsActivity extends AppCompatActivity {
             }
         });
         setUpFriendsView();
-        Log.d(TAG, "The recycle viewer should be set up");
     }
 
         //sets up recyclerView
@@ -100,7 +98,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                         .build();
 
                 adapter = new UserAdapter(options);
-                Log.d(TAG, "in SetUp Friends");
                 RecyclerView recyclerView = findViewById(R.id.Friends_View);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -135,20 +132,19 @@ public class AddFriendsActivity extends AppCompatActivity {
         myauth = FirebaseAuth.getInstance();
         FirebaseUser lonely = myauth.getCurrentUser();
         String uEmail = lonely.getEmail();
-        Log.d(TAG, "user email is " +uEmail);
+        //gets the user's username
         DocumentReference u = db.collection("users").document(uEmail);
         u.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
+                    //users username
                     String check  = (String) doc.get("name");
-                    Log.d(TAG, "the name of the user is " +check);
-                    Log.d(TAG, "the name entered in search is " +username);
+                    //checks to see if what is being searched for is a friend of the user
                     for(int i = 0; i < friendsArray.size(); i++) {
                         String fCheck = (String) friendsArray.get(i);
                         if (fCheck.equals(username)) {
-                            Log.d(TAG, "In reject");
                             Context context = getApplicationContext();
                             CharSequence reusername = "They're already your friend!";
                             int duration_one = Toast.LENGTH_SHORT;
@@ -157,8 +153,8 @@ public class AddFriendsActivity extends AppCompatActivity {
                             return;
                         }
                     }
+                        //checks to see if the user if searching themselves
                         if (check.equals(username)) {
-                        Log.d(TAG, "In reject");
                         Context context = getApplicationContext();
                         CharSequence reusername = "Can't Search for yourself!!!!";
                         int duration_one = Toast.LENGTH_SHORT;
@@ -166,7 +162,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                         toast_2.show();
                         userSearch = 1;
                     }
-
+                    //actually find the other user by username
                     else {
                         CollectionReference usersRef = db.collection("users");
                         //creates a query looking for that userinput
@@ -184,7 +180,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                                         toast_2.show();
                                     }
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
                                         //gets search result email for future querying
                                         //makes the send request and not send request buttons visible
                                         buddy = (String) document.get("email");
@@ -212,7 +207,6 @@ public class AddFriendsActivity extends AppCompatActivity {
             }
         });
 
-        Log.d(TAG, "UserSearch is " +userSearch);
         if(userSearch > 0)
         {
             return;
@@ -224,14 +218,9 @@ public class AddFriendsActivity extends AppCompatActivity {
         //gets user information to add to the request for the potential friend
         FirebaseUser user = myauth.getCurrentUser();
         String email = user.getEmail();
-        Log.d(TAG,checku);
-        String name =  "jjgospodarek";//u.get().getResult().getString("name");
-        Log.d(TAG, "the user is " +email);
-        Log.d(TAG, "the friend is " +buddy);
         //creates data for request document
         Map<String, Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(FNAME, checku);
-        //dataToSave.put(WAIT, false);
         //adds request document to potential new friend
         db.collection("users").document(buddy).collection("Requests").document(email).set(dataToSave)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -257,7 +246,7 @@ public class AddFriendsActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, reusername, duration_one);
                 toast.show();
             }
-        }); ;
+        });
 
     }
 
@@ -268,5 +257,3 @@ public class AddFriendsActivity extends AppCompatActivity {
     }
 
     }
-
-
