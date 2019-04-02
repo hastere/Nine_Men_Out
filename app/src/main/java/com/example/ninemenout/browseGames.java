@@ -26,8 +26,10 @@ public class browseGames extends AppCompatActivity {
         setContentView(R.layout.activity_search_games);
         setUpRecyclerView();
     }
+    //gets all games, sorts by overunder
+    //TODO replace overunder sort with game time sort
     private void setUpRecyclerView() {
-        Query query = gameRef.orderBy("over_under", Query.Direction.DESCENDING);
+        Query query = gameRef.orderBy("event_date", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<games> options = new FirestoreRecyclerOptions.Builder<games>()
                 .setQuery(query, games.class)
