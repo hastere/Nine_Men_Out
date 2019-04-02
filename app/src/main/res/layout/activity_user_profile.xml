@@ -247,4 +247,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/stat_notify_chat" />
 
+    <Button
+        android:id="@+id/personalBetsBtn"
+        android:layout_width="174dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="485dp"
+        android:layout_marginEnd="221dp"
+        android:layout_marginRight="221dp"
+        android:layout_marginBottom="199dp"
+        android:background="@color/colorAccent"
+        android:onClick="openPersonalBetActivity"
+        android:text="View Personal Bets"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
