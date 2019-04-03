@@ -28,8 +28,8 @@
 
     <TextView
         android:id="@+id/accountBalance"
-        android:layout_width="65dp"
-        android:layout_height="58dp"
+        android:layout_width="155dp"
+        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -37,13 +37,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="100"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/asd"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.058" />
 
     <TextView
         android:id="@+id/userSince"
