@@ -20,6 +20,7 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
     protected void onBindViewHolder(@NonNull PersonalBetsAdapter.BetHolder holder, int position, @NonNull Bets model) { //model functions come from Bets.java
         holder.textViewTitle.setText("" + model.getHome() + " vs. " + model.getAway());
         holder.textViewDescription.setText("Favorite: " + model.getFavorite() + " | Line: " + model.getOdds());
+        holder.textViewAmount.setText("Amount: " + model.getAmount() + " pts");
         if (email.equals(model.getBetOnFavorite())) { //uses users email to determine what to display
             holder.textViewPriority.setText("Pick: " + model.getFavorite());
         } else if (email.equals(model.getBetOnUnderdog())) {
@@ -41,7 +42,7 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
 
     class BetHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitle, textViewDescription, textViewPriority, textViewExpiration;
+        TextView textViewTitle, textViewDescription, textViewPriority, textViewExpiration, textViewAmount;
 
         public BetHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,6 +50,7 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPriority = itemView.findViewById(R.id.oddsText);
             textViewExpiration = itemView.findViewById(R.id.expirationDate);
+            textViewAmount = itemView.findViewById(R.id.textViewAmount);
         }
     }
 
