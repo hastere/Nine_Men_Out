@@ -19,13 +19,18 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
     @Override
     protected void onBindViewHolder(@NonNull PersonalBetsAdapter.BetHolder holder, int position, @NonNull Bets model) { //model functions come from Bets.java
         holder.textViewTitle.setText("" + model.getHome() + " vs. " + model.getAway());
-        holder.textViewDescription.setText("Expires " + model.getDate_expires() + "| Favorite: " + model.getFavorite() + "| Odds: " + model.getOdds());
-        if(email.equals(model.getBetOnFavorite())) { //uses users email to determine what to display
-            holder.textViewPriority.setText("Pick: " + model.getBetOnFavorite());
+        holder.textViewDescription.setText("Favorite: " + model.getFavorite() + " | Line: " + model.getOdds());
+        if (email.equals(model.getBetOnFavorite())) { //uses users email to determine what to display
+            holder.textViewPriority.setText("Pick: " + model.getFavorite());
+        } else if (email.equals(model.getBetOnUnderdog())) {
+            if (model.getHome().equals(model.getFavorite())) {
+                holder.textViewPriority.setText("Pick: " + model.getHome());
+            } else if (model.getAway().equals(model.getFavorite())) {
+                holder.textViewPriority.setText("Pick: " + model.getAway());
+            }
         }
-        else //if(email == model.getBetOnUnderdog()) {
-            holder.textViewPriority.setText("Pick: " + model.getBetOnUnderdog());
-        }
+        holder.textViewExpiration.setText("Expiration Date: " + model.getDate_expires());
+    }  
 
     @NonNull
     @Override
@@ -43,6 +48,7 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
             textViewTitle = itemView.findViewById(R.id.betTitle);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPriority = itemView.findViewById(R.id.oddsText);
+            textViewExpiration = itemView.findViewById(R.id.expirationDate);
         }
     }
 
