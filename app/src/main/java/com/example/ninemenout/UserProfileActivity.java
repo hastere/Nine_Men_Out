@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +31,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
         TextView userBalance = findViewById(R.id.accountBalance);
         TextView userName = findViewById(R.id.userName);
         TextView userEmail = findViewById(R.id.userEmail);
@@ -60,7 +62,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
-
     public void openAddFriendsActivity(View view) {
         Intent intent = new Intent(this, AddFriendsActivity.class);
         startActivity(intent);
@@ -77,6 +78,10 @@ public class UserProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openPersonalBetActivity(View view) {
+        Intent intent = new Intent(this, PersonalBetActivity.class);
+        startActivity(intent);
+    }
 
 
     public void logout(View view)
