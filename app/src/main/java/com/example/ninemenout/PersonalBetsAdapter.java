@@ -22,12 +22,22 @@ public class PersonalBetsAdapter extends FirestoreRecyclerAdapter<Bets, Personal
         holder.textViewDescription.setText("Favorite: " + model.getFavorite() + " | Line: " + model.getOdds());
         holder.textViewAmount.setText("Amount: " + model.getAmount() + " pts");
         if (email.equals(model.getBetOnFavorite())) { //uses users email to determine what to display
-            holder.textViewPriority.setText("Pick: " + model.getFavorite());
+            if(model.getType().equals("over under")) {
+                holder.textViewPriority.setText("Pick: Over");
+            }
+            else {
+                holder.textViewPriority.setText("Pick: " + model.getFavorite());
+            }
         } else if (email.equals(model.getBetOnUnderdog())) {
-            if (model.getHome().equals(model.getFavorite())) {
-                holder.textViewPriority.setText("Pick: " + model.getHome());
-            } else if (model.getAway().equals(model.getFavorite())) {
-                holder.textViewPriority.setText("Pick: " + model.getAway());
+            if(model.getType().equals("over under")) {
+                holder.textViewPriority.setText("Pick: Under");
+            }
+            else {
+                if (model.getHome().equals(model.getFavorite())) {
+                    holder.textViewPriority.setText("Pick: " + model.getAway());
+                } else if (model.getAway().equals(model.getFavorite())) {
+                    holder.textViewPriority.setText("Pick: " + model.getHome());
+                }
             }
         }
         holder.textViewExpiration.setText("Expiration Date: " + model.getDate_expires());
