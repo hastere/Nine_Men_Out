@@ -91,8 +91,11 @@ public class placeBetActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         long points = (long) document.get("points");
-                        long activePoints = (long) document.get("activePoints");
-                        //move points to active status
+                        long activePoints = 0;
+                        if(document.contains("activePoints")) {
+                         activePoints =   (long) document.get("activePoints");
+                        }
+                                //move points to active status
                         if((points - activePoints) >= betValue && (betValue > 0)) {
                             userRef.update("activePoints", (activePoints + betValue));
                             DocumentReference newBetRef = userBetsRef.document();
