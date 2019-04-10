@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -17,51 +18,69 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 
 public class UserAdapter extends FirestoreRecyclerAdapter<Users, UserAdapter.UserHolder> {
-private OnItemClickListener listener;
-public String TAG = "UserAdapter";
-public UserAdapter(@NonNull FirestoreRecyclerOptions<Users> options) {
-        super(options);
-        }
+    private OnItemClickListener listener;
+    public String TAG = "UserAdapter";
 
-@Override
-protected void onBindViewHolder(@NonNull UserHolder holder, int position, @NonNull Users model) {
+    public UserAdapter(@NonNull FirestoreRecyclerOptions<Users> options) {
+        super(options);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull UserHolder holder, int position, @NonNull Users model) {
         holder.textViewTitle.setText(model.getName());
         holder.textViewDescription.setText("Points: " + model.getPoints());
-        }
+    }
 
-@NonNull
-@Override
-public UserHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_item, viewGroup, false);
-        return new UserHolder(v);
-        }
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+        void onSendBetClick(DocumentSnapshot documentSnapshot, int position);
+    }
 
-class UserHolder extends RecyclerView.ViewHolder {
-
-    TextView textViewTitle, textViewDescription, textViewPriority;
-
-    public UserHolder(@NonNull View itemView) {
-        super(itemView);
-        textViewTitle = itemView.findViewById(R.id.text_view_title);
-        textViewDescription = itemView.findViewById(R.id.text_view_description);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onItemClick(getSnapshots().getSnapshot(position), position);
-                }
-            }
-        });
-    };
-}
-
-public interface OnItemClickListener {
-    void onItemClick(DocumentSnapshot documentSnapshot, int position);
-}
-
-    public void setOnItemClickListener(UserAdapter.OnItemClickListener listener){
+    public void setOnItemClickListener(UserAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
-}
 
+
+    @NonNull
+    @Override
+    public UserHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_item, viewGroup, false);
+        return new UserHolder(v);
+    }
+
+    class UserHolder extends RecyclerView.ViewHolder {
+
+        TextView textViewTitle, textViewDescription, textViewPriority;
+        Button SendBet;
+
+        public UserHolder(@NonNull View itemView) {
+            super(itemView);
+            textViewTitle = itemView.findViewById(R.id.text_view_title);
+            textViewDescription = itemView.findViewById(R.id.text_view_description);
+            SendBet = itemView.findViewById(R.id.Send_Bet);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
+
+            SendBet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onSendBetClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
+        }
+
+        ;
+    }
+
+
+}

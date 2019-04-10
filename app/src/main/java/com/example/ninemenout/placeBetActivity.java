@@ -41,7 +41,7 @@ public class placeBetActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference gamesRef = db.collection("games");
     private CollectionReference userCollectionRef = db.collection("users");
-    private String documentID;
+    private String documentID, source;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -72,6 +72,8 @@ public class placeBetActivity extends AppCompatActivity {
         } else {
             Log.d("error", "bet viewer received no data");
         }
+        Intent mintent = getIntent();
+        source = mintent.getStringExtra("FROM_ACTIVITY");
     }
     // creates the bet and returns to the list of gamees
     public void createBet(View view){
