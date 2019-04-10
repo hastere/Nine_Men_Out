@@ -6,11 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".LeaderboardActivity">
 
-    <TextView
-        android:id="@+id/textView2"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/leaderboardList"
+        android:layout_width="395dp"
+        android:layout_height="549dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="110dp" />
+
+    <Button
+        android:id="@+id/globalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Leaderboard"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="118dp" />
+        android:text="Global"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="667dp" />
+
+    <Button
+        android:id="@+id/friendsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Friends"
+        tools:layout_editor_absoluteX="306dp"
+        tools:layout_editor_absoluteY="666dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leaderboards"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="11dp" />
+
+    <TextView
+        android:id="@+id/rankText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rank"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="165dp"
+        tools:layout_editor_absoluteY="50dp" />
 </android.support.constraint.ConstraintLayout>
