@@ -163,7 +163,12 @@ public class placeBetActivity extends AppCompatActivity {
     public Map newBet(long betValue) {
         //create new bet document
         Map<String, Object> userBet = new HashMap<String, Object>();
-        userBet.put("active", 0);
+        if(source.equals("F"))
+        {
+            userBet.put("active", 2);
+        }
+        else
+        { userBet.put("active", 0); }
         userBet.put("amount", (int) betValue);
         userBet.put("away", away);
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
