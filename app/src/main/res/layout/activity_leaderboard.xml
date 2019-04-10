@@ -8,42 +8,61 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/leaderboardList"
-        android:layout_width="395dp"
-        android:layout_height="549dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="110dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/globalButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rankText" />
 
     <Button
         android:id="@+id/globalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Global"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="667dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/friendsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
         android:text="Friends"
-        tools:layout_editor_absoluteX="306dp"
-        tools:layout_editor_absoluteY="666dp" />
+        app:layout_constraintEnd_toEndOf="@+id/leaderboardList"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardList" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
         android:text="Leaderboards"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="11dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/rankText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="7dp"
         android:text="Rank"
         android:textSize="36sp"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="50dp" />
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </android.support.constraint.ConstraintLayout>
