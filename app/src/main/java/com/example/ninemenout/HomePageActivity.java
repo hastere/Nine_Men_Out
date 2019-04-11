@@ -85,11 +85,11 @@ public class HomePageActivity extends AppCompatActivity {
                 openCreateBetsActivity();
             }
         });
-        button =(Button) findViewById(R.id.suggestedBetsBtn);
+        button =(Button) findViewById(R.id.viewStatsBtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSuggestedBetsActivity();
+                openViewStatsActivity();
             }
         });
         button =(Button) findViewById(R.id.searchBetsBtn);
@@ -125,8 +125,8 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openSuggestedBetsActivity() {
-        Intent intent = new Intent(this, SuggestedBetsActivity.class);
+    public void openViewStatsActivity() {
+        Intent intent = new Intent(this, ViewStatsActivity.class);
         startActivity(intent);
     }
 
