@@ -17,7 +17,7 @@ public class browseGames extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference gameRef = db.collection("games");
-    private String source;
+    private String source, friend;
     private gamesAdapter adapter;
 
     @Override
@@ -27,7 +27,13 @@ public class browseGames extends AppCompatActivity {
         setUpRecyclerView();
         Intent mintent = getIntent();
         source =mintent.getStringExtra("FROM_ACTIVITY");
-
+        if(source.equals("F")){
+            friend = mintent.getStringExtra("FRIEND");
+        }
+        else
+        {
+          friend = "lol";
+        }
     }
     //gets all games, sorts by overunder
     //TODO replace overunder sort with game time sort
@@ -54,6 +60,7 @@ public class browseGames extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), placeBetActivity.class);
                 intent.putExtras(placeBet);
                 intent.putExtra("FROM_ACTIVITY", source);
+                intent.putExtra("FRIEND",friend);
                 startActivity(intent);
             }
         });
