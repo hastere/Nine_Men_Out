@@ -41,7 +41,7 @@ public class placeBetActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference gamesRef = db.collection("games");
     private CollectionReference userCollectionRef = db.collection("users");
-    private String documentID, source;
+    private String documentID, source, friend;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -74,6 +74,7 @@ public class placeBetActivity extends AppCompatActivity {
         }
         Intent mintent = getIntent();
         source = mintent.getStringExtra("FROM_ACTIVITY");
+        friend = mintent.getStringExtra("FRIEND");
     }
     // creates the bet and returns to the list of gamees
     public void createBet(View view){
@@ -102,7 +103,10 @@ public class placeBetActivity extends AppCompatActivity {
                             userRef.update("activePoints", (activePoints + betValue));
                             DocumentReference newBetRef = userBetsRef.document();
                             newBetRef.set(userBet);
-                            betsCollectionRef.document(newBetRef.getId()).set(userBet);
+                            if(source.equals("F")){
+                              userCollectionRef.document(friend).collection("betReq").document(newBetRef.getId()).set(userBet);
+                            }
+                            else { betsCollectionRef.document(newBetRef.getId()).set(userBet); }
                         }
                         else {
                             //error for a bet that is too big
