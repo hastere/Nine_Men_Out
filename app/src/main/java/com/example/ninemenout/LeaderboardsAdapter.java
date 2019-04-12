@@ -24,7 +24,7 @@ public class LeaderboardsAdapter extends FirestoreRecyclerAdapter<Users, Leaderb
 
     @Override
     protected void onBindViewHolder(@NonNull LeaderboardsUserHolder holder, int position, @NonNull Users model) {
-        Integer pos = position;
+        Integer pos = position + 1;
         Integer points = model.getPoints();
         holder.textViewRank.setText(pos.toString());
         holder.textViewUser.setText(model.getName());
