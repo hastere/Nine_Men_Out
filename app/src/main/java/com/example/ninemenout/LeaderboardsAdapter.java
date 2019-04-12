@@ -1,5 +1,7 @@
 package com.example.ninemenout;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
@@ -12,23 +14,34 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 
 
 public class LeaderboardsAdapter extends FirestoreRecyclerAdapter<Users, LeaderboardsAdapter.LeaderboardsUserHolder> {
-    public String TAG = "LeaderboardsAdapter";
-    public LeaderboardsAdapter(@NonNull FirestoreRecyclerOptions<Users> options) {
+
+    private FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+    Context context;
+
+    public LeaderboardsAdapter(@NonNull FirestoreRecyclerOptions<Users> options, Context context) {
         super(options);
+        this.context=context;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull LeaderboardsUserHolder holder, int position, @NonNull Users model) {
         Integer pos = position + 1;
         Integer points = model.getPoints();
+        TextView tv;
         holder.textViewRank.setText(pos.toString());
         holder.textViewUser.setText(model.getName());
         holder.textViewPoints.setText(points.toString());
+        if(model.getEmail().equals(fbUser.getEmail())) {
+            tv = (TextView) ((Activity) this.context).findViewById(R.id.rankText);
+            tv.setText("Rank: " + pos.toString());
+        }
     }
 
     @NonNull

@@ -34,7 +34,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                 .setQuery(query, Users.class)
                 .build();
 
-        adapter = new LeaderboardsAdapter(options);
+        adapter = new LeaderboardsAdapter(options, this);
 
         RecyclerView recyclerView = findViewById(R.id.globalLeaderboardRecycler);
         recyclerView.setHasFixedSize(true);
