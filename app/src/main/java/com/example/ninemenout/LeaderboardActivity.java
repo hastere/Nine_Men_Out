@@ -21,7 +21,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_games);
+        setContentView(R.layout.activity_leaderboard);
         setUpRecyclerView();
     }
 
