@@ -9,17 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".ViewRequestsActivity"></activity>
+        <activity android:name=".FriendBetsViewerActivity"></activity>
+        <activity android:name=".ViewRequestsActivity" />
         <activity android:name=".AddFriendsActivity" />
         <activity
             android:name=".placeBetActivity"
             android:label="@string/title_activity_place_bet"
-            android:theme="@style/NoActionBar"></activity>
+            android:theme="@style/NoActionBar" />
         <activity android:name=".SuggestedBetsActivity" />
         <activity
             android:name=".BetsViewerActivity"
             android:label="@string/title_activity_bets_viewer"
-            android:theme="@style/NoActionBar"></activity>
+            android:theme="@style/NoActionBar" />
         <activity
             android:name=".SearchBetsBufferActivity"
             android:label="@string/title_activity_search_bets_buffer"
