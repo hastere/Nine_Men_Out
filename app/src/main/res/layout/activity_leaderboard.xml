@@ -7,7 +7,7 @@
     tools:context=".LeaderboardActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/leaderboardList"
+        android:id="@+id/globalLeaderboardRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -40,8 +40,8 @@
         android:layout_marginEnd="9dp"
         android:layout_marginRight="9dp"
         android:text="Friends"
-        app:layout_constraintEnd_toEndOf="@+id/leaderboardList"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardList" />
+        app:layout_constraintEnd_toEndOf="@+id/globalLeaderboardRecycler"
+        app:layout_constraintTop_toBottomOf="@+id/globalLeaderboardRecycler" />
 
     <TextView
         android:id="@+id/textView"
