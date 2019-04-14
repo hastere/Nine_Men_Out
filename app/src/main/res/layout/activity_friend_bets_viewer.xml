@@ -8,13 +8,12 @@
 
     <Button
         android:id="@+id/Friends"
-        android:layout_width="410dp"
+        android:layout_width="413dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorPrimary"
+        android:layout_marginTop="2dp"
+        android:background="@color/colorBlue"
         android:text="Friends"
+        android:onClick="seeFriends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

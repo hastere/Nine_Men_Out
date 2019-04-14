@@ -1,5 +1,6 @@
 package com.example.ninemenout;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
@@ -208,4 +209,12 @@ public class ViewRequestsActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
+
+    public void seeBets(View view)
+    {
+        Intent intent = new Intent(this, FriendBetsViewerActivity.class);
+        startActivity(intent);
+    }
+
 }
