@@ -43,8 +43,26 @@ public class LeaderboardActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    public void toggleGlobal(View view){
+    private void setUpRecyclerView2() {
 
+        // list users from biggest point total to smallest
+        Query query = userRef.orderBy("points", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
+                .setQuery(query, Users.class)
+                .build();
+
+        adapter = new LeaderboardsAdapter(options, this);
+
+        RecyclerView recyclerView = findViewById(R.id.globalLeaderboardRecycler);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void toggleGlobal(View view){
+        RecyclerView globalList = findViewById(R.id.globalLeaderboardRecycler);
+        globalList.setVisibility(view.INVISIBLE);
     }
 
 
