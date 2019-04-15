@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
@@ -42,6 +43,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    public void toggleGlobal(View view){
+
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -53,4 +59,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
+
+
 }
