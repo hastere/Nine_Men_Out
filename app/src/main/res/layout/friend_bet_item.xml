@@ -54,5 +54,13 @@
 
         </TextView>
 
+        <TextView
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_description"
+            android:text="Who the bet is from"
+            android:textSize="18sp" />
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

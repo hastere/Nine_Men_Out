@@ -19,7 +19,6 @@ public class FriendsBetAdapater extends FirestoreRecyclerAdapter<Bets, FriendsBe
     public FriendsBetAdapater(@NonNull FirestoreRecyclerOptions<Bets> options) {
         super(options);
     }
-
         // overrides the view holder to display each position in the specific way
         @Override
         protected void onBindViewHolder(@NonNull FriendBetHolder holder, int position, @NonNull Bets model) {
@@ -43,6 +42,7 @@ public class FriendsBetAdapater extends FirestoreRecyclerAdapter<Bets, FriendsBe
                 untaken = model.getHome();
             }
         }
+
         holder.textViewTitle.setText(model.getHome() + " vs." + "\n" + model.getAway());
         holder.textViewDescription.setText("Favorite: " + model.getFavorite() + "\n" + "Unclaimed: " + untaken + "\n" + "Type: " + model.getType());
         holder.textViewPriority.setText(model.getOdds() + " / " + ((Integer) model.getAmount()).toString());
@@ -58,13 +58,14 @@ public class FriendsBetAdapater extends FirestoreRecyclerAdapter<Bets, FriendsBe
 
         class FriendBetHolder extends RecyclerView.ViewHolder {
 
-            TextView textViewTitle, textViewDescription, textViewPriority;
+            TextView textViewTitle, textViewDescription, textViewPriority, from;
 
             public FriendBetHolder(@NonNull View itemView) {
                 super(itemView);
                 textViewTitle = itemView.findViewById(R.id.betTitle);
                 textViewDescription = itemView.findViewById(R.id.text_view_description);
                 textViewPriority = itemView.findViewById(R.id.oddsText);
+                from = itemView.findViewById(R.id.from);
 
                 // so users can select bets to view them / accept them
                 itemView.setOnClickListener(new View.OnClickListener() {
