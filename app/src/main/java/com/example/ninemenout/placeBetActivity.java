@@ -220,7 +220,7 @@ public class placeBetActivity extends AppCompatActivity {
                     if(document.exists()){
                         home = ((String) document.get("home_team"));
                         away = ((String) document.get("away_team"));
-                        gameStart = document.get("event_date");
+                        gameStart = ((String) document.get("event_date"));
                         favorite = "";
                         favoriteSpread = "";
                         overUnder = document.getDouble("over_under");
