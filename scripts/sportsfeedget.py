@@ -10,7 +10,7 @@ import time
 
 def getNewGames():
     url = "https://therundown-therundown-v1.p.rapidapi.com/sports/4/events?include=scores+or+teams+or+all_periods"
-    headers={"X-RapidAPI-Key": "b58d7149f0msh36091f7253015aep1aa685jsn204004568b2d"}
+    headers={"X-RapidAPI-Key": ""}
     responseInfo = requests.get(url,headers=headers)
     print("hello")
     bigDict = {}
@@ -56,7 +56,7 @@ def getNewGames():
 def updateGames():
     urlStart = "https://therundown-therundown-v1.p.rapidapi.com/events/"
     urlEnd = "?include=scores"
-    headers={"X-RapidAPI-Key": "b58d7149f0msh36091f7253015aep1aa685jsn204004568b2d"}
+    headers={"X-RapidAPI-Key": ""}
 
     file_object = open("backup.json", "r")
     data = json.load(file_object)
