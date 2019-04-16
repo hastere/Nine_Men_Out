@@ -37,9 +37,8 @@ public class GamesClassTest {
 
     @Test
     public void testEvent_date(){
-        Date date = new Date();
-        g.setEvent_date(date);
-        Assert.assertEquals(date, g.getEvent_date());
+        g.setEvent_date("ha");
+        Assert.assertEquals("ha", g.getEvent_date());
     }
 
     @Test
