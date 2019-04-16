@@ -1,0 +1,14 @@
+{
+    "097e13dabbdc2f15e51c35112d331f41": {
+        "away_spread": -6,
+        "away_team": "Portland Trail Blazers",
+        "event_date": "2019-03-06T01:05:00Z",
+        "event_id": "097e13dabbdc2f15e51c35112d331f41",
+        "home_spread": 6,
+        "home_team": "Memphis Grizzlies",
+        "over_under": 215.5,
+        "score_away": 111,
+        "score_home": 120,
+        "winner": "home"
+    }
+}
