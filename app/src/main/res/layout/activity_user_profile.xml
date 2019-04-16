@@ -28,8 +28,8 @@
 
     <TextView
         android:id="@+id/accountBalance"
-        android:layout_width="65dp"
-        android:layout_height="58dp"
+        android:layout_width="155dp"
+        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -37,13 +37,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="100"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/asd"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.058" />
 
     <TextView
         android:id="@+id/userSince"
@@ -200,15 +200,69 @@
         app:layout_constraintTop_toBottomOf="@+id/asd" />
 
     <Button
-        android:id="@+id/logoutButton"
+        android:id="@+id/add_friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="219dp"
-        android:layout_marginBottom="68dp"
-        android:text="Log Out"
+        android:layout_marginStart="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="397dp"
+        android:layout_marginEnd="281dp"
+        android:layout_marginRight="281dp"
+        android:background="@color/colorPrimary"
+        android:onClick="openAddFriendsActivity"
+        android:text="Friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="230dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginLeft="66dp"
+        android:layout_marginTop="570dp"
+        android:layout_marginEnd="115dp"
+        android:layout_marginRight="115dp"
+        android:background="@color/colorPrimary"
+        android:onClick="logout"
+        android:text="Sign out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/request_button"
+        android:layout_width="73dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="271dp"
+        android:layout_marginLeft="271dp"
+        android:layout_marginTop="390dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginRight="67dp"
+        android:background="@color/colorPrimary"
+        android:onClick="openViewRequestsActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/stat_notify_chat" />
+
+    <Button
+        android:id="@+id/personalBetsBtn"
+        android:layout_width="174dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="485dp"
+        android:layout_marginEnd="221dp"
+        android:layout_marginRight="221dp"
+        android:layout_marginBottom="199dp"
+        android:background="@color/colorPrimary"
+        android:onClick="openPersonalBetActivity"
+        android:text="View Personal Bets"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
