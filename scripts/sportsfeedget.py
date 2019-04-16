@@ -6,7 +6,7 @@ from scipy import spatial
 import requests
 import simplejson
 import json
-
+import time
 
 def getNewGames():
     url = "https://therundown-therundown-v1.p.rapidapi.com/sports/4/events?include=scores+or+teams+or+all_periods"
@@ -15,7 +15,6 @@ def getNewGames():
     print("hello")
     bigDict = {}
     gameDict = {}
-    number = 0
     responseJSON = json.loads(responseInfo.text)
     for game in responseJSON['events']:
         temp = game["event_date"]
@@ -31,16 +30,26 @@ def getNewGames():
             else:
                 gameDict['away_team'] = team['name']
         print("\n")
-        number = number + 1
         print(gameDict)
-        bigDict[str(number)] = gameDict.copy()
+        bigDict[gameDict['event_id']] = gameDict.copy()
         gameDict.clear()
 
-    file_object = open("response.json", "a")
-    file_object.write(simplejson.dumps(bigDict, indent=4, sort_keys=True))
+
+    file_object = open("response.json", "r")
+    responseData = json.load(file_object)
+    responseData.update(bigDict)
     file_object.close()
+    file_object = open("response.json", "a")
+    file_object.write(simplejson.dumps(responseData, indent=4, sort_keys=True))
+    file_object.close()
+
+    
+    file_object = open("backup.json", "r")
+    backupData = json.load(file_object)
+    file_object.close()
+    responseData.update(bigDict)
     file_object = open("backup.json", "a")
-    file_object.write(simplejson.dumps(bigDict, indent=4, sort_keys=True))
+    file_object.write(simplejson.dumps(backupData, indent=4, sort_keys=True))
     file_object.close()
     return 0
 
@@ -51,6 +60,8 @@ def updateGames():
 
     file_object = open("backup.json", "r")
     data = json.load(file_object)
+    updatedGames = {}
+
     for item in data:
         if "score_away" not in data[item]:
             print(data[item]["event_id"])
@@ -68,9 +79,13 @@ def updateGames():
                     data[item]["winner"] = "away"
                 else:
                     data[item]["winner"] = "home"
+                updatedGames[item] = data[item].copy()
     file_object.close()
-    file_object = open("temp.json", "w")
+    file_object = open("backup.json", "w")
     file_object.write(simplejson.dumps(data, indent=4, sort_keys=True))
+    file_object.close()
+    file_object = open("response.json", "w")
+    file_object.write(simplejson.dumps(updatedGames, indent=4, sort_keys=True))
     file_object.close()
 
     return 0
@@ -78,7 +93,7 @@ def updateGames():
 def main():
 
     updateGames()
-    #getNewGames()
+    getNewGames()
 
 
     return 0
