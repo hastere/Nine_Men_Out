@@ -32,8 +32,7 @@ public class placeBetActivity extends AppCompatActivity {
     TextView gameTitle, gameTime, odds;
     RadioButton homeTeamOverButton, awayTeamUnderButton;
 
-    String home, away, favorite, favoriteSpread;
-    Date gameStart;
+    String home, away, favorite, favoriteSpread, gameStart;
     String[] options = new String[2];
     double overUnder, homeSpread, awaySpread;
 
@@ -164,8 +163,7 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("active", 0);
         userBet.put("amount", (int) betValue);
         userBet.put("away", away);
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        userBet.put("date_expires", outputFormat.format(gameStart));
+        userBet.put("date_expires", gameStart);
         userBet.put("favorite", favorite);
         userBet.put("home", home);
         userBet.put("odds", favoriteSpread);
@@ -222,7 +220,7 @@ public class placeBetActivity extends AppCompatActivity {
                     if(document.exists()){
                         home = ((String) document.get("home_team"));
                         away = ((String) document.get("away_team"));
-                        gameStart = document.getDate("event_date");
+                        gameStart = document.get("event_date");
                         favorite = "";
                         favoriteSpread = "";
                         overUnder = document.getDouble("over_under");
@@ -238,7 +236,7 @@ public class placeBetActivity extends AppCompatActivity {
                             favoriteSpread = Double.toString(awaySpread);
                         }
                         gameTitle.setText((home + " vs. " + away));
-                        gameTime.setText(gameStart.toString());
+                        gameTime.setText(gameStart);
                         odds.setText(favorite + " by " + favoriteSpread + "; Over/Under at " + Double.toString(overUnder));
                         homeTeamOverButton.setText(home);
                         awayTeamUnderButton.setText(away);
