@@ -217,4 +217,10 @@ public class ViewRequestsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void userProfile(View view)
+    {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
 }

@@ -28,6 +28,11 @@ public class FriendBetsViewerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_bets_viewer);
     }
 
+    public void profilePage(View view)
+    {
+        Intent intent = new Intent(this,UserProfileActivity.class);
+        startActivity(intent);
+    }
 
 
     public void seeFriends(View view){

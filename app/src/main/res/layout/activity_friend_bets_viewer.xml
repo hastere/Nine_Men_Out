@@ -8,13 +8,13 @@
 
     <Button
         android:id="@+id/Friends"
-        android:layout_width="413dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_width="342dp"
+        android:layout_height="54dp"
         android:background="@color/colorBlue"
         android:onClick="seeFriends"
         android:text="Friends"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,4 +30,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/userProfile"
+        android:layout_width="64dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="347dp"
+        android:layout_marginLeft="347dp"
+        android:onClick="profilePage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_myplaces" />
 </android.support.constraint.ConstraintLayout>
