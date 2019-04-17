@@ -40,7 +40,7 @@ public class placeBetActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference gamesRef = db.collection("games");
     private CollectionReference userCollectionRef = db.collection("users");
-    private String documentID, source, friend;
+    private String documentID, source, friend, username;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -74,7 +74,20 @@ public class placeBetActivity extends AppCompatActivity {
         Intent mintent = getIntent();
         source = mintent.getStringExtra("FROM_ACTIVITY");
         friend = mintent.getStringExtra("FRIEND");
-    }
+        DocumentReference getUserForFriend = userCollectionRef.document(user.getEmail());
+        getUserForFriend.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        username = (String) document.get("name");
+                    }
+
+                }
+            }
+        });
+        }
     // creates the bet and returns to the list of gamees
     public void createBet(View view){
         DocumentReference userRef = userCollectionRef.document(user.getEmail());
@@ -180,6 +193,10 @@ public class placeBetActivity extends AppCompatActivity {
         userBet.put("odds", favoriteSpread);
         userBet.put("type", "spread");
         userBet.put("gameRef", documentID);
+        if(source.equals("F"))
+        { userBet.put("from", username); }
+        else
+            { userBet.put("from", ""); }
         //check options for overunder and who the bet is placed on
         if (options[0].equals("spread")) {
             userBet.put("type", "spread");
