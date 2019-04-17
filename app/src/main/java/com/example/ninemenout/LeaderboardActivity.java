@@ -30,7 +30,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
     private CollectionReference userRef = db.collection("users");
-    private CollectionReference friendsRef = db.collection("users")
+    private CollectionReference friendsRef = userRef
             .document(fbUser.getEmail())
             .collection("friends");
     private LeaderboardsAdapter adapter, adapter1;
@@ -44,7 +44,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     private void setUpGlobalRecyclerView() {
         // list users from biggest point total to smallest
-        Query query = userRef.orderBy("points", Query.Direction.ASCENDING);
+        Query query = userRef.orderBy("points", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
                 .setQuery(query, Users.class)
@@ -59,20 +59,31 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     private void setUpFriendsRecyclerView() {
-        friendsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Integer count = 0;
-                    for(DocumentSnapshot document : task.getResult()){
-                        String docID = (String) document.get("email");
-                        int j = updatePointsOfUser(docID);
-                        while(j == 0)
-                            count++;
-                    }
-                    Log.d("googy", count.toString());
-                }
-            }
+
+        friendsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+           @Override
+           public void onComplete(@NonNull Task<QuerySnapshot> task){
+               if(task.isSuccessful()){
+                   for(DocumentSnapshot document : task.getResult()){
+                       String friendEmail = (String) document.get("email");
+                       DocumentReference doc1 = userRef.document(friendEmail);
+                       doc1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                           @Override
+                           public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                               DocumentSnapshot doc2 = task.getResult();
+                               if(doc2.exists()){
+                                   Integer pts = doc2.getLong("points").intValue();
+                                   Map<String, Object> friendEditor = new HashMap<String, Object>();
+                                   friendEditor.put("points", pts);
+                                   friendEditor.put("name", document.get("name"));
+                                   friendEditor.put("email", friendEmail);
+                                   friendsRef.document(friendEmail).set(friendEditor);
+                               }
+                           }
+                       });
+                   }
+               }
+           }
         });
 
         Query query = friendsRef.orderBy("points", Query.Direction.DESCENDING);
@@ -88,39 +99,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter1);
-    }
-
-    public int updatePointsOfUser(String id){
-        Log.d("googy", id);
-        DocumentReference userDoc = userRef.document(id);
-        userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    changeFriendPoints(id, (Long) doc.getLong("points"));
-                }
-            }
-        });
-        return 1;
-    }
-
-    public void changeFriendPoints(String id, Long points){
-        DocumentReference friendsDoc = friendsRef.document(id);
-        friendsDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    Map<String, Object> friendUpdate = new HashMap<String, Object>();
-                    friendUpdate.put("email", id);
-                    Log.d("googy", id);
-                    friendUpdate.put("name", document.get("name"));
-                    friendUpdate.put("points", points.intValue());
-                    friendsDoc.set(friendUpdate);
-                }
-            }
-        });
     }
 
     public void toggleGlobal(View view){
