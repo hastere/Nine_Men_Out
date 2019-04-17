@@ -30,7 +30,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
     private CollectionReference userRef = db.collection("users");
-    private CollectionReference friendsRef = userRef
+    CollectionReference friendsRef = userRef
             .document(fbUser.getEmail())
             .collection("friends");
     private LeaderboardsAdapter adapter, adapter1;
@@ -85,6 +85,22 @@ public class LeaderboardActivity extends AppCompatActivity {
                }
            }
         });
+
+        DocumentReference selfRef = userRef.document(fbUser.getEmail());
+        selfRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot doc = task.getResult();
+                if(doc.exists()){
+                    Map<String, Object> friendSelf = new HashMap<String, Object>();
+                    friendSelf.put("points", doc.getLong("points").intValue());
+                    friendSelf.put("name", doc.get("name"));
+                    friendSelf.put("email", fbUser.getEmail());
+                    friendsRef.document(fbUser.getEmail()).set(friendSelf);
+                }
+            }
+        });
+
 
         Query query = friendsRef.orderBy("points", Query.Direction.DESCENDING);
 
