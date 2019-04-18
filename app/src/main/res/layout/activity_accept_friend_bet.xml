@@ -33,7 +33,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="4dp"
             android:background="@color/colorGreen"
-            android:onClick="betAccepted"
+            android:onClick="friendBetAccepted"
             android:text="Accept Bet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

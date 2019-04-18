@@ -102,7 +102,7 @@ public class AcceptFriendBet extends AppCompatActivity {
     }
 
     // accepts the bet and returns to the home page
-    public void betAccepted(View view){
+    public void friendBetAccepted(View view){
         amountTooHigh = false;
         DocumentReference docRef = betsRef.document(documentID);
         DocumentReference emailRef = userRef.document(user.getEmail());
@@ -158,6 +158,7 @@ public class AcceptFriendBet extends AppCompatActivity {
                                                 );
                                             }
                                             userBetsRef.document(documentID).set(newUserBet(document, betOnF, betOnU));
+                                            userRef.document(user.getEmail()).collection("betReq").document(documentID).delete();
                                             acceptedToast();
                                         }
                                     }
