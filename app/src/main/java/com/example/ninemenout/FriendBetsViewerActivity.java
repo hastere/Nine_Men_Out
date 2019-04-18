@@ -52,6 +52,17 @@ public class FriendBetsViewerActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new FriendsBetAdapater.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                String id = documentSnapshot.getId();
+                Bundle viewBet = new Bundle();
+                viewBet.putString("documentID", id);
+                Intent intent = new Intent(getApplicationContext(), AcceptFriendBet.class);
+                intent.putExtras(viewBet);
+                startActivity(intent);
+            }
+        });
 
 
     }

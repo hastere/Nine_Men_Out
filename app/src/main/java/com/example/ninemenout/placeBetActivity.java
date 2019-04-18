@@ -118,7 +118,7 @@ public class placeBetActivity extends AppCompatActivity {
                             if(source.equals("F")){
                               userCollectionRef.document(friend).collection("betReq").document(newBetRef.getId()).set(userBet);
                             }
-                            else { betsCollectionRef.document(newBetRef.getId()).set(userBet); }
+                            betsCollectionRef.document(newBetRef.getId()).set(userBet);
                         }
                         else {
                             //error for a bet that is too big

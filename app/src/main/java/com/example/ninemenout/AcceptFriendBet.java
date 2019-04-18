@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class AcceptFriendBet extends AppCompatActivity {
 
-    TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite, betTypeText;
+    TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite, betTypeText, friend;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betsRef = db.collection("bets");
     private CollectionReference userRef = db.collection("users");
@@ -45,6 +45,7 @@ public class AcceptFriendBet extends AppCompatActivity {
         unclaimedTeam = findViewById(R.id.unclaimedTeamText);
         favorite = findViewById(R.id.favoriteText);
         betTypeText = findViewById(R.id.betTypeText);
+        friend = findViewById(R.id.fromText);
 
         // betsViewer should be passed the document ID as a string (reduces overall querying needed)
         Bundle b = this.getIntent().getExtras();
@@ -71,6 +72,7 @@ public class AcceptFriendBet extends AppCompatActivity {
                             awayTeam.setText((String) document.get("away"));
                             odds.setText((String) document.get("odds"));
                             points.setText(pointsConverter);
+                            friend.setText((String) document.get("from"));
                             String betType = ((String) document.get("type"));
                             if(betType.equals("over under")) {
                                 betTypeText.setText("Over Under");
