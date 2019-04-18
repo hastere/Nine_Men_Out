@@ -39,7 +39,7 @@ public class BetHistoryActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        Query query = betRef.orderBy("odds", Query.Direction.DESCENDING);
+        Query query = betRef.whereGreaterThan("winner", "").orderBy("winner", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
                 .setQuery(query, Bets.class)
