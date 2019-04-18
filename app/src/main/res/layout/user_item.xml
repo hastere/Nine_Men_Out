@@ -30,13 +30,15 @@
 
         <TextView
             android:id="@+id/text_view_description"
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large">
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="22sp">
 
         </TextView>
 

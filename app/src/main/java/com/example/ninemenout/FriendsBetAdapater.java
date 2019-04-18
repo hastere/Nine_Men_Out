@@ -46,7 +46,7 @@ public class FriendsBetAdapater extends FirestoreRecyclerAdapter<Bets, FriendsBe
         holder.textViewTitle.setText(model.getHome() + " vs." + "\n" + model.getAway());
         holder.textViewDescription.setText("Favorite: " + model.getFavorite() + "\n" + "Unclaimed: " + untaken + "\n" + "Type: " + model.getType());
         holder.textViewPriority.setText(model.getOdds() + " / " + ((Integer) model.getAmount()).toString());
-        holder.from.setText("From" + model.getFrom());
+        holder.from.setText("From: " + model.getFrom());
     }
 
         // overrides the view holder creation to use the bet item layout
