@@ -19,6 +19,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.checkerframework.checker.nullness.compatqual.NonNullType;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -178,6 +180,36 @@ public class AcceptFriendBet extends AppCompatActivity {
         Intent intent = new Intent(this, FriendBetsViewerActivity.class);
         startActivity(intent);
     }
+
+
+   public void friendBetRejected(View view){
+        DocumentReference docRef = betsRef.document(documentID);
+        String  email = user.getEmail();
+       docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+           @Override
+           public void onComplete(@NonNull Task<DocumentSnapshot> task){
+            if(task.isSuccessful()){
+                DocumentSnapshot document = task.getResult();
+                if(document.exists()){
+                    String fEmail;
+                    if(unclaimed.equals("favorite"))
+                    { fEmail = (String) document.get("betOnUnderdog"); }
+                    else
+                    { fEmail = (String) document.get("betOnFavorite"); }
+                    betsRef.document(documentID).delete();
+                    userRef.document(email).collection("betReq").document(documentID).delete();
+                    userRef.document(fEmail).collection("bets").document(documentID).delete();
+                }
+            }
+
+           }
+       });
+       // user moved back to FriendBetsViewer page
+       Intent intent = new Intent(this, FriendBetsViewerActivity.class);
+       startActivity(intent);
+   }
+
+
 
     // returns which team has NOT been bet on based on user selection in the DB
     public static String getOpenTeam(String favorite){
