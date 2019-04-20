@@ -92,11 +92,7 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot doc = task.getResult();
                 if(doc.exists()){
-                    Map<String, Object> friendSelf = new HashMap<String, Object>();
-                    friendSelf.put("points", doc.getLong("points").intValue());
-                    friendSelf.put("name", doc.get("name"));
-                    friendSelf.put("email", fbUser.getEmail());
-                    friendsRef.document(fbUser.getEmail()).set(friendSelf);
+                    friendsRef.document(fbUser.getEmail()).set(friendSelf(doc));
                 }
             }
         });
@@ -129,6 +125,13 @@ public class LeaderboardActivity extends AppCompatActivity {
         adapter1.startListening();
     }
 
+    public Map<String, Object> friendSelf(DocumentSnapshot document){
+        Map<String, Object> friendSelf = new HashMap<String, Object>();
+        friendSelf.put("points", document.getLong("points").intValue());
+        friendSelf.put("name", document.get("name"));
+        friendSelf.put("email", fbUser.getEmail());
+        return friendSelf;
+    }
 
     @Override
     protected void onStart() {
