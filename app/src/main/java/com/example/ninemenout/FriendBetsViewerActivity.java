@@ -1,14 +1,12 @@
 package com.example.ninemenout;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,51 +18,53 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-public class PersonalBetActivity extends AppCompatActivity {
-
+public class FriendBetsViewerActivity extends AppCompatActivity {
     private static final String TAG = "PersonalBetActivity";
-
+    private FriendsBetAdapater adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     static private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private CollectionReference betRef;
+    private FirebaseUser acceptor;
+    private FirebaseAuth myAuth;
 
-    private PersonalBetsAdapter adapter;
 
-   static  String email = user.getEmail();
-
-    static public String getEmail() { //for the personal bets adapter to determine what to show
-        return email;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_bet);
-
-        setUpSubCollection();
-
-        setUpRecyclerView();
+        setContentView(R.layout.activity_friend_bets_viewer);
+        myAuth = FirebaseAuth.getInstance();
+        acceptor = myAuth.getCurrentUser();
+        betRef = db.collection("users").document(acceptor.getEmail()).collection("betReq");
+        setFriendBetView();
     }
 
-    private void setUpSubCollection() { //sets up subcollection to display the documents in it
-        betRef = db.collection("users").document(email).collection("bets");
-    }
 
-    private void setUpRecyclerView() {
-        Query query = betRef.whereEqualTo("active", 1).orderBy("odds", Query.Direction.DESCENDING);
 
+    public void setFriendBetView(){
+        Query query = betRef.orderBy("amount", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
                 .setQuery(query, Bets.class)
                 .build();
 
-        adapter = new PersonalBetsAdapter(options);
-
-        RecyclerView recyclerView = findViewById(R.id.personalBetsList);
+        adapter = new FriendsBetAdapater(options);
+        RecyclerView recyclerView = findViewById(R.id.Friend_Bets);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new FriendsBetAdapater.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                String id = documentSnapshot.getId();
+                Bundle viewBet = new Bundle();
+                viewBet.putString("documentID", id);
+                Intent intent = new Intent(getApplicationContext(), AcceptFriendBet.class);
+                intent.putExtras(viewBet);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -77,5 +77,18 @@ public class PersonalBetActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+
+    public void profilePage(View view)
+    {
+        Intent intent = new Intent(this,UserProfileActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void seeFriends(View view){
+        Intent intent = new Intent(this, ViewRequestsActivity.class);
+        startActivity(intent);
     }
 }

@@ -7,8 +7,8 @@
     tools:context=".LeaderboardActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/globalLeaderboardRecycler"
-        android:layout_width="413dp"
+        android:id="@+id/friendsLeaderboardRecycler"
+        android:layout_width="411dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -28,7 +28,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/colorGreen"
+        android:background="@color/colorAccent"
         android:onClick="toggleGlobal"
         android:text="Global"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,18 +41,18 @@
         android:layout_marginTop="7dp"
         android:layout_marginEnd="9dp"
         android:layout_marginRight="9dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorGreen"
         android:onClick="toggleFriends"
         android:text="Friends"
-        app:layout_constraintEnd_toEndOf="@+id/globalLeaderboardRecycler"
-        app:layout_constraintTop_toBottomOf="@+id/globalLeaderboardRecycler" />
+        app:layout_constraintEnd_toEndOf="@+id/friendsLeaderboardRecycler"
+        app:layout_constraintTop_toBottomOf="@+id/friendsLeaderboardRecycler" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
-        android:text="Global Leaderboards"
+        android:text="Friends Leaderboards"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,8 +62,8 @@
         android:id="@+id/rankText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
         android:layout_marginTop="8dp"
         android:text="Rank: 1"
         android:textSize="36sp"

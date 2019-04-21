@@ -2,12 +2,9 @@ package com.example.ninemenout;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -24,13 +21,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.example.ninemenout.BetUtility;
 
+import org.checkerframework.checker.nullness.compatqual.NonNullType;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class BetsViewerActivity extends AppCompatActivity {
+public class AcceptFriendBet extends AppCompatActivity {
 
-    // GLOBAL VARIABLE DEFINITIONS
-    TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite, betTypeText;
+    TextView homeTeam, awayTeam, odds, points, unclaimedTeam, favorite, betTypeText, friend;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference betsRef = db.collection("bets");
     private CollectionReference userRef = db.collection("users");
@@ -41,7 +39,8 @@ public class BetsViewerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bets_viewer);
+        setContentView(R.layout.activity_accept_friend_bet);
+
         // establish variable connections to various text and buttons
         homeTeam = findViewById(R.id.homeText);
         awayTeam = findViewById(R.id.awayText);
@@ -50,6 +49,7 @@ public class BetsViewerActivity extends AppCompatActivity {
         unclaimedTeam = findViewById(R.id.unclaimedTeamText);
         favorite = findViewById(R.id.favoriteText);
         betTypeText = findViewById(R.id.betTypeText);
+        friend = findViewById(R.id.fromText);
 
         // betsViewer should be passed the document ID as a string (reduces overall querying needed)
         Bundle b = this.getIntent().getExtras();
@@ -76,6 +76,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                             awayTeam.setText((String) document.get("away"));
                             odds.setText((String) document.get("odds"));
                             points.setText(pointsConverter);
+                            friend.setText((String) document.get("from"));
                             String betType = ((String) document.get("type"));
                             if(betType.equals("over under")) {
                                 betTypeText.setText("Over Under");
@@ -105,7 +106,7 @@ public class BetsViewerActivity extends AppCompatActivity {
     }
 
     // accepts the bet and returns to the home page
-    public void betAccepted(View view){
+    public void friendBetAccepted(View view){
         amountTooHigh = false;
         DocumentReference docRef = betsRef.document(documentID);
         DocumentReference emailRef = userRef.document(user.getEmail());
@@ -126,7 +127,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                                     if (userDocument.exists()) {
                                         if(userDocument.contains("activePoints")) {
                                             userActive = userDocument.getLong("activePoints").intValue();
-                                            }
+                                        }
 
                                         int userInactive = userDocument.getLong("points").intValue() - userActive;
                                         int sumTotal = userActive + pointChanger;
@@ -161,6 +162,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                                                 );
                                             }
                                             userBetsRef.document(documentID).set(BetUtility.newUserBet(document, betOnF, betOnU));
+                                            userRef.document(user.getEmail()).collection("betReq").document(documentID).delete();
                                             acceptedToast();
                                         }
                                     }
@@ -176,12 +178,40 @@ public class BetsViewerActivity extends AppCompatActivity {
             }
         });
 
-        // user moved back to homepage
+        // user moved back to FriendBetsViewer page
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 
-    //// TOAST CONTROLLER FUNCTIONS ////
+
+   public void friendBetRejected(View view){
+        DocumentReference docRef = betsRef.document(documentID);
+        String  email = user.getEmail();
+       docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+           @Override
+           public void onComplete(@NonNull Task<DocumentSnapshot> task){
+            if(task.isSuccessful()){
+                DocumentSnapshot document = task.getResult();
+                if(document.exists()){
+                    String fEmail;
+                    if(unclaimed.equals("favorite"))
+                    { fEmail = (String) document.get("betOnUnderdog"); }
+                    else
+                    { fEmail = (String) document.get("betOnFavorite"); }
+                    betsRef.document(documentID).delete();
+                    userRef.document(email).collection("betReq").document(documentID).delete();
+                    userRef.document(fEmail).collection("bets").document(documentID).delete();
+                }
+            }
+
+           }
+       });
+       // user moved back to FriendBetsViewer page
+       Intent intent = new Intent(this, HomePageActivity.class);
+       startActivity(intent);
+   }
+
+    //// YOAST CONTROLLER FUNCTIONS ////
 
     // toast when accept is denied
     public void insufficientToast(){

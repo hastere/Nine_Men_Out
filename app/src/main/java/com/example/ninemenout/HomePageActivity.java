@@ -117,6 +117,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     public void openCreateBetsActivity() {
         Intent intent = new Intent(this, browseGames.class);
+        intent.putExtra("FROM_ACTIVITY", "HP");
         startActivity(intent);
     }
 

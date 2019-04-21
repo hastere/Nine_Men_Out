@@ -16,40 +16,40 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/text_view_title"
+            android:id="@+id/text_view_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Title"
+            android:text="Rank"
             android:textAppearance="@style/TextAppearance.AppCompat.Large">
 
         </TextView>
 
         <TextView
-            android:id="@+id/text_view_description"
-            android:layout_width="135dp"
+            android:id="@+id/text_view_points"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="Points"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="22sp">
+            android:textAppearance="@style/TextAppearance.AppCompat.Large">
 
         </TextView>
 
-        <Button
-            android:id="@+id/Send_Bet"
+        <TextView
+            android:id="@+id/text_view_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:background="@color/colorBlue"
-            android:text="Send Bet" />
+            android:layout_marginStart="49dp"
+            android:layout_marginLeft="49dp"
+            android:layout_toEndOf="@+id/text_view_rank"
+            android:layout_toRightOf="@+id/text_view_rank"
+            android:text="User"
+            android:textSize="22sp" />
 
 
     </RelativeLayout>
