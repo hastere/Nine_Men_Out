@@ -1,4 +1,4 @@
-<!-- # Nine Men Out
+# Nine Men Out
 The peer-to-peer sports betting app for CS495.
 
 ## Importance
@@ -11,4 +11,4 @@ Sports gambling is not allowed in 48 states, but many choose to set up casual si
 - Users can add friends, enabling social features such as sending direct bets to a user.
 
 # Team
-Nine Men Out is created and maintained by Owen Tazic, Bryce Martinez, Joe Gospodarek, and Andrew Ster    e.  -->
+Nine Men Out is created and maintained by Owen Tazic, Bryce Martinez, Joe Gospodarek, and Andrew Stere.
