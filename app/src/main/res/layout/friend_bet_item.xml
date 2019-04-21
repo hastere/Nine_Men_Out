@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView  xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
     app:cardBackgroundColor="@color/colorPrimary"
-    tools:cardBackgroundColor="@color/colorPrimary" >
+    tools:cardBackgroundColor="@color/colorPrimary">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,41 +16,51 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/text_view_title"
+            android:id="@+id/betTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/oddsText"
+            android:layout_toLeftOf="@id/oddsText"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="2"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large">
 
         </TextView>
 
         <TextView
-            android:id="@+id/text_view_description"
-            android:layout_width="135dp"
+            android:id="@+id/oddsText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="Points"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="22sp">
+            android:text="odds"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large">
 
         </TextView>
 
-        <Button
-            android:id="@+id/Send_Bet"
+        <TextView
+            android:id="@+id/text_view_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:background="@color/colorBlue"
-            android:text="Send Bet" />
+            android:layout_below="@id/betTitle"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:text="This is where the odds are placed"
+            android:textSize="18sp">
 
+        </TextView>
+
+        <TextView
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_description"
+            android:text="Who the bet is from"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
