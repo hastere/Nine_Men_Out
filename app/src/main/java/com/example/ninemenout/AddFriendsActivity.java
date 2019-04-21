@@ -38,6 +38,7 @@ public class AddFriendsActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth myauth;
+    private FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
     private static final String TAG = "AddFriendsActivity";
     public static final String FNAME = "Name";
     public static final String WAIT = "Status";
@@ -55,9 +56,15 @@ public class AddFriendsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friends);
+
+        // error handling to avoid being your own friend
+        db.collection("users").document(fbUser.getEmail())
+                .collection("friends")
+                .document(fbUser.getEmail())
+                .delete();
+
         button = (Button) findViewById(R.id.sendRequest);
         no = (Button) findViewById(R.id.reject);
         button.setVisibility(View.INVISIBLE);
