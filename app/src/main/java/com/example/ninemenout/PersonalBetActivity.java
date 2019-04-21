@@ -53,7 +53,7 @@ public class PersonalBetActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        Query query = betRef.orderBy("odds", Query.Direction.DESCENDING);
+        Query query = betRef.whereEqualTo("active", 1).orderBy("odds", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Bets> options = new FirestoreRecyclerOptions.Builder<Bets>()
                 .setQuery(query, Bets.class)

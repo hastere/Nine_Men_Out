@@ -177,7 +177,7 @@ public class AcceptFriendBet extends AppCompatActivity {
         });
 
         // user moved back to FriendBetsViewer page
-        Intent intent = new Intent(this, FriendBetsViewerActivity.class);
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 
@@ -205,7 +205,7 @@ public class AcceptFriendBet extends AppCompatActivity {
            }
        });
        // user moved back to FriendBetsViewer page
-       Intent intent = new Intent(this, FriendBetsViewerActivity.class);
+       Intent intent = new Intent(this, HomePageActivity.class);
        startActivity(intent);
    }
 

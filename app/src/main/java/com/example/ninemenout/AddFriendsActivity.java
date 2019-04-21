@@ -60,10 +60,10 @@ public class AddFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_friends);
 
         // error handling to avoid being your own friend
-        db.collection("users").document(fbUser.getEmail())
-                .collection("friends")
-                .document(fbUser.getEmail())
-                .delete();
+     //   db.collection("users").document(fbUser.getEmail())
+     //           .collection("friends")
+     //           .document(fbUser.getEmail())
+     //           .delete();
 
         button = (Button) findViewById(R.id.sendRequest);
         no = (Button) findViewById(R.id.reject);

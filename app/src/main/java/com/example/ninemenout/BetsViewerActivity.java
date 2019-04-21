@@ -219,7 +219,7 @@ public class BetsViewerActivity extends AppCompatActivity {
         return userBet;
     }
 
-    //// YOAST CONTROLLER FUNCTIONS ////
+    //// TOAST CONTROLLER FUNCTIONS ////
 
     // toast when accept is denied
     public void insufficientToast(){
