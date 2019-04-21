@@ -1,6 +1,7 @@
 package com.example.ninemenout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,10 +45,13 @@ public class AddFriendsActivity extends AppCompatActivity {
     private CollectionReference budRef;
     private Button button;
      private Button no;
-     public String buddy;
+     public String buddy, sucker;
      private int userSearch = 0;
      private String checku;
      private ArrayList friendsArray = new ArrayList();
+     private ArrayList UpdateFriendsPoints = new ArrayList();
+     private FirebaseUser lonely;
+     private String uEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,8 @@ public class AddFriendsActivity extends AppCompatActivity {
         button.setVisibility(View.INVISIBLE);
         no.setVisibility(View.INVISIBLE);
         myauth = FirebaseAuth.getInstance();
-        FirebaseUser lonely = myauth.getCurrentUser();
-        String uEmail = lonely.getEmail();
+        lonely = myauth.getCurrentUser();
+        uEmail = lonely.getEmail();
         Log.d(TAG, "The user email is " +uEmail);
         budRef = db.collection("users").document(uEmail).collection("friends");
         DocumentReference u = db.collection("users").document(uEmail);
@@ -73,39 +77,87 @@ public class AddFriendsActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //gets all the users friends and puts them in array to be checked against when the user searches for friends
         budRef.orderBy("name",Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful())
                 {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-
                         String f = (String) document.get("name");
                         friendsArray.add(f);
+                        String up = (String) document.get("email");
+                        UpdateFriendsPoints.add(up);
                     }
+                    if(UpdateFriendsPoints.size() != 0)
+                    {updatePoints();}
                 }
             }
         });
+        Log.d(TAG, "Length of Friends is " + friendsArray.size());
+        Log.d(TAG, "Lengtht of UpdateFriendsPoints is " + UpdateFriendsPoints.size());
+
         setUpFriendsView();
     }
 
         //sets up recyclerView
         private void setUpFriendsView() {
             Query query = budRef.orderBy("name", Query.Direction.DESCENDING);
-                FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
-                        .setQuery(query, Users.class)
-                        .build();
+            FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
+                    .setQuery(query, Users.class)
+                    .build();
 
-                adapter = new UserAdapter(options);
-                RecyclerView recyclerView = findViewById(R.id.Friends_View);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setAdapter(adapter);
+            adapter = new UserAdapter(options);
+            RecyclerView recyclerView = findViewById(R.id.Friends_View);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
+            adapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-            }
+                }
 
+                @Override
+                public void onSendBetClick(DocumentSnapshot documentSnapshot, int position) {
+                    String newFriend = (String) documentSnapshot.get("name");
+                    CollectionReference usersRef = db.collection("users");
+                    //creates a query looking for that userinput
+                    usersRef.whereEqualTo("name", newFriend).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().isEmpty()) {
+                                    //notifies the user that the search failed
+                                    Context context = getApplicationContext();
+                                    CharSequence reusername = "Sorry that user no longer exists!";
+                                    int duration_one = Toast.LENGTH_SHORT;
+                                    Toast toast_2 = Toast.makeText(context, reusername, duration_one);
+                                    toast_2.show();
+                                }
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    //gets the requester's information
+                                    //makes user and requester friends
+                                    sucker = (String) document.get("email");
+                                }
+                            }
 
+                            openCreateBetsActivity();
+                        }
+                    });
+
+                }
+            });
+        }
+
+    public void openCreateBetsActivity() {
+        Intent intent = new Intent(this, browseGames.class);
+        //added flags to tell where the bet is coming from and who the user wanted to send a bet to
+        intent.putExtra("FROM_ACTIVITY", "F");
+        intent.putExtra("FRIEND",sucker);
+        startActivity(intent);
+    }
 
 
  @Override
@@ -142,6 +194,8 @@ public class AddFriendsActivity extends AppCompatActivity {
                     //users username
                     String check  = (String) doc.get("name");
                     //checks to see if what is being searched for is a friend of the user
+                    Log.d(TAG, "Size is " + friendsArray.size());
+                    Log.d(TAG, "Update size is" + UpdateFriendsPoints.size());
                     for(int i = 0; i < friendsArray.size(); i++) {
                         String fCheck = (String) friendsArray.get(i);
                         if (fCheck.equals(username)) {
@@ -256,4 +310,40 @@ public class AddFriendsActivity extends AppCompatActivity {
         no.setVisibility(View.INVISIBLE);
     }
 
+
+    public void updatePoints(){
+        CollectionReference userRef = db.collection("users");
+        CollectionReference userFriends = db.collection("users").document(uEmail).collection("friends");
+
+        for(int i = 0; i < UpdateFriendsPoints.size(); i++)
+        {
+            String oldActive = (String) UpdateFriendsPoints.get(i);
+            DocumentReference update = userRef.document(oldActive);
+            update.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                   if(task.isSuccessful()){
+                       DocumentSnapshot fresh = task.getResult();
+                       if (fresh.exists())
+                       {
+                           long freshpoints = (long) fresh.get("points");
+                           DocumentReference old = userFriends.document(oldActive);
+                           old.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                               @Override
+                               public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                   if(task.isSuccessful()){
+                                    DocumentSnapshot outdated = task.getResult();
+                                        if(outdated.exists())
+                                        {
+                                        old.update("points", freshpoints);
+                                        }
+                                   }
+                               }
+                           });
+                       }
+                   }
+                }
+            });
+        }
+    }
     }
