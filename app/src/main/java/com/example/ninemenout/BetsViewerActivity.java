@@ -22,6 +22,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.example.ninemenout.BetUtility;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +42,6 @@ public class BetsViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bets_viewer);
-
         // establish variable connections to various text and buttons
         homeTeam = findViewById(R.id.homeText);
         awayTeam = findViewById(R.id.awayText);
@@ -66,8 +67,8 @@ public class BetsViewerActivity extends AppCompatActivity {
                             // set the text in the display to what was dynamically gained from the DB
                             // based on the passed (via the intent) document ID
                             // cast the LONG / NUMBER values first to avoid casting problems in line
-                            unclaimed = getOpenTeam(((String) document.get("betOnFavorite")));
-                            unclaimedField = getOpenTeamField(unclaimed,
+                            unclaimed = BetUtility.getOpenTeam(((String) document.get("betOnFavorite")));
+                            unclaimedField = BetUtility.getOpenTeamField(unclaimed,
                                     ((String) document.get("favorite")),
                                     ((String) document.get("home")));
                             String pointsConverter = String.valueOf(document.getLong("amount"));
@@ -159,7 +160,7 @@ public class BetsViewerActivity extends AppCompatActivity {
                                                         "betOnUnderdog", user.getEmail()
                                                 );
                                             }
-                                            userBetsRef.document(documentID).set(newUserBet(document, betOnF, betOnU));
+                                            userBetsRef.document(documentID).set(BetUtility.newUserBet(document, betOnF, betOnU));
                                             acceptedToast();
                                         }
                                     }
@@ -178,45 +179,6 @@ public class BetsViewerActivity extends AppCompatActivity {
         // user moved back to homepage
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
-    }
-
-    // returns which team has NOT been bet on based on user selection in the DB
-    public static String getOpenTeam(String favorite){
-        if(favorite.equals(""))
-            return "favorite";
-        else
-            return "underdog";
-    }
-
-    // returns which team (HOME or AWAY) is the underdog or favorite, whichever is in the 'unclaimed' String
-    public static String getOpenTeamField(String unclaimed, String favorite, String home) {
-        if (unclaimed.equals("underdog")) {
-            if (home.equals(favorite)) {
-                return "away";
-            } else
-                return "home";
-        } else {
-            if (home.equals(favorite)) {
-                return "home";
-            } else
-                return "away";
-        }
-    }
-
-    // copies document over to the bet collection of whoever accepted the bet
-    public Map<String, Object> newUserBet(DocumentSnapshot document, String betOnF, String betOnU){
-        Map<String, Object> userBet = new HashMap<String, Object>();
-        userBet.put("active", 1);
-        userBet.put("amount", document.getLong("amount"));
-        userBet.put("away", ((String) document.get("away")));
-        userBet.put("date_expires", ((String) document.get("date_expires")));
-        userBet.put("favorite", ((String) document.get("favorite")));
-        userBet.put("home", ((String) document.get("home")));
-        userBet.put("odds", ((String) document.get("odds")));
-        userBet.put("type", ((String) document.get("type")));
-        userBet.put("betOnFavorite", betOnF);
-        userBet.put("betOnUnderdog", betOnU);
-        return userBet;
     }
 
     //// TOAST CONTROLLER FUNCTIONS ////
