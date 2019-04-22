@@ -2,7 +2,7 @@ package com.example.ninemenout;
 
 public class Bets {
 
-    private String away, home, favorite, odds, type, betOnFavorite, betOnUnderdog, date_expires, from;
+    private String away, home, favorite, odds, type, betOnFavorite, betOnUnderdog, date_expires, from, winner;
 
     private int active, amount;
 

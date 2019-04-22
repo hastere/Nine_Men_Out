@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".ViewStatsActivity" />
+        <activity android:name=".BetHistoryActivity" />
         <activity android:name=".AcceptFriendBet"></activity>
         <activity android:name=".FriendBetsViewerActivity" />
         <activity android:name=".ViewRequestsActivity" />

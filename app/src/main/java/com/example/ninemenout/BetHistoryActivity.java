@@ -24,10 +24,6 @@ public class BetHistoryActivity extends AppCompatActivity {
 
     static  String email = user.getEmail();
 
-    static public String getEmail() { //for the personal bets adapter to determine what to show
-        return email;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
