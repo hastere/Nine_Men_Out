@@ -34,6 +34,7 @@ public class BetHistoryActivity extends AppCompatActivity {
         setUpRecyclerView();
     }
 
+    //sets up a recycler viewer that uses any document where there is a winner field
     private void setUpRecyclerView() {
         Query query = betRef.whereGreaterThan("winner", "").orderBy("winner", Query.Direction.DESCENDING);
 

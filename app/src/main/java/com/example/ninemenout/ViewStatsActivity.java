@@ -30,10 +30,12 @@ public class ViewStatsActivity extends AppCompatActivity {
 
     private String email = user.getEmail();
 
+    //setting up collections and documents from database to be queried
     private CollectionReference betRef = db.collection("users").document(email).collection("bets");
     private CollectionReference userRef = db.collection("users");
     private DocumentReference docRef = userRef.document(email);
 
+    //stats to be displayed
     int pointsAmt;
     int winsAmt;
     int betAmt;
@@ -45,6 +47,7 @@ public class ViewStatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_stats);
 
+        //setting textViews for display
         TextView points = findViewById(R.id.textViewPoints);
         TextView wins = findViewById(R.id.textViewWins);
         TextView losses = findViewById(R.id.textViewLosses);
@@ -52,6 +55,7 @@ public class ViewStatsActivity extends AppCompatActivity {
         TextView largeWin = findViewById(R.id.textViewLargeWin);
         TextView largeLoss = findViewById(R.id.textViewLargeLoss);
 
+        //gets the number of points the user has and displays them similar to homepage
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task){
@@ -70,6 +74,7 @@ public class ViewStatsActivity extends AppCompatActivity {
             }
         });
 
+        //counts the number of wins the user and the largest win the user has
         betRef.whereEqualTo("winner", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -88,6 +93,7 @@ public class ViewStatsActivity extends AppCompatActivity {
             }
         });
 
+        //counts the number of completed bets the user has, the number of losses, the win percentage, and the largest loss
         betRef.whereGreaterThan("winner", "").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -120,6 +126,7 @@ public class ViewStatsActivity extends AppCompatActivity {
 
     }
 
+    //takes user to their bets history page
     public void openBetHistoryActivity() {
         Intent intent = new Intent(this, BetHistoryActivity.class);
         startActivity(intent);

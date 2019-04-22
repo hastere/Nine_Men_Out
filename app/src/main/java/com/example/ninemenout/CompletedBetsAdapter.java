@@ -18,8 +18,8 @@ public class CompletedBetsAdapter extends FirestoreRecyclerAdapter<Bets, Complet
 
     @Override
     protected void onBindViewHolder(@NonNull CompletedBetsAdapter.BetHolder holder, int position, @NonNull Bets model) { //model functions come from Bets.java
-        holder.textViewTitle.setText("" + model.getHome() + " vs. " + model.getAway());
-        if (email.equals(model.getWinner())) {
+        holder.textViewTitle.setText("" + model.getHome() + " vs. " + model.getAway()); //displays game
+        if (email.equals(model.getWinner())) { //if the user is the winner of the bet and the amount
             holder.textViewResult.setText("Result: Won");
             holder.textViewAmount.setText("Reward: " + model.getAmount() + " pts");
         } else {
@@ -27,7 +27,7 @@ public class CompletedBetsAdapter extends FirestoreRecyclerAdapter<Bets, Complet
             holder.textViewAmount.setText("Cost: " + model.getAmount() + " pts");
         }
 
-        if (email.equals(model.getBetOnFavorite())) { //uses users email to determine what to display
+        if (email.equals(model.getBetOnFavorite())) { //displays what user picked
             if(model.getType().equals("over under")) {
                 holder.textViewPriority.setText("Pick: Over");
             }
