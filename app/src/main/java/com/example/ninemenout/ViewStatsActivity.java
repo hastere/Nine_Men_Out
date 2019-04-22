@@ -33,18 +33,10 @@ public class ViewStatsActivity extends AppCompatActivity {
     private CollectionReference betRef = db.collection("users").document(email).collection("bets");
     private DocumentReference docRef = db.collection("users").document(email);
 
-    private TextView points = findViewById(R.id.textViewPoints);
-    private int pointsAmt;
-    private TextView wins = findViewById(R.id.textViewWins);
-    private int winsAmt = 0;
-    private TextView losses = findViewById(R.id.textViewLosses);
-    private int betAmt = 0;
-    private int lossAmt = 0;
-    private TextView winPer = findViewById(R.id.textViewWinPer);
-    private float winPercent = 0;
-    private TextView largeWin = findViewById(R.id.textViewLargeWin);
-    private int lWin = 0;
-    private TextView largeLoss = findViewById(R.id.textViewLargeLoss);
+    private int pointsAmt = 900000;
+    private int winsAmt = 1;
+    private int betAmt = 1;
+    private int lWin = 5;
     private int lLoss = 0;
 
     @Override
@@ -52,12 +44,41 @@ public class ViewStatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_stats);
 
+        TextView points = findViewById(R.id.textViewPoints);
+        TextView wins = findViewById(R.id.textViewWins);
+        TextView losses = findViewById(R.id.textViewLosses);
+        TextView winPer = findViewById(R.id.textViewWinPer);
+        TextView largeWin = findViewById(R.id.textViewLargeWin);
+        TextView largeLoss = findViewById(R.id.textViewLargeLoss);
+
+        winsAmt = 0;
+        betAmt = 0;
+        lWin = 0;
+        lLoss = 0;
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task){
+                if(task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        // update home page display to represent user data
+                        pointsAmt = ((Long) document.get("points")).intValue();
+                    } else {
+                        Log.d("document error", "No such document");
+                    }
+                } else {
+                    Log.d("task error", "get failed with ", task.getException());
+                }
+            }
+        });
+
         getPoints();
         getWins();
         getBets();
 
-        lossAmt = betAmt - winsAmt;
-        winPercent = ((float) winsAmt / (float) betAmt) * 100;
+        int lossAmt = betAmt - winsAmt;
+        float winPercent = (winsAmt / betAmt) * 100;
 
         button = findViewById(R.id.betHistoryBtn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +91,7 @@ public class ViewStatsActivity extends AppCompatActivity {
         points.setText("Points: " + pointsAmt);
         wins.setText("Wins: " + winsAmt);
         losses.setText("Losses: " + lossAmt);
-        winPer.setText("Win Percentage: " + winPercent + "%");
+        winPer.setText("Win %: " + winPercent);
         largeWin.setText("Largest Win: " + lWin);
         largeLoss.setText("Largest Loss: "+ lLoss);
 
