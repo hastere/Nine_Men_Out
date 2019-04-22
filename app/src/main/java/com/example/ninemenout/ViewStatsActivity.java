@@ -31,13 +31,14 @@ public class ViewStatsActivity extends AppCompatActivity {
     private String email = user.getEmail();
 
     private CollectionReference betRef = db.collection("users").document(email).collection("bets");
-    private DocumentReference docRef = db.collection("users").document(email);
+    private CollectionReference userRef = db.collection("users");
+    private DocumentReference docRef = userRef.document(email);
 
-    private int pointsAmt = 900000;
-    private int winsAmt = 1;
-    private int betAmt = 1;
-    private int lWin = 5;
-    private int lLoss = 0;
+    int pointsAmt;
+    int winsAmt;
+    int betAmt;
+    int lWin;
+    int lLoss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,36 +52,6 @@ public class ViewStatsActivity extends AppCompatActivity {
         TextView largeWin = findViewById(R.id.textViewLargeWin);
         TextView largeLoss = findViewById(R.id.textViewLargeLoss);
 
-       // winsAmt = 0;
-       // betAmt = 0;
-       // lWin = 0;
-       // lLoss = 0;
-
-        //getPoints();
-        //getWins();
-        //getBets();
-
-        int lossAmt = betAmt - winsAmt;
-        float winPercent = (winsAmt / betAmt) * 100;
-
-        button = findViewById(R.id.betHistoryBtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openBetHistoryActivity();
-            }
-        });
-
-        points.setText("Points: 900005");
-        wins.setText("Wins: 1");
-        losses.setText("Losses: 0");
-        winPer.setText("Win %: 100");
-        largeWin.setText("Largest Win: 5");
-        largeLoss.setText("Largest Loss: 0");
-
-    }
-/*
-    private void getPoints() {
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task){
@@ -89,6 +60,7 @@ public class ViewStatsActivity extends AppCompatActivity {
                     if(document.exists()){
                         // update home page display to represent user data
                         pointsAmt = ((Long) document.get("points")).intValue();
+                        points.setText("Points: " + pointsAmt);
                     } else {
                         Log.d("document error", "No such document");
                     }
@@ -97,9 +69,7 @@ public class ViewStatsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    private void getWins() {
         betRef.whereEqualTo("winner", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -110,19 +80,18 @@ public class ViewStatsActivity extends AppCompatActivity {
                             lWin = ((Long) document.get("amount")).intValue();
                         }
                     }
+                    wins.setText("Wins: " + winsAmt);
+                    largeWin.setText("Largest Win: " + lWin);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
-    }
 
-    private void getBets() {
         betRef.whereGreaterThan("winner", "").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    betAmt = 0;
                     for (DocumentSnapshot document : task.getResult()) {
                         betAmt++;
                         if(!(document.get("winner").equals(email))) {
@@ -131,13 +100,26 @@ public class ViewStatsActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    losses.setText("Losses: " + (betAmt - winsAmt));
+                    largeLoss.setText("Largest Loss: " + lLoss);
+                    winPer.setText("Win %: " + ((winsAmt / betAmt) * 100));
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
+
+
+        button = findViewById(R.id.betHistoryBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBetHistoryActivity();
+            }
+        });
+
     }
-*/
+
     public void openBetHistoryActivity() {
         Intent intent = new Intent(this, BetHistoryActivity.class);
         startActivity(intent);
