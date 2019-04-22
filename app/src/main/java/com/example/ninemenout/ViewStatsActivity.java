@@ -108,7 +108,10 @@ public class ViewStatsActivity extends AppCompatActivity {
                     }
                     losses.setText("Losses: " + (betAmt - winsAmt));
                     largeLoss.setText("Largest Loss: " + lLoss);
-                    winPer.setText("Win %: " + ((winsAmt / betAmt) * 100));
+                    if(betAmt > 0)
+                        winPer.setText("Win %: " + ((winsAmt / betAmt) * 100));
+                    else
+                        winPer.setText("Win %: NA");
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
