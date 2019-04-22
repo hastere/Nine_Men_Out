@@ -2,7 +2,8 @@ package com.example.ninemenout;
 
 public class Bets {
 
-    private String away, home, favorite, odds, type, betOnFavorite, betOnUnderdog, date_expires, from;
+    private String away, home, favorite, odds, type, betOnFavorite, betOnUnderdog, date_expires, from, winner;
+
     private int active, amount;
 
     public String getAway() {
@@ -87,6 +88,14 @@ public class Bets {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 
     // default BIG constructor
