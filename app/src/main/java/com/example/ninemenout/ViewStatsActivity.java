@@ -51,31 +51,14 @@ public class ViewStatsActivity extends AppCompatActivity {
         TextView largeWin = findViewById(R.id.textViewLargeWin);
         TextView largeLoss = findViewById(R.id.textViewLargeLoss);
 
-        winsAmt = 0;
-        betAmt = 0;
-        lWin = 0;
-        lLoss = 0;
+       // winsAmt = 0;
+       // betAmt = 0;
+       // lWin = 0;
+       // lLoss = 0;
 
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task){
-                if(task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if(document.exists()){
-                        // update home page display to represent user data
-                        pointsAmt = ((Long) document.get("points")).intValue();
-                    } else {
-                        Log.d("document error", "No such document");
-                    }
-                } else {
-                    Log.d("task error", "get failed with ", task.getException());
-                }
-            }
-        });
-
-        getPoints();
-        getWins();
-        getBets();
+        //getPoints();
+        //getWins();
+        //getBets();
 
         int lossAmt = betAmt - winsAmt;
         float winPercent = (winsAmt / betAmt) * 100;
@@ -88,15 +71,15 @@ public class ViewStatsActivity extends AppCompatActivity {
             }
         });
 
-        points.setText("Points: " + pointsAmt);
-        wins.setText("Wins: " + winsAmt);
-        losses.setText("Losses: " + lossAmt);
-        winPer.setText("Win %: " + winPercent);
-        largeWin.setText("Largest Win: " + lWin);
-        largeLoss.setText("Largest Loss: "+ lLoss);
+        points.setText("Points: 900005");
+        wins.setText("Wins: 1");
+        losses.setText("Losses: 0");
+        winPer.setText("Win %: 100");
+        largeWin.setText("Largest Win: 5");
+        largeLoss.setText("Largest Loss: 0");
 
     }
-
+/*
     private void getPoints() {
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -154,7 +137,7 @@ public class ViewStatsActivity extends AppCompatActivity {
             }
         });
     }
-
+*/
     public void openBetHistoryActivity() {
         Intent intent = new Intent(this, BetHistoryActivity.class);
         startActivity(intent);
