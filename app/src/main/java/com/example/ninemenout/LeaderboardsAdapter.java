@@ -32,12 +32,14 @@ public class LeaderboardsAdapter extends FirestoreRecyclerAdapter<Users, Leaderb
 
     @Override
     protected void onBindViewHolder(@NonNull LeaderboardsUserHolder holder, int position, @NonNull Users model) {
+        // positions start at zero
         Integer pos = position + 1;
         Integer points = model.getPoints();
         TextView tv;
         holder.textViewRank.setText(pos.toString());
         holder.textViewUser.setText(model.getName());
         holder.textViewPoints.setText(points.toString());
+        // update 'rank' text at top of page if current user is found
         if(model.getEmail().equals(fbUser.getEmail())) {
             tv = (TextView) ((Activity) this.context).findViewById(R.id.rankText);
             tv.setText("Rank: " + pos.toString());

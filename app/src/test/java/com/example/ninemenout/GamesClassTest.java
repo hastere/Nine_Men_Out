@@ -17,6 +17,11 @@ import java.text.SimpleDateFormat;
 
 public class GamesClassTest {
 
+    ////
+    //  Dr. Gray said we can reuse the same test cases since we have 25 already (don't need new ones)
+    //  Some, however, have been fixed per the grading of sprint 2
+    ////
+
     private games g = new games("home", "away");
 
     private double over_under, home_spread, away_spread;

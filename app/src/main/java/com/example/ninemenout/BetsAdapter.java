@@ -24,6 +24,7 @@ public class BetsAdapter extends FirestoreRecyclerAdapter<Bets, BetsAdapter.BetH
     protected void onBindViewHolder(@NonNull BetHolder holder, int position, @NonNull Bets model) {
         String untaken = "Alabama";
         boolean ouFlag = false;
+        // updates page after finding an over under bet
         if(model.getType().equals("over under"))
             ouFlag = true;
         if(model.getBetOnFavorite().equals("")) {

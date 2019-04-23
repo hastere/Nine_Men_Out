@@ -10,6 +10,10 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class RequestsClassTest {
+    ////
+    //  Dr. Gray said we can reuse the same test cases since we have 25 already (don't need new ones)
+    //  Some, however, have been fixed per the grading of sprint 2
+    ////
 
     private Requests r = new Requests("Owen");
 

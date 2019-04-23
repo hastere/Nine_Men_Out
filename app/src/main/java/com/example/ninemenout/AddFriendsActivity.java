@@ -60,10 +60,10 @@ public class AddFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_friends);
 
         // error handling to avoid being your own friend
-     //   db.collection("users").document(fbUser.getEmail())
-     //           .collection("friends")
-     //           .document(fbUser.getEmail())
-     //           .delete();
+        db.collection("users").document(fbUser.getEmail())
+                .collection("friends")
+                .document(fbUser.getEmail())
+                .delete();
 
         button = (Button) findViewById(R.id.sendRequest);
         no = (Button) findViewById(R.id.reject);
@@ -72,7 +72,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         myauth = FirebaseAuth.getInstance();
         lonely = myauth.getCurrentUser();
         uEmail = lonely.getEmail();
-        Log.d(TAG, "The user email is " +uEmail);
+
         budRef = db.collection("users").document(uEmail).collection("friends");
         DocumentReference u = db.collection("users").document(uEmail);
         u.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -101,8 +101,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                 }
             }
         });
-        Log.d(TAG, "Length of Friends is " + friendsArray.size());
-        Log.d(TAG, "Lengtht of UpdateFriendsPoints is " + UpdateFriendsPoints.size());
 
         setUpFriendsView();
     }
@@ -143,7 +141,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                                     toast_2.show();
                                 }
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
                                     //gets the requester's information
                                     //makes user and requester friends
                                     sucker = (String) document.get("email");
@@ -201,8 +198,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                     //users username
                     String check  = (String) doc.get("name");
                     //checks to see if what is being searched for is a friend of the user
-                    Log.d(TAG, "Size is " + friendsArray.size());
-                    Log.d(TAG, "Update size is" + UpdateFriendsPoints.size());
                     for(int i = 0; i < friendsArray.size(); i++) {
                         String fCheck = (String) friendsArray.get(i);
                         if (fCheck.equals(username)) {
@@ -300,7 +295,6 @@ public class AddFriendsActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "it failed");
                 Context context = getApplicationContext();
                 CharSequence reusername = "Request Failed";
                 int duration_one = Toast.LENGTH_SHORT;

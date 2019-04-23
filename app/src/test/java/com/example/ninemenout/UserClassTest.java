@@ -13,6 +13,11 @@ import static org.junit.Assert.*;
 
 public class UserClassTest {
 
+    ////
+    //  Dr. Gray said we can reuse the same test cases since we have 25 already (don't need new ones)
+    //  Some, however, have been fixed per the grading of sprint 2
+    ////
+
     private Users u = new Users("otaz@gmail.com", "otaz", 500, 1000);
 
     @Test
