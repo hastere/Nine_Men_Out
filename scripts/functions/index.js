@@ -9,14 +9,14 @@ const firestore = admin.firestore()
 exports.payUser = functions.firestore
   .document('bets/{betId}')
   .onUpdate((change,context) => {
-    if (document.get("winner") !== null) {
-      const finalBet = change.after.data();
+    const finalBet = change.after.data();
+    if (finalBet.active === -1) {
       const usersRef = firestore.collection("users");
       const betAmount = finalBet.amount;
       const favoriteUser = finalBet.betOnFavorite;
       const underdogUser = finalBet.betOnUnderdog;
       const winningUser = finalBet.winner;
-
+      console.log("winner was " + winningUser);
       var favActivePoints = 0;
       var favPoints = 0;
       var underPoints = 0;
