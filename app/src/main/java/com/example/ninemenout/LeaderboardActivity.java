@@ -50,6 +50,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                 .setQuery(query, Users.class)
                 .build();
 
+        // the adapter handles numbering by ranks
         adapter = new LeaderboardsAdapter(options, this);
 
         RecyclerView recyclerView = findViewById(R.id.globalLeaderboardRecycler);
@@ -64,14 +65,17 @@ public class LeaderboardActivity extends AppCompatActivity {
            @Override
            public void onComplete(@NonNull Task<QuerySnapshot> task){
                if(task.isSuccessful()){
+                   // update points for every friend
                    for(DocumentSnapshot document : task.getResult()){
                        String friendEmail = (String) document.get("email");
+                       // reference point for friends user row
                        DocumentReference doc1 = userRef.document(friendEmail);
                        doc1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                            @Override
                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                DocumentSnapshot doc2 = task.getResult();
                                if(doc2.exists()){
+                                   // get that friends current point total, updates it in your friend list
                                    Integer pts = doc2.getLong("points").intValue();
                                    Map<String, Object> friendEditor = new HashMap<String, Object>();
                                    friendEditor.put("points", pts);
@@ -86,6 +90,8 @@ public class LeaderboardActivity extends AppCompatActivity {
            }
         });
 
+        // add yourself to your friends list temporarily so you can compare yourself with others
+        // firebase + firestore don't have a very robust querying service
         DocumentReference selfRef = userRef.document(fbUser.getEmail());
         selfRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -113,18 +119,21 @@ public class LeaderboardActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter1);
     }
 
+    // whenever the global button is pressed, load global leaderboards
     public void toggleGlobal(View view){
         setContentView(R.layout.activity_leaderboard);
         setUpGlobalRecyclerView();
         adapter.startListening();
     }
 
+    // whenever the friends button is pressed, load friends leaderboards
     public void toggleFriends(View view){
         setContentView(R.layout.activity_leaderboard_friends);
         setUpFriendsRecyclerView();
         adapter1.startListening();
     }
 
+    // new 'friend' object to add to a users friend list (yourself)
     public Map<String, Object> friendSelf(DocumentSnapshot document){
         Map<String, Object> friendSelf = new HashMap<String, Object>();
         friendSelf.put("points", document.getLong("points").intValue());

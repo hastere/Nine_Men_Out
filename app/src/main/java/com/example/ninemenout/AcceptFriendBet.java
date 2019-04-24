@@ -206,12 +206,10 @@ public class AcceptFriendBet extends AppCompatActivity {
 
            }
        });
-       // user moved back to FriendBetsViewer page
+       // user moved back to homepage to avoid the back loop
        Intent intent = new Intent(this, HomePageActivity.class);
        startActivity(intent);
    }
-
-    //// YOAST CONTROLLER FUNCTIONS ////
 
     // toast when accept is denied
     public void insufficientToast(){

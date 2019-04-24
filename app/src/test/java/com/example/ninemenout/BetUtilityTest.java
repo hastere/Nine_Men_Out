@@ -10,7 +10,10 @@ import static org.junit.Assert.*;
 
 public class BetUtilityTest {
 
-    // SHOULD WORK THE SAME AS THE BETS VIEWER TESTS
+    ////
+    //  Dr. Gray said we can reuse the same test cases since we have 25 already (don't need new ones)
+    //  Some, however, have been fixed per the grading of sprint 2
+    ////
 
     @Test
     public void testGetOpenTeam(){
