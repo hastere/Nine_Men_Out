@@ -55,6 +55,36 @@ public class ViewStatsActivity extends AppCompatActivity {
         TextView largeWin = findViewById(R.id.textViewLargeWin);
         TextView largeLoss = findViewById(R.id.textViewLargeLoss);
 
+        betRef.whereGreaterThanOrEqualTo("active", 0).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() { //gets all documents where active is above 0
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task){
+                if(task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) { //for each document, checks them against the bets collection to see if it is complete
+                        if (document.exists()) {
+                            DocumentReference doc2 = db.collection("users").document(email).collection("bets").document(document.getId());
+                            DocumentReference doc1 = db.collection("bets").document(document.getId());
+                            doc1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if(task.isSuccessful()) {
+                                        DocumentSnapshot doc = task.getResult();
+                                        if(((Long) doc.get("active")).intValue() == -1) { //updates fields in users bets
+                                            doc2.update("active", -1);
+                                            doc2.update("winner", doc.get("winner"));
+                                        }
+                                    }
+                                }
+                            });
+                        } else {
+                            Log.d("document error", "No such document");
+                        }
+                    }
+                } else {
+                    Log.d("task error", "get failed with ", task.getException());
+                }
+            }
+        });
+
         //gets the number of points the user has and displays them similar to homepage
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
